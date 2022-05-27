@@ -41,7 +41,8 @@ class _ProductsPageState extends State<ProductsPage> {
                     ? RaisedButton.icon(
                         onPressed: () {},
                         icon: Icon(Icons.add),
-                        label: Text("ADD CATEGORY"))
+                        label: Text("ADD PRODUCT"),
+                      )
                     : null,
                 actions: [
                   if (tablesProvider.isSearch)

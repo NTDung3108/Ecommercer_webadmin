@@ -1,10 +1,12 @@
 import 'package:ecommerce_admin_tut/extension/string_extensions.dart';
 import 'package:ecommerce_admin_tut/pages/brands/brands_page.dart';
 import 'package:ecommerce_admin_tut/pages/categories/categories_page.dart';
+import 'package:ecommerce_admin_tut/pages/discount/discount_page.dart';
 import 'package:ecommerce_admin_tut/pages/login/login.dart';
 import 'package:ecommerce_admin_tut/pages/phone_verify/phone_verify_page.dart';
 import 'package:ecommerce_admin_tut/pages/register_info/register_info_page.dart';
 import 'package:ecommerce_admin_tut/pages/registration/registration.dart';
+import 'package:ecommerce_admin_tut/pages/subcategory/subcategory_page.dart';
 import 'package:ecommerce_admin_tut/widgets/layout/layout.dart';
 
 import '../pages/home/home_page.dart';
@@ -41,8 +43,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(LayoutTemplate(), settings);
     case CategoriesRoute:
       return _getPageRoute(CategoriesPage(), settings);
+    case SubcategoryRoute:
+      return _getPageRoute(SubcategoryPage(), settings);
     case BrandsRoute:
       return _getPageRoute(BrandsPage(), settings);
+    case DiscountRoute:
+      return _getPageRoute(DiscountPage(), settings);
     default:
       return _getPageRoute(LoginPage(), settings);
   }

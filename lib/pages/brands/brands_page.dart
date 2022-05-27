@@ -38,7 +38,7 @@ class _BrandsPageState extends State<BrandsPage> {
                     ? RaisedButton.icon(
                         onPressed: () {},
                         icon: Icon(Icons.add),
-                        label: Text("ADD CATEGORY"))
+                        label: Text("ADD BRAND"))
                     : null,
                 actions: [
                   if (tablesProvider.isSearch)

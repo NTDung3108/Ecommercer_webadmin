@@ -10,5 +10,7 @@ const String RegisterInfoRoute = "/register_info";
 const String PhoneVerifyRoute = '/phone_verify';
 const String OTPRoute = '/otp';
 const String CategoriesRoute = "/categories";
+const String SubcategoryRoute = "/subcategory";
 const String BrandsRoute = "/brands";
+const String DiscountRoute = "/discount";
 const String PageControllerRoute = "/page";

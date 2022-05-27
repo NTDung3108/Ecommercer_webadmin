@@ -11,6 +11,7 @@ import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
 import 'package:ecommerce_admin_tut/services/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_table/responsive_table.dart';
 
@@ -31,8 +32,27 @@ class TablesProvider with ChangeNotifier {
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
-        text: "Email",
-        value: "email",
+        text: "Phone",
+        value: "phone",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Address",
+        value: "Address",
+        show: true,
+        flex: 2,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Gender",
+        value: "gender",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Status",
+        value: "status",
         show: true,
         sortable: true,
         textAlign: TextAlign.left),
@@ -42,19 +62,19 @@ class TablesProvider with ChangeNotifier {
     DatatableHeader(
         text: "ID",
         value: "id",
-        show: false,
+        show: true,
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
         text: "User Id",
         value: "userId",
-        show: true,
         flex: 2,
+        show: true,
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
-        text: "Description",
-        value: "description",
+        text: "Total",
+        value: "total",
         show: true,
         sortable: true,
         textAlign: TextAlign.left),
@@ -65,8 +85,15 @@ class TablesProvider with ChangeNotifier {
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
-        text: "Total",
-        value: "total",
+        text: "Description",
+        value: "description",
+        flex: 2,
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Status",
+        value: "status",
         show: true,
         sortable: true,
         textAlign: TextAlign.left),
@@ -76,7 +103,7 @@ class TablesProvider with ChangeNotifier {
     DatatableHeader(
         text: "ID",
         value: "id",
-        show: false,
+        show: true,
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
@@ -105,20 +132,14 @@ class TablesProvider with ChangeNotifier {
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
-        text: "Sizes",
-        value: "sizes",
+        text: "Sold",
+        value: "sold",
         show: true,
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
         text: "Colors",
         value: "colors",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Featured",
-        value: "featured",
         show: true,
         sortable: true,
         textAlign: TextAlign.left),
@@ -131,6 +152,18 @@ class TablesProvider with ChangeNotifier {
     DatatableHeader(
         text: "Price",
         value: "price",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Add Day",
+        value: "addday",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Update Day",
+        value: "updateday",
         show: true,
         sortable: true,
         textAlign: TextAlign.left),
@@ -150,6 +183,7 @@ class TablesProvider with ChangeNotifier {
         flex: 2,
         sortable: true,
         textAlign: TextAlign.left),
+
   ];
 
   List<DatatableHeader> categoriesTableHeader = [
@@ -167,6 +201,67 @@ class TablesProvider with ChangeNotifier {
         sortable: true,
         textAlign: TextAlign.left),
   ];
+  List<DatatableHeader> subcategoryTableHeader = [
+    DatatableHeader(
+        text: "ID",
+        value: "id",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Subcategory",
+        value: "subcategory",
+        show: true,
+        flex: 2,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Category ID",
+        value: "category_id",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "View",
+        value: "view",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+  ];
+  List<DatatableHeader> discountTableHeader = [
+    DatatableHeader(
+        text: "ID",
+        value: "id",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Title",
+        value: "title",
+        show: true,
+        flex: 2,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Content",
+        value: "content",
+        flex: 3,
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Start Day",
+        value: "startday",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "End Day",
+        value: "endday",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+  ];
   List<int> perPages = [5, 10, 15, 100];
   int total = 100;
   int? currentPerPage;
@@ -176,7 +271,9 @@ class TablesProvider with ChangeNotifier {
   List<Map<String, dynamic>> ordersTableSource = [];
   List<Map<String, dynamic>> productsTableSource = [];
   List<Map<String, dynamic>> categoriesTableSource = [];
+  List<Map<String, dynamic>> subcategoryTableSource = [];
   List<Map<String, dynamic>> brandsTableSource = [];
+  List<Map<String, dynamic>> discountTableSource = [];
 
   List<Map<String, dynamic>> selecteds = [];
   String selectableKey = "id";
@@ -297,7 +394,6 @@ class TablesProvider with ChangeNotifier {
     productsTableSource.addAll(_getProductsData());
     categoriesTableSource.addAll(_getCategoriesData());
     brandsTableSource.addAll(_getBrandsData());
-
     isLoading = false;
     notifyListeners();
   }

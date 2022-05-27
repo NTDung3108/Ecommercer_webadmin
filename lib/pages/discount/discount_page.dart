@@ -4,28 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_table/responsive_table.dart';
 
-class UsersPage extends StatefulWidget {
+class DiscountPage extends StatefulWidget {
   @override
-  _UsersPageState createState() => _UsersPageState();
+  _DiscountPageState createState() => _DiscountPageState();
 }
 
-class _UsersPageState extends State<UsersPage> {
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class _DiscountPageState extends State<DiscountPage> {
   @override
   Widget build(BuildContext context) {
     final TablesProvider tablesProvider = Provider.of<TablesProvider>(context);
     return SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
           PageHeader(
-            text: 'USERS',
+            text: 'DISCOUNT',
           ),
           Container(
             margin: EdgeInsets.all(10),
@@ -38,6 +32,12 @@ class _UsersPageState extends State<UsersPage> {
               shadowColor: Colors.black,
               clipBehavior: Clip.none,
               child: ResponsiveDatatable(
+                title: !tablesProvider.isSearch
+                    ? RaisedButton.icon(
+                        onPressed: () {},
+                        icon: Icon(Icons.add),
+                        label: Text("ADD DISCOUNT"))
+                    : null,
                 actions: [
                   if (tablesProvider.isSearch)
                     Expanded(
@@ -62,8 +62,8 @@ class _UsersPageState extends State<UsersPage> {
                           });
                         })
                 ],
-                headers: tablesProvider.usersTableHeader,
-                source: tablesProvider.usersTableSource,
+                headers: tablesProvider.discountTableHeader,
+                source: tablesProvider.discountTableSource,
                 selecteds: tablesProvider.selecteds,
                 showSelect: tablesProvider.showSelect,
                 autoHeight: false,
@@ -116,6 +116,8 @@ class _UsersPageState extends State<UsersPage> {
               ),
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }

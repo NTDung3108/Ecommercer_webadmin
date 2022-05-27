@@ -11,93 +11,8 @@ class OrdersPage extends StatefulWidget {
 }
 
 class _OrdersPageState extends State<OrdersPage> {
-  List<DatatableHeader> _headers = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: false,
-        sortable: true,
-        textAlign: TextAlign.right),
-    DatatableHeader(
-        text: "Name",
-        value: "name",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "SKU",
-        value: "sku",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.center),
-    DatatableHeader(
-        text: "Category",
-        value: "category",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Price",
-        value: "price",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Margin",
-        value: "margin",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "In Stock",
-        value: "in_stock",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Alert",
-        value: "alert",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Received",
-        value: "received",
-        show: true,
-        sortable: false,
-        sourceBuilder: (value, row) {
-          List list = List.from(value);
-          return Container(
-            child: Column(
-              children: [
-                Container(
-                  width: 85,
-                  child: LinearProgressIndicator(
-                    value: list.first / list.last,
-                  ),
-                ),
-                Text("${list.first} of ${list.last}")
-              ],
-            ),
-          );
-        },
-        textAlign: TextAlign.center),
-  ];
-
-  List<int> _perPages = [5, 10, 15, 100];
-  int _total = 100;
-  int? _currentPerPage;
-  int _currentPage = 1;
-  bool _isSearch = false;
   List<Map<String, dynamic>> _source = [];
-  List<Map<String, dynamic>> _selecteds = [];
-  String _selectableKey = "id";
-
-  String? _sortColumn;
-  bool _sortAscending = true;
   bool _isLoading = true;
-  bool _showSelect = true;
 
   List<Map<String, dynamic>> _generateData({int n: 100}) {
     final List source = List.filled(n, Random.secure());
@@ -163,12 +78,6 @@ class _OrdersPageState extends State<OrdersPage> {
               shadowColor: Colors.black,
               clipBehavior: Clip.none,
               child: ResponsiveDatatable(
-                title: !tablesProvider.isSearch
-                    ? RaisedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Icons.add),
-                        label: Text("ADD CATEGORY"))
-                    : null,
                 actions: [
                   if (tablesProvider.isSearch)
                     Expanded(
