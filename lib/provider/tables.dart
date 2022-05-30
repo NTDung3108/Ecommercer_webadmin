@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:ecommerce_admin_tut/models/brands.dart';
 import 'package:ecommerce_admin_tut/models/categories.dart';
-import 'package:ecommerce_admin_tut/models/orders.dart';
+import 'package:ecommerce_admin_tut/models/order_model/order_response.dart';
 import 'package:ecommerce_admin_tut/models/products.dart';
 import 'package:ecommerce_admin_tut/models/user.dart';
 import 'package:ecommerce_admin_tut/services/brands.dart';
@@ -11,8 +9,6 @@ import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
 import 'package:ecommerce_admin_tut/services/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:responsive_table/responsive_table.dart';
 
 class TablesProvider with ChangeNotifier {
@@ -85,8 +81,15 @@ class TablesProvider with ChangeNotifier {
         sortable: true,
         textAlign: TextAlign.left),
     DatatableHeader(
-        text: "Description",
-        value: "description",
+        text: "Note",
+        value: "note",
+        flex: 2,
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Reason",
+        value: "reason",
         flex: 2,
         show: true,
         sortable: true,
@@ -268,7 +271,7 @@ class TablesProvider with ChangeNotifier {
   int currentPage = 1;
   bool isSearch = false;
   List<Map<String, dynamic>> usersTableSource = [];
-  List<Map<String, dynamic>> ordersTableSource = [];
+  List<Map<String, dynamic>> ordersTableSource = <Map<String, dynamic>>[];
   List<Map<String, dynamic>> productsTableSource = [];
   List<Map<String, dynamic>> categoriesTableSource = [];
   List<Map<String, dynamic>> subcategoryTableSource = [];
@@ -288,8 +291,8 @@ class TablesProvider with ChangeNotifier {
   List<UserModel> get users => _users;
 
   OrderServices _orderServices = OrderServices();
-  List<OrderModel> _orders = <OrderModel>[];
-  List<OrderModel> get orders => _orders;
+  List<Orders> _orders = <Orders>[];
+  List<Orders> get orders => _orders;
 
   ProductsServices _productsServices = ProductsServices();
   List<ProductModel> _products = <ProductModel>[];
@@ -302,11 +305,11 @@ class TablesProvider with ChangeNotifier {
   List<BrandModel> _brands = <BrandModel>[];
 
   Future _loadFromFirebase() async {
-    _users = await _userServices.getAllUsers();
-    _orders = await _orderServices.getAllOrders();
-    _products = await _productsServices.getAllProducts();
-    _brands = await _brandsServices.getAll();
-    _categories = await _categoriesServices.getAll();
+    // _users = await _userServices.getAllUsers();
+    _orders = await _orderServices.getAllOrders() ?? [];
+    // _products = await _productsServices.getAllProducts();
+    // _brands = await _brandsServices.getAll();
+    // _categories = await _categoriesServices.getAll();
   }
 
   List<Map<String, dynamic>> _getUsersData() {
@@ -353,14 +356,15 @@ class TablesProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> _getOrdersData() {
     List<Map<String, dynamic>> temps = [];
-    for (OrderModel order in _orders) {
+    for (Orders order in _orders) {
       temps.add({
-        "id": order.id,
+        "id": order.uidOrderBuy,
         "userId": order.userId,
-        "description": order.description,
-        "createdAt": DateFormat.yMMMd()
-            .format(DateTime.fromMillisecondsSinceEpoch(order.createdAt)),
-        "total": "\$${order.total}",
+        "total": "\$${order.amount}",
+        "createdAt": order.datee,
+        "note": order.note,
+        "reason": order.reason ?? '',
+        "status": order.status
       });
     }
     return temps;
@@ -389,11 +393,12 @@ class TablesProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     await _loadFromFirebase();
-    usersTableSource.addAll(_getUsersData());
+    // usersTableSource.addAll(_getUsersData());
     ordersTableSource.addAll(_getOrdersData());
-    productsTableSource.addAll(_getProductsData());
-    categoriesTableSource.addAll(_getCategoriesData());
-    brandsTableSource.addAll(_getBrandsData());
+    notifyListeners();
+    // productsTableSource.addAll(_getProductsData());
+    // categoriesTableSource.addAll(_getCategoriesData());
+    // brandsTableSource.addAll(_getBrandsData());
     isLoading = false;
     notifyListeners();
   }

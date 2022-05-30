@@ -10,7 +10,7 @@ class AppProvider with ChangeNotifier {
   double revenue = 0;
 
   AppProvider.init() {
-    _getRevenue();
+    // _getRevenue();
     changeCurrentPage(DisplayedPage.HOME);
   }
 
@@ -19,15 +19,15 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void _getRevenue() async {
-    await _orderServices.getAllOrders().then((orders) {
-      for (OrderModel order in orders) {
-        revenue = revenue + order.total;
-        print("======= TOTAL REVENUE: ${revenue.toString()}");
-        print("======= TOTAL REVENUE: ${revenue.toString()}");
-        print("======= TOTAL REVENUE: ${revenue.toString()}");
-      }
-      notifyListeners();
-    });
-  }
+  // void _getRevenue() async {
+  //   await _orderServices.getAllOrders().then((orders) {
+  //     for (OrderModel order in orders) {
+  //       revenue = revenue + order.total;
+  //       print("======= TOTAL REVENUE: ${revenue.toString()}");
+  //       print("======= TOTAL REVENUE: ${revenue.toString()}");
+  //       print("======= TOTAL REVENUE: ${revenue.toString()}");
+  //     }
+  //     notifyListeners();
+  //   });
+  // }
 }
