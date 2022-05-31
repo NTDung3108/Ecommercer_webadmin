@@ -54,54 +54,6 @@ class TablesProvider with ChangeNotifier {
         textAlign: TextAlign.left),
   ];
 
-  List<DatatableHeader> ordersTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "User Id",
-        value: "userId",
-        flex: 2,
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Total",
-        value: "total",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Created At",
-        value: "createdAt",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Note",
-        value: "note",
-        flex: 2,
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Reason",
-        value: "reason",
-        flex: 2,
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Status",
-        value: "status",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-  ];
-
   List<DatatableHeader> productsTableHeader = [
     DatatableHeader(
         text: "ID",
