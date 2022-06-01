@@ -1,7 +1,8 @@
 import 'package:http/http.dart' as http;
 
 class HttpClient{
-  String server = 'http://192.168.2.101:3000/api';
+  // String server = 'http://192.168.2.101:3000/api';
+  String server = 'http://10.50.10.135:3000/api';
   var client = http.Client();
 
   Future<http.Response> get(String address)async{

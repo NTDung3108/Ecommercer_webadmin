@@ -6,7 +6,14 @@ import 'package:ecommerce_admin_tut/widgets/top_buyer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePageDesktop extends StatelessWidget {
+import 'statistical.dart';
+
+class HomePageDesktop extends StatefulWidget {
+  @override
+  State<HomePageDesktop> createState() => _HomePageDesktopState();
+}
+
+class _HomePageDesktopState extends State<HomePageDesktop> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -21,6 +28,7 @@ class HomePageDesktop extends StatelessWidget {
               SizedBox(
                   height: 600,
                   width: MediaQuery.of(context).size.width / 1.9,
+                child: Statistical(),
               ),//SalesChart()),
               Container(
                 width:  MediaQuery.of(context).size.width / 4,
@@ -28,7 +36,6 @@ class HomePageDesktop extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-
                     boxShadow: [
                       BoxShadow(
                           color: Colors.grey[300]!,
