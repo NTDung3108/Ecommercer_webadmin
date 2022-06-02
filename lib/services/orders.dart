@@ -5,6 +5,7 @@ import 'package:ecommerce_admin_tut/address.dart';
 import 'package:ecommerce_admin_tut/helpers/costants.dart';
 import 'package:ecommerce_admin_tut/http_client.dart';
 import 'package:ecommerce_admin_tut/models/order_model/order_response.dart';
+import 'package:ecommerce_admin_tut/models/order_model/revenue_statistic.dart';
 import 'package:ecommerce_admin_tut/models/orders.dart';
 
 class OrderServices {
@@ -23,6 +24,14 @@ class OrderServices {
     var response = await httpClient.get(Address.getAllOrder);
     if(response.statusCode == 200){
       return OrderResponse.fromJson(jsonDecode(response.body)).orders;
+    }else{
+      throw Exception();
+    }
+  }
+  Future<List<Revenue>?> getStatistic1(int startTime, int endTime) async {
+    var response = await httpClient.get('${Address.getStatistic1}?starTime=$startTime&endTime=$endTime');
+    if(response.statusCode == 200){
+      return RevenueStatistic.fromJson(jsonDecode(response.body)).revenue;
     }else{
       throw Exception();
     }
