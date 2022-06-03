@@ -1,9 +1,12 @@
 import 'dart:math';
+import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
-import 'package:ecommerce_admin_tut/widgets/page_header.dart';
+import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_table/responsive_table.dart';
+
+import '../../services/navigation_service.dart';
 
 class OrdersPage extends StatefulWidget {
   @override
@@ -180,6 +183,7 @@ class _OrdersPageState extends State<OrdersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("ORDERS"),
+        leading: Container(),
       ),
       body: SingleChildScrollView(
           child: Column(
@@ -255,7 +259,9 @@ class _OrdersPageState extends State<OrdersPage> {
                         /// print(header);
                       },
                       onTabRow: (data) {
-                        print(data);
+                        locator<NavigationService>()
+                            .globalNavigateTo(
+                            OrderDetailRoute, context);
                       },
                       onSort: (value) {
                         setState(() => _isLoading = true);

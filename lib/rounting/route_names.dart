@@ -14,3 +14,5 @@ const String SubcategoryRoute = "/subcategory";
 const String BrandsRoute = "/brands";
 const String DiscountRoute = "/discount";
 const String PageControllerRoute = "/page";
+const String OrderDetailRoute = "/order_detail";
+
