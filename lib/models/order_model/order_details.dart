@@ -1,11 +1,11 @@
-class Order_Details {
+class OrderDetails {
   bool? resp;
   String? msj;
   OrderDetail? orderDetail;
 
-  Order_Details({this.resp, this.msj, this.orderDetail});
+  OrderDetails({this.resp, this.msj, this.orderDetail});
 
-  Order_Details.fromJson(Map<String, dynamic> json) {
+  OrderDetails.fromJson(Map<String, dynamic> json) {
     resp = json['resp'];
     msj = json['msj'];
     orderDetail = json['order_detail'] != null
@@ -50,14 +50,14 @@ class OrderDetail {
 
   OrderDetail.fromJson(Map<String, dynamic> json) {
     orderId = json['order_id'];
-    userName = json['user_name'];
-    address = json['address'];
-    phone = json['phone'];
-    amount = json['amount'];
-    note = json['note'];
-    reason = json['reason'];
-    payment = json['payment'];
-    status = json['status'];
+    userName = json['user_name'] ?? '';
+    address = json['address'] ?? '';
+    phone = json['phone'] ?? '';
+    amount = json['amount'] ?? 0;
+    note = json['note'] ?? '';
+    reason = json['reason'] ?? '';
+    payment = json['payment'] ?? '';
+    status = json['status'] ?? -1;
     if (json['details'] != null) {
       details = <Details>[];
       json['details'].forEach((v) {

@@ -18,6 +18,18 @@ checkEmail(String? value) {
   return '';
 }
 
+String convertStatus(int i){
+  if(i == -1){
+    return 'Cancle';
+  }else if(i == 0){
+    return 'New Order';
+  }else if(i == 1){
+    return 'Transport';
+  }else{
+    return 'Complete';
+  }
+}
+
 const String phoneNumberNullError = "Please Enter your phone number";
 const String phoneError = "Invalid phone number";
 const String emailError = "Invalid email";

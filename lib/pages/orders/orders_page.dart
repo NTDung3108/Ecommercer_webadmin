@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:ecommerce_admin_tut/locator.dart';
+import 'package:ecommerce_admin_tut/provider/order_detail_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:flutter/material.dart';
@@ -180,6 +181,7 @@ class _OrdersPageState extends State<OrdersPage> {
 
   @override
   Widget build(BuildContext context) {
+    OrderDetailProvider _orderDetailProvider = Provider.of<OrderDetailProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("ORDERS"),
@@ -259,6 +261,8 @@ class _OrdersPageState extends State<OrdersPage> {
                         /// print(header);
                       },
                       onTabRow: (data) {
+                        print(data['id']);
+                        _orderDetailProvider.getOrderDetail(data['id']);
                         locator<NavigationService>()
                             .globalNavigateTo(
                             OrderDetailRoute, context);
@@ -383,36 +387,3 @@ class _OrdersPageState extends State<OrdersPage> {
   }
 }
 
-// class _DropDownContainer extends StatelessWidget {
-//   final Map<String, dynamic> data;
-//   const _DropDownContainer({Key? key, required this.data}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     List<Widget> _children = data.entries.map<Widget>((entry) {
-//       Widget w = Row(
-//         children: [
-//           Text(entry.key.toString()),
-//           Spacer(),
-//           Text(entry.value.toString()),
-//         ],
-//       );
-//       return w;
-//     }).toList();
-//
-//     return Container(
-//       /// height: 100,
-//       child: Column(
-//         /// children: [
-//         ///   Expanded(
-//         ///       child: Container(
-//         ///     color: Colors.red,
-//         ///     height: 50,
-//         ///   )),
-//
-//         /// ],
-//         children: _children,
-//       ),
-//     );
-//   }
-// }

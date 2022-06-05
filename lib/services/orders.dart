@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_admin_tut/address.dart';
-import 'package:ecommerce_admin_tut/helpers/costants.dart';
 import 'package:ecommerce_admin_tut/http_client.dart';
+import 'package:ecommerce_admin_tut/models/order_model/order_details.dart';
 import 'package:ecommerce_admin_tut/models/order_model/order_response.dart';
 import 'package:ecommerce_admin_tut/models/order_model/revenue_statistic.dart';
-import 'package:ecommerce_admin_tut/models/orders.dart';
+import 'dart:html' as html;
+
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderServices {
   String collection = "orders";
@@ -35,5 +36,18 @@ class OrderServices {
     }else{
       throw Exception();
     }
+  }
+  Future<OrderDetail?> getOrderDetail(int? orderId) async {
+    var response = await httpClient.get('${Address.getOrderDetail}$orderId');
+    if(response.statusCode == 200){
+      return OrderDetails.fromJson(jsonDecode(response.body)).orderDetail;
+    }else{
+      throw Exception();
+    }
+  }
+
+  Future<void> downloadInvoice(int? orderId)  async {
+    String url = 'http://192.168.2.101:3000/api/export_invoice/$orderId';
+    if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
   }
 }
