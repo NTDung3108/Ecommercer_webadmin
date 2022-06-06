@@ -7,7 +7,6 @@ import 'package:ecommerce_admin_tut/models/order_model/order_response.dart';
 import 'package:ecommerce_admin_tut/models/order_model/revenue_statistic.dart';
 import 'dart:html' as html;
 
-import 'package:url_launcher/url_launcher.dart';
 
 class OrderServices {
   String collection = "orders";
@@ -47,7 +46,9 @@ class OrderServices {
   }
 
   Future<void> downloadInvoice(int? orderId)  async {
-    String url = 'http://192.168.2.101:3000/api/export_invoice/$orderId';
-    if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
+    String url = 'http://192.168.2.101:3000/HD1.txt';
+    html.AnchorElement anchorElement = html.AnchorElement(href: url);
+    anchorElement.download = "HD1.txt"; //in my case is .pdf
+    anchorElement.click();
   }
 }

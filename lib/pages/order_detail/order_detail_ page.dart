@@ -3,7 +3,6 @@ import 'package:ecommerce_admin_tut/widgets/base_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_table/responsive_table.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../provider/order_detail_provider.dart';
 
@@ -192,12 +191,5 @@ class _OrderDetailState extends State<OrderDetail> {
             ),
     );
   }
-  _launchURL() async {
-    const url = 'https://flutter.io';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+
 }

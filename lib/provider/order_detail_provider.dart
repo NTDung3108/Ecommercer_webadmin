@@ -1,8 +1,7 @@
 import 'package:ecommerce_admin_tut/models/order_model/order_details.dart';
 import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:flutter/foundation.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:html' as html;
 import '../address.dart';
 
 class OrderDetailProvider with ChangeNotifier{
@@ -43,8 +42,9 @@ class OrderDetailProvider with ChangeNotifier{
   }
 
   downloadInvoice()async{
-    String url = '${Address.downloadInvoice}${orderDetail.orderId}';
-
-    if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
+    String url = 'http://10.50.10.135:3000/api/export_invoice/1';
+    html.AnchorElement anchorElement =  new html.AnchorElement(href: url);
+    anchorElement.download = url;
+    anchorElement.click();
   }
 }
