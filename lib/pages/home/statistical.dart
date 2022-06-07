@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_admin_tut/provider/statictic_provider.dart';
+import 'package:ecommerce_admin_tut/widgets/charts/revenue_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/tab_bar_custom.dart';
@@ -115,13 +116,14 @@ class _StatisticalState extends State<Statistical>
           tabs: ['Diagram', 'Detail Statistical'],
           isScrollable: false,
         ),
+        SizedBox(height: 20,),
         Expanded(
           child: TabBarView(
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
-            children: [Container(
-              child: Text('${statictisProvider.revenues}${statictisProvider.isLoading}'),
-            ), Container()],
+            children: [
+              LineChartSample1(),
+              Container()],
           ),
         ),
       ],

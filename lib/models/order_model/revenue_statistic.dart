@@ -28,20 +28,34 @@ class RevenueStatistic {
 }
 
 class Revenue {
-  int? amount;
-  int? datee;
+  int? uidOrderBuy;
+  String? datee2;
+  int? amounts;
+  int? taxs;
+  int? totalOriginals;
 
-  Revenue({this.amount, this.datee});
+  Revenue(
+      {this.uidOrderBuy,
+        this.datee2,
+        this.amounts,
+        this.taxs,
+        this.totalOriginals});
 
   Revenue.fromJson(Map<String, dynamic> json) {
-    amount = json['amount'];
-    datee = json['datee'];
+    uidOrderBuy = json['uidOrderBuy'];
+    datee2 = json['datee2'];
+    amounts = json['amounts'];
+    taxs = json['taxs'];
+    totalOriginals = json['total_originals'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['amount'] = this.amount;
-    data['datee'] = this.datee;
+    data['uidOrderBuy'] = this.uidOrderBuy;
+    data['datee2'] = this.datee2;
+    data['amounts'] = this.amounts;
+    data['taxs'] = this.taxs;
+    data['total_originals'] = this.totalOriginals;
     return data;
   }
 }

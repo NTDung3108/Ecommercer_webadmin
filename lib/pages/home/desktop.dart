@@ -1,3 +1,4 @@
+import 'package:ecommerce_admin_tut/pages/home/top_rank.dart';
 import 'package:ecommerce_admin_tut/widgets/cards/cards_list.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/page_header.dart';
@@ -43,19 +44,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> with TickerProviderSt
                           blurRadius: 16
                       )
                     ]),
-                child: Column(
-                  children: [
-                    CustomText(text: 'Top Buyers', size: 30,),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                    TopBuyerWidget(),
-                  ],
-                ),
+                child: TopRank()
               )
             ],
           ),

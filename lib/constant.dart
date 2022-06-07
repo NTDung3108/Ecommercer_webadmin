@@ -30,6 +30,38 @@ String convertStatus(int i){
   }
 }
 
+int chartData(int i){
+  if(1000<i && i < 10000){
+    return 1000;
+  }else if(10000<=i && i<100000){
+    return 10000;
+  }else if(100000<=i && i<1000000){
+    return 100000;
+  }else if(1000000<=i && i<10000000) {
+    return 1000000;
+  }else if(10000000<=i && i<100000000) {
+    return 10000000;
+  }else{
+    return 100000000;
+  }
+}
+
+String formatChartDataX(int i, int data){
+  if(1000<i && i < 10000){
+    return 'k';
+  }else if(10000<=i && i<100000){
+    return '0k';
+  }else if(100000<=i && i<1000000){
+    return '00k';
+  }else if(1000000<=i && i<10000000) {
+    return 'm';
+  }else if(10000000<=i && i<100000000) {
+    return '0m';
+  }else{
+    return '00m';
+  }
+}
+
 const String phoneNumberNullError = "Please Enter your phone number";
 const String phoneError = "Invalid phone number";
 const String emailError = "Invalid email";

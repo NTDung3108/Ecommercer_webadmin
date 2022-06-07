@@ -12,14 +12,6 @@ class OrderServices {
   String collection = "orders";
   HttpClient httpClient = HttpClient();
 
-  // Future<List<OrderModel>> getAllOrders() async =>
-  //     firebaseFiretore.collection(collection).get().then((result) {
-  //       List<OrderModel> orders = [];
-  //       for (DocumentSnapshot order in result.docs) {
-  //         orders.add(OrderModel.fromSnapshot(order));
-  //       }
-  //       return orders;
-  //     });
   Future<List<Orders>?> getAllOrders() async {
     var response = await httpClient.get(Address.getAllOrder);
     if(response.statusCode == 200){
@@ -28,8 +20,8 @@ class OrderServices {
       throw Exception();
     }
   }
-  Future<List<Revenue>?> getStatistic1(int startTime, int endTime) async {
-    var response = await httpClient.get('${Address.getStatistic1}?starTime=$startTime&endTime=$endTime');
+  Future<List<Revenue>?> getRevenueStatistics(int startTime, int endTime) async {
+    var response = await httpClient.get('${Address.getRevenueStatistics}?starTime=$startTime&endTime=$endTime');
     if(response.statusCode == 200){
       return RevenueStatistic.fromJson(jsonDecode(response.body)).revenue;
     }else{
