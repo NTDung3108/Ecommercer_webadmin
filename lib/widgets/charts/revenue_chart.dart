@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class _LineChart extends StatelessWidget {
+  StatictisProvider statictisProvider;
+  _LineChart({required this.statictisProvider});
   @override
   Widget build(BuildContext context) {
     return LineChart(
@@ -58,7 +60,7 @@ class _LineChart extends StatelessWidget {
   FlTitlesData _titlesData() {
     return FlTitlesData(
       bottomTitles: AxisTitles(
-        sideTitles: bottomTitles,
+        sideTitles: _bottomTitles(),
       ),
       rightTitles: AxisTitles(
         sideTitles: SideTitles(showTitles: false),
@@ -81,19 +83,16 @@ class _LineChart extends StatelessWidget {
     String text;
     switch (value.toInt()) {
       case 1:
-        text = '1m';
+        text = statictisProvider.dataX[0];
         break;
       case 2:
-        text = '2m';
+        text = statictisProvider.dataX[1];
         break;
       case 3:
-        text = '3m';
+        text = statictisProvider.dataX[2];
         break;
       case 4:
-        text = '5m';
-        break;
-      case 5:
-        text = '6m';
+        text = statictisProvider.dataX[3];
         break;
       default:
         return Container();
@@ -141,12 +140,14 @@ class _LineChart extends StatelessWidget {
     );
   }
 
-  SideTitles get bottomTitles => SideTitles(
-        showTitles: true,
-        reservedSize: 32,
-        interval: 1,
-        getTitlesWidget: bottomTitleWidgets,
-      );
+  SideTitles _bottomTitles() {
+    return SideTitles(
+      showTitles: true,
+      reservedSize: 32,
+      interval: 1,
+      getTitlesWidget: bottomTitleWidgets,
+    );
+  }
 }
 
 class LineChartSample1 extends StatefulWidget {
@@ -215,7 +216,7 @@ class LineChartSample1State extends State<LineChartSample1> {
                         child: Padding(
                           padding:
                               const EdgeInsets.only(right: 16.0, left: 6.0),
-                          child: _LineChart(),
+                          child: _LineChart(statictisProvider: statictisProvider,),
                         ),
                       ),
                       const SizedBox(

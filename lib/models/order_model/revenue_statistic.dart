@@ -7,7 +7,7 @@ class RevenueStatistic {
 
   RevenueStatistic.fromJson(Map<String, dynamic> json) {
     resp = json['resp'];
-    msj = json['msj'];
+    msj = json['msj'] ?? '';
     if (json['revenue'] != null) {
       revenue = <Revenue>[];
       json['revenue'].forEach((v) {

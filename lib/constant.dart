@@ -48,17 +48,17 @@ int chartData(int i){
 
 String formatChartDataX(int i, int data){
   if(1000<i && i < 10000){
-    return 'k';
+    return '${data}k';
   }else if(10000<=i && i<100000){
-    return '0k';
+    return '${data}0k';
   }else if(100000<=i && i<1000000){
-    return '00k';
+    return '${data}00k';
   }else if(1000000<=i && i<10000000) {
-    return 'm';
+    return '${data}m';
   }else if(10000000<=i && i<100000000) {
-    return '0m';
+    return '${data}0m';
   }else{
-    return '00m';
+    return '${data}00m';
   }
 }
 

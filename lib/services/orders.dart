@@ -38,7 +38,7 @@ class OrderServices {
   }
 
   Future<void> downloadInvoice(int? orderId)  async {
-    String url = 'http://192.168.2.101:3000/HD1.txt';
+    String url = 'http://192.168.2.151:3000/HD1.txt';
     html.AnchorElement anchorElement = html.AnchorElement(href: url);
     anchorElement.download = "HD1.txt"; //in my case is .pdf
     anchorElement.click();
