@@ -41,27 +41,6 @@ class _OrdersPageState extends State<OrdersPage> {
   bool _showSelect = true;
   var random = new Random();
 
-  List<Map<String, dynamic>> _generateData({int n: 100}) {
-    final List source = List.filled(n, Random.secure());
-    List<Map<String, dynamic>> temps = [];
-    var i = 1;
-    print(i);
-    // ignore: unused_local_variable
-    for (var data in source) {
-      temps.add({
-        "id": i,
-        "userId": "$i\000$i",
-        "total": "Product $i",
-        "createdAt": "Category-$i",
-        "note": i * 10.00,
-        "reason": "20.00",
-        "status": "${i}0.20",
-      });
-      i++;
-    }
-    return temps;
-  }
-
   _initializeData() async {
     _mockPullData();
   }

@@ -15,6 +15,8 @@ class OrderDetailProvider with ChangeNotifier{
   getOrderDetail(int orderId) async {
     isLoading = true;
     try{
+      _detail.clear();
+      orderDetailTableSource.clear();
       orderDetail = await _services.getOrderDetail(orderId) ?? orderDetail;
       _detail.addAll(orderDetail.details ?? []);
       orderDetailTableSource.addAll(_getOrderDetailData());

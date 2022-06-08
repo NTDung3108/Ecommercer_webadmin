@@ -9,6 +9,8 @@ class StatictisProvider with ChangeNotifier{
   List<double> revenues = [];
   List<String> dataX = [];
   int maxTotal = 0;
+  List<Map<String, dynamic>> revenueTableSource = <Map<String, dynamic>>[];
+  int? _currentPerPage;
   OrderServices _orderServices = OrderServices();
 
   getRevenue(int startTime, int endTime) async {
@@ -17,6 +19,7 @@ class StatictisProvider with ChangeNotifier{
     dataX.clear();
     isLoading = true;
     statistics = await _orderServices.getRevenueStatistics(startTime, endTime) ?? [];
+    revenueTableSource.addAll(_getRevenueDataTable());
     statistics.forEach((item) {
       double revenue = item.amounts! - (item.taxs! + item.totalOriginals!) + 0.0;
       revenues.add(revenue);
@@ -31,10 +34,10 @@ class StatictisProvider with ChangeNotifier{
   formatData(){
     int number = chartData(maxTotal);
     revenues.sort();
-    revenues.forEach((item) {
-      double data = item / number;
-      item = data;
-    });
+    for(int i=0; i<revenues.length; i++){
+      double data = revenues[i] / number;
+      revenues[i] = data;
+    }
     double x = (maxTotal/number).ceil() / 4;
     int num = 0;
     for(int i = 1; i<5; i++){
@@ -42,6 +45,26 @@ class StatictisProvider with ChangeNotifier{
       dataX.add(formatChartDataX(number, num));
     }
     notifyListeners();
+  }
+
+  _getRevenueDataTable(){
+    List<Map<String, dynamic>> temps = [];
+    var i = 1;
+    for (Revenue revenue in statistics) {
+      int amount = revenue.amounts ?? 0;
+      int tax = revenue.taxs ?? 0;
+      int totalOriginal = revenue.totalOriginals ?? 0;
+      temps.add({
+        "stt": i,
+        "date": revenue.datee2,
+        "amounts": revenue.amounts,
+        "tax": revenue.taxs,
+        "total_originals": revenue.totalOriginals,
+        "revenue": amount - (tax + totalOriginal),
+      });
+      i++;
+    }
+    return temps;
   }
 
 }

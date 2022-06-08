@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_admin_tut/provider/statictic_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,9 @@ import 'package:provider/provider.dart';
 
 class _LineChart extends StatelessWidget {
   StatictisProvider statictisProvider;
+
   _LineChart({required this.statictisProvider});
+
   @override
   Widget build(BuildContext context) {
     return LineChart(
@@ -22,13 +26,13 @@ class _LineChart extends StatelessWidget {
               isStrokeCapRound: true,
               dotData: FlDotData(show: false),
               belowBarData: BarAreaData(show: false),
-              spots: List.generate(
-                15,
-                (index) => FlSpot(index + 1.0, 3),
-              )),
+              spots: [
+                FlSpot(1, statictisProvider.revenues[0]),
+                FlSpot(15, statictisProvider.revenues[1]),
+              ],),
         ],
         minX: 0,
-        maxX: 15,
+        maxX: 16,
         maxY: 4,
         minY: 0,
       ),
@@ -114,23 +118,22 @@ class _LineChart extends StatelessWidget {
       fontWeight: FontWeight.bold,
       fontSize: 16,
     );
-    Widget text;
-    switch (value.toInt()) {
-      case 1:
-        text = const Text('SEPT', style: style);
-        break;
-      case 5:
-        text = const Text('OCT', style: style);
-        break;
-      case 10:
-        text = const Text('DEC', style: style);
-        break;
-      case 15:
-        text = const Text('DEC', style: style);
-        break;
-      default:
-        text = const Text('');
-        break;
+    Widget text = const Text('');
+    int length = statictisProvider.statistics.length-1;
+    double jump = 0;
+    int index = length;
+    for (double i = 1; i < 16; i = i + ((15 / length).floor() - 1)) {
+      if (value.toInt() == 1) {
+        text =
+            Text('${statictisProvider.statistics[index].datee2}', style: style);
+        index--;
+      }
+      if (value.toInt() != 0 && value.toInt() == jump.floor() && index > -1) {
+        text =
+            Text('${statictisProvider.statistics[index].datee2}', style: style);
+        index--;
+      }
+      jump = jump + (15 / length);
     }
 
     return SideTitleWidget(
@@ -180,7 +183,7 @@ class LineChartSample1State extends State<LineChartSample1> {
                   end: Alignment.topCenter,
                 ),
               ),
-              child: Stack(
+              child: statictisProvider.statistics.isEmpty == true ? Container() : Stack(
                 children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -216,7 +219,9 @@ class LineChartSample1State extends State<LineChartSample1> {
                         child: Padding(
                           padding:
                               const EdgeInsets.only(right: 16.0, left: 6.0),
-                          child: _LineChart(statictisProvider: statictisProvider,),
+                          child: _LineChart(
+                            statictisProvider: statictisProvider,
+                          ),
                         ),
                       ),
                       const SizedBox(

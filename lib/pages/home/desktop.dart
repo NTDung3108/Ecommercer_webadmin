@@ -1,11 +1,9 @@
 import 'package:ecommerce_admin_tut/pages/home/top_rank.dart';
+import 'package:ecommerce_admin_tut/provider/home_provider.dart';
 import 'package:ecommerce_admin_tut/widgets/cards/cards_list.dart';
-import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/page_header.dart';
-import 'package:ecommerce_admin_tut/widgets/charts/sales_chart.dart';
-import 'package:ecommerce_admin_tut/widgets/top_buyer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'statistical.dart';
 
@@ -17,6 +15,7 @@ class HomePageDesktop extends StatefulWidget {
 class _HomePageDesktopState extends State<HomePageDesktop> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
+
     return ListView(
       children: [
         PageHeader(text: "DASHBOARD",),

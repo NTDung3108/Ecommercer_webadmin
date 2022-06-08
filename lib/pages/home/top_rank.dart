@@ -1,7 +1,9 @@
+import 'package:ecommerce_admin_tut/provider/home_provider.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/tab_bar_custom.dart';
 import 'package:ecommerce_admin_tut/widgets/top_buyer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TopRank extends StatefulWidget {
   const TopRank({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    HomeProvider _homeProvider = Provider.of<HomeProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,9 +43,9 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: _homeProvider.buyers.length,
                       itemBuilder: (context, index) {
-                        return TopBuyerWidget();
+                        return TopBuyerWidget(buyers: _homeProvider.buyers[index]);
                       },
                     ),
                   ),
@@ -58,7 +61,7 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
                     child: ListView.builder(
                       itemCount: 10,
                       itemBuilder: (context, index) {
-                        return TopBuyerWidget();
+                        return Container();
                       },
                     ),
                   ),

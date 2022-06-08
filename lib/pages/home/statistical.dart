@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_admin_tut/pages/home/statistic_detail.dart';
 import 'package:ecommerce_admin_tut/provider/statictic_provider.dart';
 import 'package:ecommerce_admin_tut/widgets/charts/revenue_chart.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,8 @@ class _StatisticalState extends State<Statistical>
 
   @override
   Widget build(BuildContext context) {
-    final StatictisProvider statictisProvider = Provider.of<StatictisProvider>(context);
+    final StatictisProvider statictisProvider =
+        Provider.of<StatictisProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,48 +68,45 @@ class _StatisticalState extends State<Statistical>
               style: TextStyle(fontSize: 16, height: 20 / 16),
             ),
             InkWell(
-              onTap: (){
-                _selectDate(context, true);
-              },
-              child: Container(
-                padding: EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(4))
-                ),
-                child: Text(startTime),
-              )
-            ),
-            const Text(
-              ' - ',
-              style: TextStyle(fontSize: 16, height: 20 / 16),
-            ),
-            InkWell(
-                onTap: (){
-                  _selectDate(context, false);
+                onTap: () {
+                  _selectDate(context, true);
                 },
                 child: Container(
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.all(Radius.circular(4))
-                  ),
-                  child: Text(endTime),
-                ),
+                      borderRadius: BorderRadius.all(Radius.circular(4))),
+                  child: Text(startTime),
+                )),
+            const Text(
+              ' - ',
+              style: TextStyle(fontSize: 16, height: 20 / 16),
+            ),
+            InkWell(
+              onTap: () {
+                _selectDate(context, false);
+              },
+              child: Container(
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(4))),
+                child: Text(endTime),
+              ),
             ),
             SizedBox(
               width: 100,
             ),
             ElevatedButton(
-                onPressed: (){
-                  Timestamp ts1 = Timestamp.fromDate(selectedDate);
-                  Timestamp ts2 = Timestamp.fromDate(selectedDate2);
-                  log('${ts1.seconds}');
-                  log('${ts2.seconds}');
-                  statictisProvider.getRevenue(ts1.seconds, ts2.seconds);
-                  log('${statictisProvider.revenues}');
-                },
-                child: Text('Statistic'),
+              onPressed: () {
+                Timestamp ts1 = Timestamp.fromDate(selectedDate);
+                Timestamp ts2 = Timestamp.fromDate(selectedDate2);
+                log('${ts1.seconds}');
+                log('${ts2.seconds}');
+                statictisProvider.getRevenue(ts1.seconds, ts2.seconds);
+                log('${statictisProvider.revenues}');
+              },
+              child: Text('Statistic'),
             ),
           ],
         ),
@@ -116,34 +115,44 @@ class _StatisticalState extends State<Statistical>
           tabs: ['Diagram', 'Detail Statistical'],
           isScrollable: false,
         ),
-        SizedBox(height: 20,),
+        SizedBox(
+          height: 20,
+        ),
         Expanded(
           child: TabBarView(
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              LineChartSample1(),
-              Container()],
+              statictisProvider.statistics.isEmpty == true
+                  ? Container()
+                  : LineChartSample1(),
+              statictisProvider.statistics.isEmpty == true
+                  ? Container()
+                  : StatisticDetail(),
+            ],
           ),
         ),
       ],
     );
   }
+
   _selectDate(BuildContext context, bool b) async {
     final DateTime? selected = await showDatePicker(
       context: context,
-      initialDate:b ? selectedDate : selectedDate2,
+      initialDate: b ? selectedDate : selectedDate2,
       firstDate: DateTime(2010),
       lastDate: DateTime(2025),
     );
     if (selected != null && selected != selectedDate)
       setState(() {
-        if(b){
+        if (b) {
           selectedDate = selected;
-          startTime = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-        }else{
+          startTime =
+              "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+        } else {
           selectedDate2 = selected;
-          endTime = "${selectedDate2.day}/${selectedDate2.month}/${selectedDate2.year}";
+          endTime =
+              "${selectedDate2.day}/${selectedDate2.month}/${selectedDate2.year}";
         }
       });
   }

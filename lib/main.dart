@@ -1,6 +1,7 @@
 import 'package:ecommerce_admin_tut/pages/login/login.dart';
 import 'package:ecommerce_admin_tut/provider/app_provider.dart';
 import 'package:ecommerce_admin_tut/provider/auth.dart';
+import 'package:ecommerce_admin_tut/provider/home_provider.dart';
 import 'package:ecommerce_admin_tut/provider/order_detail_provider.dart';
 import 'package:ecommerce_admin_tut/provider/statictic_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
@@ -22,6 +23,7 @@ void main() {
     ChangeNotifierProvider.value(value: TablesProvider.init()),
     ChangeNotifierProvider.value(value: StatictisProvider()),
     ChangeNotifierProvider.value(value: OrderDetailProvider()),
+    ChangeNotifierProvider.value(value: HomeProvider.init()),
   ], child: MyApp()));
 }
 
