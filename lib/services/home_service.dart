@@ -6,6 +6,7 @@ import 'package:ecommerce_admin_tut/models/revenue_month.dart';
 import 'package:ecommerce_admin_tut/models/sum_order.dart';
 import 'package:ecommerce_admin_tut/models/sum_product.dart';
 import 'package:ecommerce_admin_tut/models/top_buyer.dart';
+import 'package:ecommerce_admin_tut/models/top_products.dart';
 
 class HomeService {
   HttpClient _httpClient = HttpClient();
@@ -38,6 +39,14 @@ class HomeService {
     var response = await _httpClient.get('${Address.topBuyer}');
     if (response.statusCode == 200) {
       return TopBuyer.fromJson(jsonDecode(response.body));
+    }
+    return null;
+  }
+
+  Future<TopProducts?> getTopProducts() async {
+    var response = await _httpClient.get('${Address.topProduct}');
+    if (response.statusCode == 200) {
+      return TopProducts.fromJson(jsonDecode(response.body));
     }
     return null;
   }

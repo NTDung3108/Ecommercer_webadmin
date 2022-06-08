@@ -7,4 +7,5 @@ class Address{
   static String sumProduct = '/sum-product';
   static String sumOrder = '/sum-order';
   static String topBuyer = '/staff/top-buyer';
+  static String topProduct = '/top-Products';
 }

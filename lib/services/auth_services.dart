@@ -8,7 +8,7 @@ import '../models/auth/auth_response.dart';
 import '../models/auth/update_profile_response.dart';
 
 class AuthServices {
-  static String server = 'http://10.50.10.90/api';
+  static String server = 'http://192.168.2.151:3000/api';
   static var client = http.Client();
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
@@ -22,12 +22,9 @@ class AuthServices {
     return Response.fromJson(jsonDecode(resp.body));
   }
 
-  static Future<AuthModel> login(
-      {String? phone, String? password}) async {
+  static Future<AuthModel> login({String? phone, String? password}) async {
     Uri uri = Uri.parse('$server/login-staff');
-
-    final resp = await client.post(
-        uri,
+    final resp = await client.post(uri,
         headers: {'Accept': 'application/json'},
         body: {'phone': phone, 'password': password});
 
@@ -39,8 +36,8 @@ class AuthServices {
 
     Uri uri = Uri.parse('$server/login/renew');
 
-    final resp = await client
-        .get(uri, headers: {'Accept': 'application/json', 'xx-token': '$token'});
+    final resp = await client.get(uri,
+        headers: {'Accept': 'application/json', 'xx-token': '$token'});
 
     return AuthModel.fromJson(jsonDecode(resp.body));
   }
@@ -50,11 +47,11 @@ class AuthServices {
     final token = await readToken();
 
     var request =
-    http.MultipartRequest('PUT', Uri.parse('$server/update-image-profile'))
-      ..headers['Accept'] = 'application/json'
-      ..headers['xx-token'] = '$token'
-      ..fields['uidPerson'] = uidPerson
-      ..files.add(await http.MultipartFile.fromPath('image', image));
+        http.MultipartRequest('PUT', Uri.parse('$server/update-image-profile'))
+          ..headers['Accept'] = 'application/json'
+          ..headers['xx-token'] = '$token'
+          ..fields['uidPerson'] = uidPerson
+          ..files.add(await http.MultipartFile.fromPath('image', image));
 
     final resp = await request.send();
     var datas = await http.Response.fromStream(resp);

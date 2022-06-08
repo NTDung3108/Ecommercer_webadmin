@@ -1,16 +1,19 @@
 class TopProducts {
   bool? resp;
   String? msj;
-  TopProduct? topProducts;
+  List<TopProduct>? topProducts;
 
   TopProducts({this.resp, this.msj, this.topProducts});
 
   TopProducts.fromJson(Map<String, dynamic> json) {
     resp = json['resp'];
     msj = json['msj'];
-    topProducts = json['topProducts'] != null
-        ? new TopProduct.fromJson(json['topProducts'])
-        : null;
+    if (json['topProducts'] != null) {
+      topProducts = <TopProduct>[];
+      json['topProducts'].forEach((v) {
+        topProducts!.add(new TopProduct.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -18,7 +21,7 @@ class TopProducts {
     data['resp'] = this.resp;
     data['msj'] = this.msj;
     if (this.topProducts != null) {
-      data['topProducts'] = this.topProducts!.toJson();
+      data['topProducts'] = this.topProducts!.map((v) => v.toJson()).toList();
     }
     return data;
   }

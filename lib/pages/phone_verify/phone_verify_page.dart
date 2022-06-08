@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:ecommerce_admin_tut/provider/auth.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/widgets/form_error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constant.dart';
 import '../../locator.dart';
@@ -43,6 +45,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider _authProvider = Provider.of<AuthProvider>(context);
     return Container(
       decoration: BoxDecoration(
           gradient:
@@ -130,8 +133,10 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              locator<NavigationService>()
-                                  .globalNavigateTo(OTPRoute, context);
+
+                              _authProvider.verifyPhone(phoneNumber.text.replaceFirst('0', '+84'), context);
+                              // locator<NavigationService>()
+                              //     .globalNavigateTo(OTPRoute, context);
                               log(phone!);
                             }
                           },

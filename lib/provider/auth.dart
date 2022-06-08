@@ -1,139 +1,128 @@
 import 'dart:async';
-
-import 'package:ecommerce_admin_tut/helpers/costants.dart';
-import 'package:ecommerce_admin_tut/models/user.dart';
-import 'package:ecommerce_admin_tut/services/user.dart';
+import 'dart:developer';
+import 'package:ecommerce_admin_tut/models/auth/auth_response.dart';
+import 'package:ecommerce_admin_tut/pages/otp_screen/otp_page.dart';
+import 'package:ecommerce_admin_tut/pages/registration/registration.dart';
+import 'package:ecommerce_admin_tut/rounting/route_names.dart';
+import 'package:ecommerce_admin_tut/services/auth_services.dart';
+import 'package:ecommerce_admin_tut/services/navigation_service.dart';
+import 'package:ecommerce_admin_tut/services/user_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../helpers/costants.dart';
+import '../locator.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class AuthProvider with ChangeNotifier {
-  User? _user;
   Status _status = Status.Uninitialized;
-  UserServices _userServices = UserServices();
-  UserModel? _userModel;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  String verificationId = '';
+  ConfirmationResult? confirmationResult;
 
-//  getter
-  UserModel get userModel => _userModel!;
-  Status get status => _status;
-  User get user => _user!;
+  Users users = Users();
 
-  // public variables
-  final formkey = GlobalKey<FormState>();
-
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController name = TextEditingController();
-
-  AuthProvider.initialize() {
-    _fireSetUp();
-  }
-
-  _fireSetUp() async {
-    await initialization.then((value) {
-      auth.authStateChanges().listen(_onStateChanged);
-    });
-  }
-
-  Future<bool> signIn() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
+  Future<bool> signIn(String phone, String pass) async {
+    final sercureStorage = FlutterSecureStorage();
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      await auth
-          .signInWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim())
-          .then((value) async {
-        await prefs.setString("id", value.user!.uid);
-      });
-      return true;
-    } catch (e) {
-      _status = Status.Unauthenticated;
-      notifyListeners();
-      print(e.toString());
-      return false;
-    }
-  }
+      var response = await AuthServices.login(phone: phone, password: pass);
+      if (response.resp!) {
+        log('${response.msj}');
 
-  Future<bool> signUp() async {
-    try {
-      _status = Status.Authenticating;
-      notifyListeners();
-      await auth
-          .createUserWithEmailAndPassword(
-              email: email.text.trim(), password: password.text.trim())
-          .then((result) async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString("id", result.user!.uid);
-        _userServices.createAdmin(
-          id: result.user!.uid,
-          name: name.text.trim(),
-          email: email.text.trim(),
-        );
-      });
-      return true;
-    } catch (e) {
-      _status = Status.Unauthenticated;
-      notifyListeners();
-      print(e.toString());
-      return false;
-    }
-  }
+        await AuthServices()
+            .persistenToken(response.token, response.refreshToken);
 
-  Future signOut() async {
-    auth.signOut();
-    _status = Status.Unauthenticated;
-    notifyListeners();
-    return Future.delayed(Duration.zero);
-  }
-
-  void clearController() {
-    name.text = "";
-    password.text = "";
-    email.text = "";
-  }
-
-  Future<void> reloadUserModel() async {
-    _userModel = await _userServices.getAdminById(user.uid);
-    notifyListeners();
-  }
-
-  updateUserData(Map<String, dynamic> data) async {
-    _userServices.updateUserData(data);
-  }
-
-  _onStateChanged(User? firebaseUser) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (firebaseUser == null) {
-      _status = Status.Unauthenticated;
-    } else {
-      _user = firebaseUser;
-      await prefs.setString("id", firebaseUser.uid);
-
-      _userModel = await _userServices.getAdminById(user.uid).then((value) {
-        _status = Status.Authenticated;
-        return value;
-      });
-    }
-    notifyListeners();
-  }
-
-  String validateEmail(String value) {
-    value = value.trim();
-
-    if (email.text != null) {
-      if (value.isEmpty) {
-        return 'Email can\'t be empty';
-      } else if (!value.contains(RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"))) {
-        return 'Enter a correct email address';
+        await sercureStorage.write(key: 'uid', value: response.users?.id);
+        await sercureStorage.write(key: 'phone', value: response.users?.phone);
+        await sercureStorage.write(key: 'image', value: response.users?.image);
+        notifyListeners();
+        return true;
       }
+      _status = Status.Unauthenticated;
+      log('${response.msj}');
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _status = Status.Unauthenticated;
+      notifyListeners();
+      throw Exception(e);
     }
+  }
 
-    return '';
+  void verifyPhone(String phoneNumber, BuildContext context) async {
+    confirmationResult = await _auth.signInWithPhoneNumber(phoneNumber);
+    locator<NavigationService>().globalNavigateTo(OTPRoute, context);
+  }
+
+  void otp(String smsCode, BuildContext context) async {
+    UserCredential userCredential = await confirmationResult!.confirm(smsCode);
+    if (userCredential != null) {
+      locator<NavigationService>().globalNavigateTo(RegistrationRoute, context);
+    }
+  }
+
+  void signOut() async {
+    await _auth.signOut();
+  }
+
+  Future<bool> registerUser(String phone, String password, String idUser,
+      BuildContext context) async {
+    try {
+      final resp = await AuthServices.createUsers(
+          phone: phone, password: password, idUser: idUser);
+      if (resp.resp == true) {
+        log('${resp.msj}');
+        return true;
+      } else {
+        log('${resp.msj}');
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  void logout(BuildContext context) async {
+    try {
+      final secureStore = FlutterSecureStorage();
+
+      await secureStore.deleteAll();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  void changePhotoProfile(String image) async {
+    try {
+      final secureStorage = FlutterSecureStorage();
+
+      var uidPerson = await AuthServices().uidPersonStorage();
+
+      final resp = await AuthServices()
+          .updateImageProfile(image: image, uidPerson: '$uidPerson');
+
+      await secureStorage.write(key: 'profile', value: resp.profile);
+
+      users.image = resp.profile;
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<bool> checkPhone(String phone, BuildContext context) async {
+    var resp = await UserServices2.checkPhoneNumber(phone);
+
+    if (resp!.resp!) {
+      log('${resp.msj}');
+      return true;
+    } else {
+      log('${resp.msj}');
+      return false;
+    }
   }
 }

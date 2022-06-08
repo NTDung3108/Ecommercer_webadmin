@@ -3,7 +3,6 @@ import 'package:ecommerce_admin_tut/provider/auth.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
-import 'package:ecommerce_admin_tut/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,14 +12,14 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    final TextEditingController phone = TextEditingController();
+    final TextEditingController password = TextEditingController();
 
     return Container(
       decoration: BoxDecoration(
           gradient:
               LinearGradient(colors: [Colors.blue, Colors.indigo.shade600])),
-      child: authProvider.status == Status.Authenticating
-          ? Loading()
-          : Scaffold(
+      child: Scaffold(
               key: _key,
               backgroundColor: Colors.transparent,
               body: Center(
@@ -56,7 +55,7 @@ class LoginPage extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: TextField(
-                                controller: authProvider.email,
+                                controller: phone,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Phone number',
@@ -75,7 +74,7 @@ class LoginPage extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: TextField(
-                                controller: authProvider.password,
+                                controller: password,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Password',
@@ -109,12 +108,12 @@ class LoginPage extends StatelessWidget {
                             decoration: BoxDecoration(color: Colors.indigo),
                             child: FlatButton(
                               onPressed: () async {
-                                // if (!await authProvider.signIn()) {
-                                //   ScaffoldMessenger.of(context).showSnackBar(
-                                //       SnackBar(content: Text("Login failed!")));
-                                //   return;
-                                // }
-                                // authProvider.clearController();
+                                bool login = await authProvider.signIn(phone.text, password.text);
+                                if (!login) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Login failed!")));
+                                  return;
+                                }
                                 locator<NavigationService>()
                                     .globalNavigateTo(LayoutRoute, context);
                               },

@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'package:ecommerce_admin_tut/locator.dart';
+import 'package:ecommerce_admin_tut/provider/auth.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/form_error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../services/navigation_service.dart';
 
@@ -20,8 +22,8 @@ class _OTPPageState extends State<OTPPage> {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-  TextEditingController phoneNumber  = TextEditingController();
-  String? otp;
+  TextEditingController otpController  = TextEditingController();
+  String? otpValue;
 
   final List<String?> errors = [];
 
@@ -43,6 +45,7 @@ class _OTPPageState extends State<OTPPage> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider _authProvider = Provider.of<AuthProvider>(context);
     return Container(
       decoration: BoxDecoration(
           gradient:
@@ -85,12 +88,12 @@ class _OTPPageState extends State<OTPPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: TextFormField(
-                            controller: phoneNumber,
+                            controller: otpController,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                               new LengthLimitingTextInputFormatter(6)
                             ],
-                            onSaved: (newValue) => otp = newValue,
+                            onSaved: (newValue) => otpValue = newValue,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
                                 removeError(error: "OTP is not empty");
@@ -134,9 +137,10 @@ class _OTPPageState extends State<OTPPage> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              locator<NavigationService>()
-                                  .globalNavigateTo(RegistrationRoute, context);
-                              log(otp!);
+                              _authProvider.otp(otpController.text, context);
+                              // locator<NavigationService>()
+                              //     .globalNavigateTo(RegistrationRoute, context);
+                              log(otpValue!);
                             }
                           },
                           child: Padding(

@@ -2,6 +2,7 @@ import 'package:ecommerce_admin_tut/provider/home_provider.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/tab_bar_custom.dart';
 import 'package:ecommerce_admin_tut/widgets/top_buyer.dart';
+import 'package:ecommerce_admin_tut/widgets/top_product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,9 +60,9 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: _homeProvider.products.length,
                       itemBuilder: (context, index) {
-                        return Container();
+                        return TopProductWidget(topProduct: _homeProvider.products[index],);
                       },
                     ),
                   ),
