@@ -16,8 +16,7 @@ class HomeProvider extends ChangeNotifier {
   List<Buyers> buyers = [];
   List<TopProduct> products = [];
 
-  HomeProvider.init() {
-    // _getRevenue();
+  init() {
     getRevenueHome();
     getSumProduct();
     getSumOrder();
@@ -55,6 +54,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
   getTopBuyer() async {
+    buyers.clear();
+    notifyListeners();
     TopBuyer? _topBuyer = await _homeService.getTopBuyer();
     if (_topBuyer!.resp == true && _topBuyer.buyers!.isNotEmpty == true) {
       buyers.addAll(_topBuyer.buyers!);
@@ -62,6 +63,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
   getTopProducts() async {
+    products.clear();
+    notifyListeners();
     TopProducts? _topProducts = await _homeService.getTopProducts();
     if (_topProducts!.resp == true && _topProducts.topProducts!.isNotEmpty == true) {
       products.addAll(_topProducts.topProducts!);

@@ -3,13 +3,16 @@ import 'dart:developer';
 import 'package:ecommerce_admin_tut/constant.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/form_error.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../locator.dart';
+import '../../provider/auth.dart';
 import '../../rounting/route_names.dart';
 import '../../services/navigation_service.dart';
 
-enum Gender {male, female, other}
+enum Gender { male, female, other }
 
 class RegisterInfoPage extends StatefulWidget {
   const RegisterInfoPage({Key? key}) : super(key: key);
@@ -50,9 +53,11 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
   }
 
   Gender? _gender = Gender.male;
+  String sGender = 'male';
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider _authProvider = Provider.of<AuthProvider>(context);
     return Container(
       decoration: BoxDecoration(
           gradient:
@@ -164,28 +169,31 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                             onChanged: (Gender? value) {
                               setState(() {
                                 _gender = value;
+                                sGender = 'male';
                               });
                             },
                           ),
                           Text('male'),
                           Radio<Gender>(
-                              value: Gender.female,
-                              groupValue: _gender,
-                              onChanged: (Gender? value) {
-                                setState(() {
-                                  _gender = value;
-                                });
-                              },
+                            value: Gender.female,
+                            groupValue: _gender,
+                            onChanged: (Gender? value) {
+                              setState(() {
+                                _gender = value;
+                                sGender = 'female';
+                              });
+                            },
                           ),
                           Text('female'),
                           Radio<Gender>(
-                              value: Gender.other,
-                              groupValue: _gender,
-                              onChanged: (Gender? value) {
-                                setState(() {
-                                  _gender = value;
-                                });
-                              },
+                            value: Gender.other,
+                            groupValue: _gender,
+                            onChanged: (Gender? value) {
+                              setState(() {
+                                _gender = value;
+                                sGender = 'ohter';
+                              });
+                            },
                           ),
                           Text('other'),
                         ],
@@ -211,7 +219,7 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                             },
                             validator: (value) {
                               String error = checkEmail(value);
-                              if(error != ''){
+                              if (error != '') {
                                 addError(error: error);
                                 return "";
                               }
@@ -270,9 +278,28 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              locator<NavigationService>()
-                                  .globalNavigateTo(LoginRoute, context);
-                              log(firstName! + lastName! + '$_gender' + email! + address!);
+                              log(firstName! +
+                                  lastName! +
+                                  sGender +
+                                  email! +
+                                  address!);
+                              String? phone = FirebaseAuth
+                                  .instance.currentUser!.phoneNumber;
+                              String? uid =
+                                  FirebaseAuth.instance.currentUser!.uid;
+                              bool registerInfo =
+                                  await _authProvider.registerUserInfo(
+                                      firstName: firstNameController.text,
+                                      lastName: lastNameController.text,
+                                      phone: phone!.replaceFirst('+84', '0'),
+                                      address: addressController.text,
+                                      gender: sGender,
+                                      email: emailController.text,
+                                      uid: uid,
+                                      context: context);
+                              if (registerInfo)
+                                locator<NavigationService>()
+                                    .globalNavigateTo(LoginRoute, context);
                             }
                           },
                           child: Padding(

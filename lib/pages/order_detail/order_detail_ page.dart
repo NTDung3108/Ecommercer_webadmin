@@ -159,7 +159,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            _orderDetailProvider!.downloadInvoice();
+                            _orderDetailProvider!.downloadInvoice(_orderDetailProvider!.orderDetail.orderId);
                           },
                           child: Text('Xuất hóa đơn'),
                         ),

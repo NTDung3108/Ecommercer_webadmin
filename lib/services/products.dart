@@ -1,16 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_admin_tut/helpers/costants.dart';
-import 'package:ecommerce_admin_tut/models/products.dart';
+import 'dart:convert';
+import 'package:ecommerce_admin_tut/address.dart';
+import 'package:ecommerce_admin_tut/http_client.dart';
+import 'package:ecommerce_admin_tut/models/all_product.dart';
+import 'package:ecommerce_admin_tut/services/auth_services.dart';
 
 class ProductsServices {
-  String collection = "products";
-
-  Future<List<ProductModel>> getAllProducts() async =>
-      firebaseFiretore.collection(collection).get().then((result) {
-        List<ProductModel> products = [];
-        for (DocumentSnapshot product in result.docs) {
-          products.add(ProductModel.fromSnapshot(product));
-        }
-        return products;
-      });
+  HttpClient httpClient = HttpClient();
+  Future<List<Products>?> getAllProducts() async {
+    var token = await AuthServices().readToken();
+    var response = await httpClient.get(Address.allProduct, token!);
+    if(response.statusCode == 200){
+      return ProductsResponse.fromJson(jsonDecode(response.body)).products;
+    }else{
+      throw Exception();
+    }
+  }
 }

@@ -8,4 +8,8 @@ class Address{
   static String sumOrder = '/sum-order';
   static String topBuyer = '/staff/top-buyer';
   static String topProduct = '/top-Products';
+  static String allProduct = '/staff/get-all-product';
+  static String allUser = '/staff/get-all-user';
+  static String allBrands = '/staff/get-all-brands';
+  static String allDiscount = '/get-all-discount';
 }

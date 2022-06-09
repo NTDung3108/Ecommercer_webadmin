@@ -1,12 +1,8 @@
 import 'package:ecommerce_admin_tut/helpers/enumerators.dart';
-import 'package:ecommerce_admin_tut/models/orders.dart';
-import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:flutter/material.dart';
 
 class AppProvider with ChangeNotifier {
   DisplayedPage? currentPage;
-  OrderServices _orderServices = OrderServices();
-  OrderModel? _orderModel;
   double revenue = 0;
 
   AppProvider.init() {

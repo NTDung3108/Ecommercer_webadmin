@@ -13,9 +13,18 @@ class HomePageDesktop extends StatefulWidget {
 }
 
 class _HomePageDesktopState extends State<HomePageDesktop> with TickerProviderStateMixin{
+  HomeProvider? _homeProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+      _homeProvider!.init();
+    });
+  }
   @override
   Widget build(BuildContext context) {
-
     return ListView(
       children: [
         PageHeader(text: "DASHBOARD",),

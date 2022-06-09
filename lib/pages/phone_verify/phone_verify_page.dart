@@ -1,15 +1,12 @@
 import 'dart:developer';
-
+import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/provider/auth.dart';
-import 'package:ecommerce_admin_tut/rounting/route_names.dart';
+import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/widgets/form_error.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../constant.dart';
-import '../../locator.dart';
-import '../../services/navigation_service.dart';
+import '../../rounting/route_names.dart';
 import '../../widgets/custom_text.dart';
 
 class PhoneVerifyPage extends StatefulWidget {
@@ -22,7 +19,7 @@ class PhoneVerifyPage extends StatefulWidget {
 class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-  TextEditingController phoneNumber  = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
   String? phone;
 
   final List<String?> errors = [];
@@ -93,7 +90,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                             onChanged: (value) {
                               if (value.isNotEmpty) {
                                 removeError(error: phoneNumberNullError);
-                              }else{
+                              } else {
                                 removeError(error: phoneError);
                               }
                               return;
@@ -104,7 +101,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                                 return "";
                               }
                               String error = checkPhone(value);
-                              if(error != ''){
+                              if (error != '') {
                                 addError(error: error);
                                 return "";
                               }
@@ -133,11 +130,19 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-
-                              _authProvider.verifyPhone(phoneNumber.text.replaceFirst('0', '+84'), context);
-                              // locator<NavigationService>()
-                              //     .globalNavigateTo(OTPRoute, context);
-                              log(phone!);
+                              if (_authProvider.isForgot) {
+                                _authProvider.verifyPhone(
+                                    phoneNumber.text.replaceFirst('0', '+84'),
+                                    context);
+                              } else {
+                                bool checkPhone = await _authProvider
+                                    .checkPhone(phoneNumber.text, context);
+                                if (checkPhone)
+                                  _authProvider.verifyPhone(
+                                      phoneNumber.text.replaceFirst('0', '+84'),
+                                      context);
+                                log(phone!);
+                              }
                             }
                           },
                           child: Padding(

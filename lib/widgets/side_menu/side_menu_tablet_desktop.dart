@@ -2,6 +2,8 @@ import 'package:ecommerce_admin_tut/helpers/enumerators.dart';
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/pages/categories/categories_page.dart';
 import 'package:ecommerce_admin_tut/provider/app_provider.dart';
+import 'package:ecommerce_admin_tut/provider/home_provider.dart';
+import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/widgets/navbar/navbar_logo.dart';
@@ -13,6 +15,7 @@ class SideMenuTabletDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppProvider appProvider = Provider.of<AppProvider>(context);
+    final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
     return Container(
       decoration: BoxDecoration(
           color: Colors.indigo,

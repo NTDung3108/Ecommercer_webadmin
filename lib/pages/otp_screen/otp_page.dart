@@ -1,18 +1,15 @@
 import 'dart:developer';
-import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/provider/auth.dart';
-import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/widgets/custom_text.dart';
 import 'package:ecommerce_admin_tut/widgets/form_error.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/navigation_service.dart';
 
 class OTPPage extends StatefulWidget {
-  const OTPPage({Key? key}) : super(key: key);
+  final bool isForgot;
+  const OTPPage({Key? key, this.isForgot = false}) : super(key: key);
 
   @override
   _OTPPageState createState() => _OTPPageState();
@@ -138,8 +135,6 @@ class _OTPPageState extends State<OTPPage> {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               _authProvider.otp(otpController.text, context);
-                              // locator<NavigationService>()
-                              //     .globalNavigateTo(RegistrationRoute, context);
                               log(otpValue!);
                             }
                           },

@@ -1,227 +1,18 @@
-import 'package:ecommerce_admin_tut/models/brands.dart';
-import 'package:ecommerce_admin_tut/models/categories.dart';
+import 'package:ecommerce_admin_tut/models/all_product.dart';
+import 'package:ecommerce_admin_tut/models/brand_response.dart';
+import 'package:ecommerce_admin_tut/models/discount_responese.dart';
 import 'package:ecommerce_admin_tut/models/order_model/order_response.dart';
-import 'package:ecommerce_admin_tut/models/products.dart';
-import 'package:ecommerce_admin_tut/models/user.dart';
 import 'package:ecommerce_admin_tut/services/brands.dart';
-import 'package:ecommerce_admin_tut/services/categories.dart';
+import 'package:ecommerce_admin_tut/services/discount_service.dart';
 import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
-import 'package:ecommerce_admin_tut/services/user.dart';
+import 'package:ecommerce_admin_tut/services/user_service.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_table/responsive_table.dart';
+
+import '../models/user_response.dart';
 
 class TablesProvider with ChangeNotifier {
   // ANCHOR table headers
-  List<DatatableHeader> usersTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Name",
-        value: "name",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Phone",
-        value: "phone",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Address",
-        value: "Address",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Gender",
-        value: "gender",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Status",
-        value: "status",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-  ];
-
-  List<DatatableHeader> productsTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Name",
-        value: "name",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Brand",
-        value: "brand",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Category",
-        value: "category",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Quantity",
-        value: "quantity",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Sold",
-        value: "sold",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Colors",
-        value: "colors",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Sale",
-        value: "sale",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Price",
-        value: "price",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Add Day",
-        value: "addday",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Update Day",
-        value: "updateday",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-  ];
-
-  List<DatatableHeader> brandsTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Brand",
-        value: "brand",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-
-  ];
-
-  List<DatatableHeader> categoriesTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Category",
-        value: "category",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-  ];
-  List<DatatableHeader> subcategoryTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Subcategory",
-        value: "subcategory",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Category ID",
-        value: "category_id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "View",
-        value: "view",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-  ];
-  List<DatatableHeader> discountTableHeader = [
-    DatatableHeader(
-        text: "ID",
-        value: "id",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Title",
-        value: "title",
-        show: true,
-        flex: 2,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Content",
-        value: "content",
-        flex: 3,
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "Start Day",
-        value: "startday",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-    DatatableHeader(
-        text: "End Day",
-        value: "endday",
-        show: true,
-        sortable: true,
-        textAlign: TextAlign.left),
-  ];
-  List<int> perPages = [5, 10, 15, 100];
-  int total = 100;
-  int? currentPerPage;
-  int currentPage = 1;
-  bool isSearch = false;
   List<Map<String, dynamic>> usersTableSource = [];
   List<Map<String, dynamic>> ordersTableSource = <Map<String, dynamic>>[];
   List<Map<String, dynamic>> productsTableSource = [];
@@ -230,53 +21,83 @@ class TablesProvider with ChangeNotifier {
   List<Map<String, dynamic>> brandsTableSource = [];
   List<Map<String, dynamic>> discountTableSource = [];
 
-  List<Map<String, dynamic>> selecteds = [];
-  String selectableKey = "id";
-
-  String? sortColumn;
-  bool sortAscending = true;
   bool isLoading = true;
-  bool showSelect = true;
-
-  UserServices _userServices = UserServices();
-  List<UserModel> _users = <UserModel>[];
-  List<UserModel> get users => _users;
 
   OrderServices _orderServices = OrderServices();
   List<Orders> _orders = <Orders>[];
+
   List<Orders> get orders => _orders;
 
-  ProductsServices _productsServices = ProductsServices();
-  List<ProductModel> _products = <ProductModel>[];
-  List<ProductModel> get products => _products;
+  UserService _userServices = UserService();
+  List<Users> _users = <Users>[];
 
-  CategoriesServices _categoriesServices = CategoriesServices();
-  List<CategoriesModel> _categories = <CategoriesModel>[];
+  List<Users> get users => _users;
+
+  ProductsServices _productsServices = ProductsServices();
+  List<Products> _products = <Products>[];
+
+  List<Products> get products => _products;
 
   BrandsServices _brandsServices = BrandsServices();
-  List<BrandModel> _brands = <BrandModel>[];
+  List<Brands> _brands = <Brands>[];
 
-  Future _loadFromFirebase() async {
-    // _users = await _userServices.getAllUsers();
+  DiscountService _discountService = DiscountService();
+  List<Discounr> _discounts = <Discounr>[];
+
+  getOrderFromServer() async {
+    ordersTableSource.clear();
+    _orders.clear();
     _orders = await _orderServices.getAllOrders() ?? [];
-    // _products = await _productsServices.getAllProducts();
-    // _brands = await _brandsServices.getAll();
-    // _categories = await _categoriesServices.getAll();
+    ordersTableSource.addAll(_getOrdersData());
+    notifyListeners();
+  }
+
+  getProductFromServer() async {
+    productsTableSource.clear();
+    _products.clear();
+    _products = await _productsServices.getAllProducts() ?? [];
+    productsTableSource.addAll(_getProductsData());
+    notifyListeners();
+  }
+
+  getUserFromServer() async {
+    usersTableSource.clear();
+    _users.clear();
+    _users = await _userServices.getAllUser() ?? [];
+    usersTableSource.addAll(_getUsersData());
+    notifyListeners();
+  }
+
+  getBrandFromServer() async {
+    brandsTableSource.clear();
+    _brands.clear();
+    _brands = await _brandsServices.getAllBrands() ?? [];
+    brandsTableSource.addAll(_getBrandsData());
+    notifyListeners();
+  }
+
+  getDiscountFromServer() async {
+    discountTableSource.clear();
+    _discounts.clear();
+    _discounts = await _discountService.getAllDiscount() ?? [];
+    discountTableSource.addAll(_getDiscountData());
+    notifyListeners();
   }
 
   List<Map<String, dynamic>> _getUsersData() {
     isLoading = true;
     notifyListeners();
     List<Map<String, dynamic>> temps = [];
-    var i = _users.length;
-    print(i);
-    for (UserModel userData in _users) {
+    for (Users user in _users) {
       temps.add({
-        "id": userData.id,
-        "email": userData.email,
-        "name": userData.name,
+        "id": user.uid,
+        "name": '${user.firstName} ${user.lastName}',
+        "phone": user.phone,
+        "address": user.address,
+        "gender": user.sex,
+        "created": user.created,
+        "status": user.statuss
       });
-      i++;
     }
     isLoading = false;
     notifyListeners();
@@ -285,26 +106,27 @@ class TablesProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> _getBrandsData() {
     List<Map<String, dynamic>> temps = [];
-    for (BrandModel brand in _brands) {
+    for (Brands brand in _brands) {
       temps.add({
-        "id": brand.id,
+        "id": brand.idBrands,
         "brand": brand.brand,
+        "status": brand.status,
       });
     }
     return temps;
   }
 
-  List<Map<String, dynamic>> _getCategoriesData() {
-    List<Map<String, dynamic>> temps = [];
-
-    for (CategoriesModel category in _categories) {
-      temps.add({
-        "id": category.id,
-        "category": category.category,
-      });
-    }
-    return temps;
-  }
+  // List<Map<String, dynamic>> _getCategoriesData() {
+  //   List<Map<String, dynamic>> temps = [];
+  //
+  //   for (CategoriesModel category in _categories) {
+  //     temps.add({
+  //       "id": category.id,
+  //       "category": category.category,
+  //     });
+  //   }
+  //   return temps;
+  // }
 
   List<Map<String, dynamic>> _getOrdersData() {
     List<Map<String, dynamic>> temps = [];
@@ -324,85 +146,35 @@ class TablesProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> _getProductsData() {
     List<Map<String, dynamic>> temps = [];
-    for (ProductModel product in _products) {
+    for (Products product in _products) {
       temps.add({
-        "id": product.id,
+        "id": product.idProduct,
         "name": product.name,
         "brand": product.brand,
-        "category": product.category,
-        "quantity": product.quantity,
-        "sale": product.sale,
-        "featured": product.featured,
-        "colors": product.colors,
-        "sizes": product.sizes,
+        "category": product.name,
+        "quantity": product.quantily,
+        "sold": product.sold,
         "price": "\$${product.price}",
+        "importPrice": product.importPrice,
+        "Add Day": product.addDay,
+        "Update Day": product.updateDay,
       });
     }
     return temps;
   }
-
-  _initData() async {
+  List<Map<String, dynamic>> _getDiscountData() {
     isLoading = true;
     notifyListeners();
-    await _loadFromFirebase();
-    // usersTableSource.addAll(_getUsersData());
-    ordersTableSource.addAll(_getOrdersData());
-    notifyListeners();
-    // productsTableSource.addAll(_getProductsData());
-    // categoriesTableSource.addAll(_getCategoriesData());
-    // brandsTableSource.addAll(_getBrandsData());
-    isLoading = false;
-    notifyListeners();
-  }
-
-  onSort(dynamic value) {
-    sortColumn = value;
-    sortAscending = !sortAscending;
-    if (sortAscending) {
-      usersTableSource
-          .sort((a, b) => b["$sortColumn"].compareTo(a["$sortColumn"]));
-    } else {
-      usersTableSource
-          .sort((a, b) => a["$sortColumn"].compareTo(b["$sortColumn"]));
+    List<Map<String, dynamic>> temps = [];
+    for (Discounr discount in _discounts) {
+      temps.add({
+        "id": discount.idDiscount,
+        "title": discount.title,
+        "content": discount.content,
+        "startday": discount.startTime,
+        "endday": discount.endTime,
+      });
     }
-    notifyListeners();
-  }
-
-  onSelected(bool? value, Map<String, dynamic>? item) {
-    print("$value  $item ");
-    if (value!) {
-      selecteds.add(item!);
-    } else {
-      selecteds.removeAt(selecteds.indexOf(item!));
-    }
-    notifyListeners();
-  }
-
-  onSelectAll(bool? value) {
-    if (value!) {
-      selecteds = usersTableSource.map((entry) => entry).toList().cast();
-    } else {
-      selecteds.clear();
-    }
-    notifyListeners();
-  }
-
-  onChanged(int value) {
-    currentPerPage = value;
-    notifyListeners();
-  }
-
-  previous() {
-    currentPage = currentPage >= 2 ? currentPage - 1 : 1;
-    notifyListeners();
-  }
-
-  next() {
-    currentPage++;
-    notifyListeners();
-  }
-
-  TablesProvider.init() {
-    _initData();
+    return temps;
   }
 }

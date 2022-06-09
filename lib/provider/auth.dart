@@ -1,34 +1,31 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:ecommerce_admin_tut/models/auth/auth_response.dart';
-import 'package:ecommerce_admin_tut/pages/otp_screen/otp_page.dart';
-import 'package:ecommerce_admin_tut/pages/registration/registration.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/auth_services.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
-import 'package:ecommerce_admin_tut/services/user_services.dart';
+import 'package:ecommerce_admin_tut/services/user_services_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../helpers/costants.dart';
 import '../locator.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class AuthProvider with ChangeNotifier {
-  Status _status = Status.Uninitialized;
+  Status status = Status.Uninitialized;
   FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId = '';
   ConfirmationResult? confirmationResult;
+  bool isForgot = false;
 
   Users users = Users();
 
-  Future<bool> signIn(String phone, String pass) async {
+  Future<bool> signIn(String phone, String pass, BuildContext context) async {
     final sercureStorage = FlutterSecureStorage();
     try {
-      _status = Status.Authenticating;
+      status = Status.Authenticating;
       notifyListeners();
       var response = await AuthServices.login(phone: phone, password: pass);
       if (response.resp!) {
@@ -43,12 +40,16 @@ class AuthProvider with ChangeNotifier {
         notifyListeners();
         return true;
       }
-      _status = Status.Unauthenticated;
-      log('${response.msj}');
+      status = Status.Unauthenticated;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${response.msj}'),
+        ),
+      );
       notifyListeners();
       return false;
     } catch (e) {
-      _status = Status.Unauthenticated;
+      status = Status.Unauthenticated;
       notifyListeners();
       throw Exception(e);
     }
@@ -121,8 +122,70 @@ class AuthProvider with ChangeNotifier {
       log('${resp.msj}');
       return true;
     } else {
-      log('${resp.msj}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${resp.msj}'),
+        ),
+      );
       return false;
+    }
+  }
+
+  Future<bool> registerUserInfo(
+      {required String? firstName,
+      required String? lastName,
+      required String? phone,
+      required String? address,
+      required String? gender,
+      required String? email,
+      required String? uid,
+      required BuildContext context}) async {
+    try {
+      var resp = await UserServices2.registerUserInfo(
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          address: address,
+          email: email,
+          gender: gender,
+          uid: uid);
+
+      if (resp.resp! == true) {
+        log(resp.msj!);
+        return true;
+      } else {
+        log(resp.msj!);
+        return false;
+      }
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  Future<bool> forgotPassword(
+      {required String password,
+      required String phone,
+      required BuildContext context}) async {
+    try {
+      final resp =
+          await UserServices2.forgotPassword(password: password, phone: phone);
+      if (resp!.resp!) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${resp.msj}'),
+          ),
+        );
+        return true;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${resp.msj}'),
+          ),
+        );
+        return false;
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }

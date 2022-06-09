@@ -18,10 +18,10 @@ void main() async{
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider.value(value: AppProvider.init()),
     ChangeNotifierProvider.value(value: AuthProvider()),
-    ChangeNotifierProvider.value(value: TablesProvider.init()),
+    ChangeNotifierProvider.value(value: TablesProvider()),
     ChangeNotifierProvider.value(value: StatictisProvider()),
     ChangeNotifierProvider.value(value: OrderDetailProvider()),
-    ChangeNotifierProvider.value(value: HomeProvider.init()),
+    ChangeNotifierProvider.value(value: HomeProvider()),
   ], child: MyApp()));
 }
 

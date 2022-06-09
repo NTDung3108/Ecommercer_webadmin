@@ -42,8 +42,8 @@ class OrderDetailProvider with ChangeNotifier{
     return temps;
   }
 
-  downloadInvoice()async{
-    String url = 'http://10.50.10.135:3000/api/export_invoice/1';
+  downloadInvoice(int? orderId)async{
+    String url = 'http://10.50.10.135:3000/api/export_invoice/$orderId';
     html.AnchorElement anchorElement =  new html.AnchorElement(href: url);
     anchorElement.download = url;
     anchorElement.click();

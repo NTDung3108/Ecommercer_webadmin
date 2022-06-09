@@ -149,6 +149,7 @@ class _OrdersPageState extends State<OrdersPage> {
     ];
     Future.delayed(Duration.zero, () {
       _tablesProvider = Provider.of<TablesProvider>(context, listen: false);
+      _tablesProvider!.getOrderFromServer();
       _initializeData();
     });
   }
