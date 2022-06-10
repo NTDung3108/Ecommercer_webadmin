@@ -1,7 +1,10 @@
 import 'package:ecommerce_admin_tut/models/order_model/order_details.dart';
 import 'package:ecommerce_admin_tut/services/orders.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:html' as html;
+
+import 'package:flutter/material.dart';
 
 class OrderDetailProvider with ChangeNotifier{
   bool isLoading = false;
@@ -42,10 +45,20 @@ class OrderDetailProvider with ChangeNotifier{
     return temps;
   }
 
-  downloadInvoice(int? orderId)async{
-    String url = 'http://10.50.10.135:3000/api/export_invoice/$orderId';
-    html.AnchorElement anchorElement =  new html.AnchorElement(href: url);
-    anchorElement.download = url;
-    anchorElement.click();
+  downloadInvoice(int? orderId, BuildContext context)async{
+    var res = await _services.exportInvoice(orderId);
+    if(res.resp){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${res.msj}'),
+        ),
+      );
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${res.msj}'),
+        ),
+      );
+    }
   }
 }

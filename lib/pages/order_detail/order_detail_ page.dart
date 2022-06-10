@@ -148,48 +148,50 @@ class _OrderDetailState extends State<OrderDetail> {
                     SizedBox(
                       height: 20,
                     ),
-                    Text("Amount: ${_orderDetailProvider!.orderDetail.amount} VND",
+                    Text(
+                        "Amount: ${_orderDetailProvider!.orderDetail.amount} VND",
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                     SizedBox(
                       height: 20,
                     ),
-                    if(_orderDetailProvider!.orderDetail.status != -1)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            _orderDetailProvider!.downloadInvoice(_orderDetailProvider!.orderDetail.orderId);
-                          },
-                          child: Text('Xuất hóa đơn'),
-                        ),
-                        if(_orderDetailProvider!.orderDetail.status! < 2)
-                        Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Text('Giao hàng'),
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.green),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Text('Hủy đơn hàng'),
-                              style:
-                                  ElevatedButton.styleFrom(primary: Colors.red),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
+                    if (_orderDetailProvider!.orderDetail.status != -1)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              _orderDetailProvider!.downloadInvoice(
+                                  _orderDetailProvider!.orderDetail.orderId,
+                                  context);
+                            },
+                            child: Text('Xuất hóa đơn'),
+                          ),
+                          if (_orderDetailProvider!.orderDetail.status! < 2)
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text('Giao hàng'),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.green),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text('Hủy đơn hàng'),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.red),
+                                ),
+                              ],
+                            )
+                        ],
+                      )
                   ],
                 ),
               ),
             ),
     );
   }
-
 }

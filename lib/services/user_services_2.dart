@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import '../models/response.dart';
 
 class UserServices2 {
-  static String server = 'http://10.50.10.135:3000/api';
+  // static String server = 'http://10.50.10.135:3000/api';
+  static String server = 'http://192.168.2.151:3000/api';
   static var client = http.Client();
   static FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
