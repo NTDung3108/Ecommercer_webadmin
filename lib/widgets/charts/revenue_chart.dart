@@ -28,7 +28,8 @@ class _LineChart extends StatelessWidget {
               belowBarData: BarAreaData(show: false),
               spots: [
                 FlSpot(1, statictisProvider.revenues[0]),
-                FlSpot(15, statictisProvider.revenues[1]),
+                // FlSpot(8, statictisProvider.revenues[1]),
+                FlSpot(15, statictisProvider.revenues[2]),
               ],),
         ],
         minX: 0,

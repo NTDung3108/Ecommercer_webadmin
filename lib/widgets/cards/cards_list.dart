@@ -9,8 +9,6 @@ import 'card_item.dart';
 class CardsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AppProvider appProvider = Provider.of<AppProvider>(context);
-    TablesProvider tablesProvider = Provider.of<TablesProvider>(context);
     HomeProvider _homeProvider = Provider.of<HomeProvider>(context);
     return Container(
       height: 120,

@@ -14,8 +14,8 @@ class HomeService {
   HttpClient _httpClient = HttpClient();
 
   Future<RevenueMonth?> getRevenueMonth(String date) async {
-    var token = await AuthServices().readToken();
-    var response = await _httpClient.get('${Address.revenue}?$date', token!);
+    // var token = await AuthServices().readToken();
+    var response = await _httpClient.get('${Address.revenue}?$date', 'token!');
     if (response.statusCode == 200) {
       return RevenueMonth.fromJson(jsonDecode(response.body));
     }
@@ -32,8 +32,8 @@ class HomeService {
   }
 
   Future<SumOrder?> getSumOrder(String date) async {
-    var token = await AuthServices().readToken();
-    var response = await _httpClient.get('${Address.sumOrder}?time=$date', token!);
+    // var token = await AuthServices().readToken();
+    var response = await _httpClient.get('${Address.sumOrder}?time=$date', 'token!');
     if (response.statusCode == 200) {
       return SumOrder.fromJson(jsonDecode(response.body));
     }
@@ -41,8 +41,8 @@ class HomeService {
   }
 
   Future<TopBuyer?> getTopBuyer() async {
-    var token = await AuthServices().readToken();
-    var response = await _httpClient.get('${Address.topBuyer}', token!);
+    // var token = await AuthServices().readToken();
+    var response = await _httpClient.get('${Address.topBuyer}', 'token!');
     if (response.statusCode == 200) {
       return TopBuyer.fromJson(jsonDecode(response.body));
     }
@@ -50,8 +50,8 @@ class HomeService {
   }
 
   Future<TopProducts?> getTopProducts() async {
-    var token = await AuthServices().readToken();
-    var response = await _httpClient.get('${Address.topProduct}', token!);
+    // var token = await AuthServices().readToken();
+    var response = await _httpClient.get('${Address.topProduct}', 'token!');
     if (response.statusCode == 200) {
       return TopProducts.fromJson(jsonDecode(response.body));
     }

@@ -11,12 +11,12 @@ class HomeProvider extends ChangeNotifier {
   RevenueHome revenueHome = RevenueHome();
   HomeService _homeService = HomeService();
   int revenue = 0;
-  int quantity = 0;
+  int quantity = 130;
   int amount = 0;
   List<Buyers> buyers = [];
   List<TopProduct> products = [];
 
-  init() {
+  HomeProvider.init() {
     getRevenueHome();
     getSumProduct();
     getSumOrder();
@@ -30,17 +30,19 @@ class HomeProvider extends ChangeNotifier {
 
     RevenueMonth? revenueMonth =
         await _homeService.getRevenueMonth(_dateFormatted);
-    if (revenueMonth!.resp == true && revenueMonth.revenue != null) {
+    if (revenueMonth!.resp == true ) {
       revenueHome = revenueMonth.revenue!;
       revenue =
           revenueHome.amount! - revenueHome.tax! - revenueHome.totalOriginal!;
+      notifyListeners();
     }
     notifyListeners();
   }
   getSumProduct() async {
     SumProduct? _sumProduct = await _homeService.getSumProduct();
-    if (_sumProduct!.resp == true && _sumProduct.sumProduct != null) {
+    if (_sumProduct!.resp == true) {
       quantity = _sumProduct.sumProduct!;
+      notifyListeners();
     }
     notifyListeners();
   }
@@ -48,8 +50,9 @@ class HomeProvider extends ChangeNotifier {
     DateTime _date = DateTime.now();
     String _dateFormatted = DateFormat('yyyy-MM').format(_date);
     SumOrder? _sumProduct = await _homeService.getSumOrder(_dateFormatted);
-    if (_sumProduct!.resp == true && _sumProduct.sumOrder != null) {
+    if (_sumProduct!.resp == true) {
       amount = _sumProduct.sumOrder!;
+      notifyListeners();
     }
     notifyListeners();
   }

@@ -20,7 +20,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> with TickerProviderSt
     super.initState();
     Future.delayed(Duration.zero, () {
       _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-      _homeProvider!.init();
+      // _homeProvider!.init();
     });
   }
   @override
