@@ -1,7 +1,6 @@
 import 'package:ecommerce_admin_tut/constant.dart';
 import 'package:ecommerce_admin_tut/models/order_model/revenue_statistic.dart';
 import 'package:ecommerce_admin_tut/services/orders.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 
 class StatictisProvider with ChangeNotifier{
@@ -11,7 +10,7 @@ class StatictisProvider with ChangeNotifier{
   List<String> dataX = [];
   int maxTotal = 0;
   List<Map<String, dynamic>> revenueTableSource = <Map<String, dynamic>>[];
-  List<FlSpot> data = [];
+  int? _currentPerPage;
   OrderServices _orderServices = OrderServices();
 
   getRevenue(int startTime, int endTime) async {
@@ -68,21 +67,4 @@ class StatictisProvider with ChangeNotifier{
     return temps;
   }
 
-  List<FlSpot> addData(){
-    int length = revenues.length - 1;
-    double jump = 0;
-    int index = 0;
-    for (double i = 1; i < 16; i = i + ((15 / length).floor() - 1)) {
-      if (i == 1) {
-        data.add(FlSpot(i, revenues[index]));
-        index++;
-      }
-      if (i != 0 && i == jump.floor()) {
-        data.add(FlSpot(i, revenues[index]));
-        index++;
-      }
-      jump = jump + (15 / length);
-    }
-    return data;
-  }
 }

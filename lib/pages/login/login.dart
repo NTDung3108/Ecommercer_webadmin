@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                                     authProvider.isForgot = true;
                                     locator<NavigationService>()
                                         .globalNavigateTo(
-                                        PhoneVerifyRoute, context);
+                                            PhoneVerifyRoute, context);
                                   },
                                   child: CustomText(
                                     text: "Forgot password?",
@@ -221,20 +221,19 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: BoxDecoration(color: Colors.indigo),
                               child: FlatButton(
                                 onPressed: () async {
-                                  // if (_formKey.currentState!.validate()) {
-                                  //   _formKey.currentState!.save();
-                                    // bool login = await authProvider.signIn(
-                                    //                                     //     phoneController.text,
-                                    //                                     //     passwordController.text,
-                                    //                                     //     context);
-                                    //                                     // if (login)
-                                  //     locator<NavigationService>()
-                                  //         .globalNavigateTo(
-                                  //             LayoutRoute, context);
-                                  // }
-                                  locator<NavigationService>()
-                                      .globalNavigateTo(
-                                      LayoutRoute, context);
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+                                  bool login = await authProvider.signIn(
+                                      phoneController.text,
+                                      passwordController.text,
+                                      context);
+                                  if (login)
+                                      locator<NavigationService>()
+                                          .globalNavigateTo(
+                                              LayoutRoute, context);
+                                  }
+                                  // locator<NavigationService>()
+                                  //     .globalNavigateTo(LayoutRoute, context);
                                 },
                                 child: Padding(
                                   padding:
@@ -272,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                                       authProvider.isForgot = false;
                                       locator<NavigationService>()
                                           .globalNavigateTo(
-                                          PhoneVerifyRoute, context);
+                                              PhoneVerifyRoute, context);
                                     },
                                     child: CustomText(
                                       text: "Sign in here.. ",
