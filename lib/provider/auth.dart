@@ -34,7 +34,7 @@ class AuthProvider with ChangeNotifier {
         await AuthServices()
             .persistenToken(response.token, response.refreshToken);
 
-        await sercureStorage.write(key: 'uid', value: response.users?.id);
+        await sercureStorage.write(key: 'sid', value: response.users?.id);
         await sercureStorage.write(key: 'phone', value: response.users?.phone);
         await sercureStorage.write(key: 'image', value: response.users?.image);
         notifyListeners();

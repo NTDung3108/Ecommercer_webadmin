@@ -1,5 +1,7 @@
+import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
-import 'package:ecommerce_admin_tut/widgets/page_header.dart';
+import 'package:ecommerce_admin_tut/rounting/route_names.dart';
+import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_table/responsive_table.dart';
@@ -99,24 +101,25 @@ class _ProductsPageState extends State<ProductsPage> {
           value: "id",
           show: true,
           sortable: true,
-          textAlign: TextAlign.left),
+          textAlign: TextAlign.center),
       DatatableHeader(
           text: "Name",
           value: "name",
           show: true,
-          flex: 2,
+          flex: 3,
           sortable: true,
-          textAlign: TextAlign.left),
+          textAlign: TextAlign.center),
       DatatableHeader(
           text: "Brand",
           value: "brand",
           show: true,
           sortable: true,
-          textAlign: TextAlign.left),
+          textAlign: TextAlign.center),
       DatatableHeader(
           text: "Category",
           value: "category",
           show: true,
+          flex: 2,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
@@ -124,13 +127,13 @@ class _ProductsPageState extends State<ProductsPage> {
           value: "quantity",
           show: true,
           sortable: true,
-          textAlign: TextAlign.left),
+          textAlign: TextAlign.center),
       DatatableHeader(
           text: "Sold",
           value: "sold",
           show: true,
           sortable: true,
-          textAlign: TextAlign.left),
+          textAlign: TextAlign.center),
       DatatableHeader(
           text: "Price",
           value: "price",
@@ -145,13 +148,13 @@ class _ProductsPageState extends State<ProductsPage> {
           textAlign: TextAlign.left),
       DatatableHeader(
           text: "Add Day",
-          value: "addday",
+          value: "addDay",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
           text: "Update Day",
-          value: "updateday",
+          value: "updateDay",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
@@ -249,7 +252,9 @@ class _ProductsPageState extends State<ProductsPage> {
                         /// print(header);
                       },
                       onTabRow: (data) {
-                        print(data['id']);
+                        locator<NavigationService>()
+                            .globalNavigateTo(
+                            ProductDetailRoute, context);
                       },
                       onSort: (value) {
                         setState(() => _isLoading = true);

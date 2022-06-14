@@ -1,3 +1,4 @@
+import 'package:ecommerce_admin_tut/provider/staff_provider.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/rounting/router.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
@@ -13,6 +14,7 @@ class LayoutTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ResponsiveBuilder(
       builder: (context, sizingInformation) => Scaffold(
         key: _key,

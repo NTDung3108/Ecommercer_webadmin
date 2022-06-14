@@ -36,8 +36,8 @@ class Products {
   int? sold;
   int? price;
   int? importPrice;
-  int? addDay;
-  int? updateDay;
+  String? addDay;
+  String? updateDay;
 
   Products(
       {this.idProduct,

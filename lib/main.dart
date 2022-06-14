@@ -21,7 +21,7 @@ void main() async{
     ChangeNotifierProvider.value(value: TablesProvider()),
     ChangeNotifierProvider.value(value: StatictisProvider()),
     ChangeNotifierProvider.value(value: OrderDetailProvider()),
-    ChangeNotifierProvider.value(value: HomeProvider.init()),
+    ChangeNotifierProvider.value(value: HomeProvider()),
   ], child: MyApp()));
 }
 

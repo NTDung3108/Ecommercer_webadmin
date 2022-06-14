@@ -8,6 +8,7 @@ import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
 import 'package:ecommerce_admin_tut/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/user_response.dart';
 
@@ -149,15 +150,15 @@ class TablesProvider with ChangeNotifier {
     for (Products product in _products) {
       temps.add({
         "id": product.idProduct,
-        "name": product.name,
+        "name": product.nameProduct,
         "brand": product.brand,
         "category": product.name,
         "quantity": product.quantily,
         "sold": product.sold,
-        "price": "\$${product.price}",
-        "importPrice": product.importPrice,
-        "Add Day": product.addDay,
-        "Update Day": product.updateDay,
+        "price": "${product.price} VND",
+        "importPrice": '${product.importPrice} VND',
+        "addDay": product.addDay,
+        "updateDay": product.updateDay,
       });
     }
     return temps;

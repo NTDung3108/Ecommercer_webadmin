@@ -15,8 +15,8 @@ class OrderServices {
   HttpClient httpClient = HttpClient();
 
   Future<List<Orders>?> getAllOrders() async {
-    // var token = await AuthServices().readToken();
-    var response = await httpClient.get(Address.getAllOrder, 'token!');
+    var token = await AuthServices().readToken();
+    var response = await httpClient.get(Address.getAllOrder, token!);
     if(response.statusCode == 200){
       return OrderResponse.fromJson(jsonDecode(response.body)).orders;
     }else{
@@ -24,8 +24,8 @@ class OrderServices {
     }
   }
   Future<List<Revenue>?> getRevenueStatistics(int startTime, int endTime) async {
-    // var token = await AuthServices().readToken();
-    var response = await httpClient.get('${Address.getRevenueStatistics}?starTime=$startTime&endTime=$endTime', 'token!');
+    var token = await AuthServices().readToken();
+    var response = await httpClient.get('${Address.getRevenueStatistics}?starTime=$startTime&endTime=$endTime', token!);
     if(response.statusCode == 200){
       return RevenueStatistic.fromJson(jsonDecode(response.body)).revenue;
     }else{
@@ -33,8 +33,8 @@ class OrderServices {
     }
   }
   Future<OrderDetail?> getOrderDetail(int? orderId) async {
-    // var token = await AuthServices().readToken();
-    var response = await httpClient.get('${Address.getOrderDetail}$orderId', 'token!');
+    var token = await AuthServices().readToken();
+    var response = await httpClient.get('${Address.getOrderDetail}$orderId', token!);
     if(response.statusCode == 200){
       return OrderDetails.fromJson(jsonDecode(response.body)).orderDetail;
     }else{
@@ -42,8 +42,8 @@ class OrderServices {
     }
   }
   exportInvoice(int? orderId)async{
-    // var token = await AuthServices().readToken();
-    var response = await httpClient.get('${Address.downloadInvoice}$orderId', 'token!');
+    var token = await AuthServices().readToken();
+    var response = await httpClient.get('${Address.downloadInvoice}$orderId', token!);
     if(response.statusCode == 200){
       String url = 'http://192.168.2.151:3000/HD$orderId.txt';
       html.AnchorElement anchorElement =  new html.AnchorElement(href: url);
