@@ -43,7 +43,7 @@ class _DetailProductState extends State<DetailProduct> {
                   height: 10,
                 ),
                 Text(
-                  "Sold: ",
+                  "Discount: ",
                   style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
                 const SizedBox(
@@ -86,10 +86,11 @@ class _DetailProductState extends State<DetailProduct> {
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  'Description: ',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
+                descriptionItem('Description'),
+                // Text(
+                //   'Description: ',
+                //   style: TextStyle(fontSize: 16, color: Colors.black),
+                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -108,7 +109,6 @@ class _DetailProductState extends State<DetailProduct> {
                       style: ElevatedButton.styleFrom(primary: Colors.green),
                     ),
                   ],
-
                 )
               ],
             ),
@@ -134,6 +134,41 @@ class _DetailProductState extends State<DetailProduct> {
             onSaved: (newValue) => phone = newValue,
             decoration: InputDecoration(
               border: InputBorder.none,
+              hintText: 'Phone number',
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget descriptionItem(String title) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$title:',
+          style: TextStyle(fontSize: 16, color: Colors.black),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 1 / 3,
+          height: 100,
+          child: TextFormField(
+            onSaved: (newValue) => phone = newValue,
+            keyboardType: TextInputType.multiline,
+            maxLines: 10,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(width: 3, color: Colors.blue),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(width: 3, color: Colors.red),
+                borderRadius: BorderRadius.circular(15),
+              ),
               hintText: 'Phone number',
             ),
           ),

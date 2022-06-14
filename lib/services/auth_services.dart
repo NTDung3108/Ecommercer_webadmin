@@ -8,7 +8,8 @@ import '../models/auth/auth_response.dart';
 import '../models/auth/update_profile_response.dart';
 
 class AuthServices {
-  static String server = 'http://10.50.10.135:3000/api';
+  // static String server = 'http://10.50.10.135:3000/api';
+  static String server = 'http://192.168.2.101:3000/api';
   // static String server = 'http://192.168.2.151:3000/api';
   static var client = http.Client();
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();
