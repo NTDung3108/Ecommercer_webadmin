@@ -2,6 +2,7 @@ import 'package:ecommerce_admin_tut/provider/app_provider.dart';
 import 'package:ecommerce_admin_tut/provider/auth.dart';
 import 'package:ecommerce_admin_tut/provider/home_provider.dart';
 import 'package:ecommerce_admin_tut/provider/order_detail_provider.dart';
+import 'package:ecommerce_admin_tut/provider/product_provider.dart';
 import 'package:ecommerce_admin_tut/provider/statictic_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
@@ -22,6 +23,7 @@ void main() async{
     ChangeNotifierProvider.value(value: StatictisProvider()),
     ChangeNotifierProvider.value(value: OrderDetailProvider()),
     ChangeNotifierProvider.value(value: HomeProvider()),
+    ChangeNotifierProvider.value(value: ProductProvider.init()),
   ], child: MyApp()));
 }
 

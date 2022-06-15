@@ -9,11 +9,11 @@ class BrandsServices {
   HttpClient httpClient = HttpClient();
   Future<List<Brands>?> getAllBrands() async {
     var token = await AuthServices().readToken();
-    var response = await httpClient.get(Address.allBrands, token!);
+    var response = await httpClient.get(Address.allBrands, token: token);
     if(response.statusCode == 200){
       return BrandResponse.fromJson(jsonDecode(response.body)).brands;
     }else{
-      throw Exception();
+      return [];
     }
   }
 }

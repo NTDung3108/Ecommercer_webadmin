@@ -12,4 +12,6 @@ class Address{
   static String allUser = '/staff/get-all-user';
   static String allBrands = '/staff/get-all-brands';
   static String allDiscount = '/get-all-discount';
+  static String detailProduct = '/staff/get-product-by-id/';
+  static String allSubcategory = '/staff/get-all-category';
 }

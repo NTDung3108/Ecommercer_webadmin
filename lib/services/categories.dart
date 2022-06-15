@@ -1,13 +1,18 @@
-
+import 'dart:convert';
+import 'package:ecommerce_admin_tut/address.dart';
+import 'package:ecommerce_admin_tut/http_client.dart';
+import 'package:ecommerce_admin_tut/models/subcategory.dart';
+import 'package:ecommerce_admin_tut/services/auth_services.dart';
 
 class CategoriesServices {
-
-  // Future<List<CategoriesModel>> getAll() async =>
-  //     firebaseFiretore.collection(collection).get().then((result) {
-  //       List<CategoriesModel> categories = [];
-  //       for (DocumentSnapshot category in result.docs) {
-  //         categories.add(CategoriesModel.fromSnapshot(category));
-  //       }
-  //       return categories;
-  //     });
+  HttpClient httpClient = HttpClient();
+  Future<List<Subcategory>?> getAllSubcategory() async {
+    var token = await AuthServices().readToken();
+    var response = await httpClient.get(Address.allSubcategory, token: token);
+    if(response.statusCode == 200){
+      return SubcategoriesResponse.fromJson(jsonDecode(response.body)).subcategory;
+    }else{
+      return [];
+    }
+  }
 }

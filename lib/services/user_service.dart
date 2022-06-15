@@ -9,7 +9,7 @@ class UserService{
   HttpClient httpClient = HttpClient();
   Future<List<Users>?> getAllUser() async {
     var token = await AuthServices().readToken();
-    var response = await httpClient.get(Address.allUser, token!);
+    var response = await httpClient.get(Address.allUser, token: token!);
     if(response.statusCode == 200){
       return UsersResponse.fromJson(jsonDecode(response.body)).users;
     }else{

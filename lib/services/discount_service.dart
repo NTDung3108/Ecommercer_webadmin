@@ -9,11 +9,11 @@ class DiscountService{
   HttpClient httpClient = HttpClient();
   Future<List<Discounr>?> getAllDiscount() async {
     var token = await AuthServices().readToken();
-    var response = await httpClient.get(Address.allDiscount, token!);
+    var response = await httpClient.get(Address.allDiscount, token: token!);
     if(response.statusCode == 200){
       return DiscountResponse.fromJson(jsonDecode(response.body)).discounr;
     }else{
-      throw Exception();
+      return [];
     }
   }
 }

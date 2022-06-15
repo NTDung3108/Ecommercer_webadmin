@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_tut/locator.dart';
+import 'package:ecommerce_admin_tut/provider/product_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
@@ -173,6 +174,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("ORDERS"),
@@ -252,9 +254,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         /// print(header);
                       },
                       onTabRow: (data) {
-                        locator<NavigationService>()
-                            .globalNavigateTo(
-                            ProductDetailRoute, context);
+                        productProvider.getDetailProduct(data['id'], context);
                       },
                       onSort: (value) {
                         setState(() => _isLoading = true);
