@@ -26,11 +26,7 @@ class _LineChart extends StatelessWidget {
               isStrokeCapRound: true,
               dotData: FlDotData(show: false),
               belowBarData: BarAreaData(show: false),
-              spots: [
-                FlSpot(1, statictisProvider.revenues[0]),
-                // FlSpot(8, statictisProvider.revenues[1]),
-                FlSpot(15, statictisProvider.revenues[2]),
-              ],),
+              spots: statictisProvider.addData(),),
         ],
         minX: 0,
         maxX: 16,

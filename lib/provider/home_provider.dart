@@ -17,9 +17,9 @@ class HomeProvider extends ChangeNotifier {
   List<TopProduct> products = [];
 
   init() {
-    getRevenueHome();
+    // getRevenueHome();
     getSumProduct();
-    getSumOrder();
+    // getSumOrder();
     getTopBuyer();
     getTopProducts();
   }

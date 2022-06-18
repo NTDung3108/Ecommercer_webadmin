@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 
 class HttpClient {
   // String server = 'http://192.168.2.101:3000/api';
-  String server = 'http://10.50.10.135:3000/api';
+  String server = 'http://192.168.2.101:3000/api';
 
   // String server = 'http://192.168.2.151:3000/api';
   var client = http.Client();
@@ -21,11 +21,13 @@ class HttpClient {
         body: body);
   }
 
-  Future<http.Response> put(
-      String address, String token, Map<String, dynamic> body) async {
+  Future<http.Response> put(String address, String token, String body) async {
     Uri uri = Uri.parse(server + address);
     return await client.put(uri,
-        headers: {'Accept': 'application/json', 'xx-token': '$token'},
+        headers: {
+          'Accept': 'application/json',
+          'xx-token': '$token'
+        },
         body: body);
   }
 }

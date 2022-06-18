@@ -61,4 +61,27 @@ class OrderDetailProvider with ChangeNotifier{
       );
     }
   }
+
+  updateOrderStatus(int orderId, int status, String reason, BuildContext context) async{
+    try{
+      var resp = await _services.updateStatus(orderId, status, reason);
+      if(resp!.resp!){
+        orderDetail.status = status;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${resp.msj}'),
+          ),
+        );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${resp.msj}'),
+          ),
+        );
+      }
+    }catch(e){
+      throw Exception(e);
+    }
+    notifyListeners();
+  }
 }

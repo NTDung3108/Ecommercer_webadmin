@@ -170,7 +170,11 @@ class _OrderDetailState extends State<OrderDetail> {
                             Row(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _orderDetailProvider!.updateOrderStatus(
+                                        _orderDetailProvider!.orderDetail.orderId!,
+                                        1, '', context);
+                                  },
                                   child: Text('Giao hàng'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green),
@@ -179,7 +183,11 @@ class _OrderDetailState extends State<OrderDetail> {
                                   width: 20,
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _orderDetailProvider!.updateOrderStatus(
+                                        _orderDetailProvider!.orderDetail.orderId!,
+                                        -1, '', context);
+                                  },
                                   child: Text('Hủy đơn hàng'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red),
