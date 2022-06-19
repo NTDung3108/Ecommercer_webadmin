@@ -2,12 +2,11 @@ import 'package:ecommerce_admin_tut/models/order_model/order_details.dart';
 import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
 
 class OrderDetailProvider with ChangeNotifier{
-  bool isLoading = false;
+  bool isLoading = true;
   OrderServices _services = OrderServices();
 
   List<Map<String, dynamic>> orderDetailTableSource = <Map<String, dynamic>>[];
@@ -16,18 +15,16 @@ class OrderDetailProvider with ChangeNotifier{
 
 
   getOrderDetail(int orderId) async {
-    isLoading = true;
     try{
       _detail.clear();
-      orderDetailTableSource.clear();
       orderDetail = await _services.getOrderDetail(orderId) ?? orderDetail;
       _detail.addAll(orderDetail.details ?? []);
+      orderDetailTableSource.clear();
       orderDetailTableSource.addAll(_getOrderDetailData());
-      isLoading = false;
-      notifyListeners();
     }catch(e){
       throw Exception(e);
     }
+    notifyListeners();
   }
 
   _getOrderDetailData(){
