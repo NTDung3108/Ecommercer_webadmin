@@ -20,20 +20,21 @@ class _LineChart extends StatelessWidget {
         borderData: _flBorderData(),
         lineBarsData: [
           LineChartBarData(
-              isCurved: true,
-              color: const Color(0xff27b6fc),
-              barWidth: 8,
-              isStrokeCapRound: true,
-              dotData: FlDotData(show: false),
-              belowBarData: BarAreaData(show: false),
-              spots: statictisProvider.addData(),),
+            curveSmoothness: 0,
+            color: const Color(0xff27b6fc),
+            barWidth: 4,
+            isStrokeCapRound: true,
+            dotData: FlDotData(show: true),
+            belowBarData: BarAreaData(show: false),
+            spots: statictisProvider.addData(),
+          ),
         ],
         minX: 0,
         maxX: 16,
         maxY: 4,
         minY: 0,
       ),
-      swapAnimationDuration: const Duration(milliseconds: 250),
+      // swapAnimationDuration: const Duration(milliseconds: 250),
     );
   }
 
@@ -116,23 +117,25 @@ class _LineChart extends StatelessWidget {
       fontSize: 16,
     );
     Widget text = const Text('');
-    int length = statictisProvider.statistics.length-1;
-    double jump = 0;
-    int index = length;
-    for (double i = 1; i < 16; i = i + ((15 / length).floor() - 1)) {
-      if (value.toInt() == 1) {
-        text =
-            Text('${statictisProvider.statistics[index].datee2}', style: style);
-        index--;
-      }
-      if (value.toInt() != 0 && value.toInt() == jump.floor() && index > -1) {
-        text =
-            Text('${statictisProvider.statistics[index].datee2}', style: style);
-        index--;
-      }
-      jump = jump + (15 / length);
+    int length = statictisProvider.statistics.length - 1;
+    double jump = statictisProvider.jump;
+    int index = statictisProvider.index;
+    if(value.toInt() == 1){
+      text =
+          Text('${statictisProvider.statistics[index].datee2}', style: style);
+      statictisProvider.index = index + 1;
+      statictisProvider.jump = jump + (15 / length).floor();
     }
-
+    if(value.toInt() > 1 && value.toInt() == jump){
+      text =
+          Text('${statictisProvider.statistics[index].datee2}', style: style);
+      statictisProvider.index = index + 1;
+      statictisProvider.jump = jump + (15 / length).floor();
+    }
+    if(value.toInt() == 16){
+      statictisProvider.index = 0;
+      statictisProvider.jump = 0;
+    }
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 10,
@@ -141,6 +144,7 @@ class _LineChart extends StatelessWidget {
   }
 
   SideTitles _bottomTitles() {
+
     return SideTitles(
       showTitles: true,
       reservedSize: 32,
@@ -150,85 +154,165 @@ class _LineChart extends StatelessWidget {
   }
 }
 
-class LineChartSample1 extends StatefulWidget {
+class LineChartSample1 extends StatelessWidget {
   const LineChartSample1({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => LineChartSample1State();
-}
-
-class LineChartSample1State extends State<LineChartSample1> {
-  @override
   Widget build(BuildContext context) {
     final StatictisProvider statictisProvider =
-        Provider.of<StatictisProvider>(context);
+    Provider.of<StatictisProvider>(context);
     return statictisProvider.isLoading
         ? Center(
-            child: CircularProgressIndicator(),
-          )
+      child: CircularProgressIndicator(),
+    )
         : AspectRatio(
-            aspectRatio: 1.23,
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xff2c274c),
-                    Color(0xff46426c),
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
+      aspectRatio: 1.23,
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff2c274c),
+              Color(0xff46426c),
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+        ),
+        child: statictisProvider.statistics.isEmpty == true
+            ? Container()
+            : Stack(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const SizedBox(
+                  height: 37,
                 ),
-              ),
-              child: statictisProvider.statistics.isEmpty == true ? Container() : Stack(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 37,
-                      ),
-                      const Text(
-                        'Unfold Shop 2018',
-                        style: TextStyle(
-                          color: Color(0xff827daa),
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      const Text(
-                        'Monthly Sales',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 37,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(right: 16.0, left: 6.0),
-                          child: _LineChart(
-                            statictisProvider: statictisProvider,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                const Text(
+                  'Unfold Shop 2018',
+                  style: TextStyle(
+                    color: Color(0xff827daa),
+                    fontSize: 16,
                   ),
-                ],
-              ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                const Text(
+                  'Monthly Sales',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 37,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        right: 16.0, left: 6.0),
+                    child: _LineChart(
+                      statictisProvider: statictisProvider,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 }
+
+// class LineChartSample1 extends StatefulWidget {
+//   const LineChartSample1({Key? key}) : super(key: key);
+//
+//   @override
+//   State<StatefulWidget> createState() => LineChartSample1State();
+// }
+
+// class LineChartSample1State extends State<LineChartSample1> {
+//   @override
+//   Widget build(BuildContext context) {
+//     final StatictisProvider statictisProvider =
+//         Provider.of<StatictisProvider>(context);
+//     return statictisProvider.isLoading
+//         ? Center(
+//             child: CircularProgressIndicator(),
+//           )
+//         : AspectRatio(
+//             aspectRatio: 1.23,
+//             child: Container(
+//               decoration: const BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(18)),
+//                 gradient: LinearGradient(
+//                   colors: [
+//                     Color(0xff2c274c),
+//                     Color(0xff46426c),
+//                   ],
+//                   begin: Alignment.bottomCenter,
+//                   end: Alignment.topCenter,
+//                 ),
+//               ),
+//               child: statictisProvider.statistics.isEmpty == true
+//                   ? Container()
+//                   : Stack(
+//                       children: <Widget>[
+//                         Column(
+//                           crossAxisAlignment: CrossAxisAlignment.stretch,
+//                           children: <Widget>[
+//                             const SizedBox(
+//                               height: 37,
+//                             ),
+//                             const Text(
+//                               'Unfold Shop 2018',
+//                               style: TextStyle(
+//                                 color: Color(0xff827daa),
+//                                 fontSize: 16,
+//                               ),
+//                               textAlign: TextAlign.center,
+//                             ),
+//                             const SizedBox(
+//                               height: 4,
+//                             ),
+//                             const Text(
+//                               'Monthly Sales',
+//                               style: TextStyle(
+//                                 color: Colors.white,
+//                                 fontSize: 32,
+//                                 fontWeight: FontWeight.bold,
+//                                 letterSpacing: 2,
+//                               ),
+//                               textAlign: TextAlign.center,
+//                             ),
+//                             const SizedBox(
+//                               height: 37,
+//                             ),
+//                             Expanded(
+//                               child: Padding(
+//                                 padding: const EdgeInsets.only(
+//                                     right: 16.0, left: 6.0),
+//                                 child: _LineChart(
+//                                   statictisProvider: statictisProvider,
+//                                 ),
+//                               ),
+//                             ),
+//                             const SizedBox(
+//                               height: 10,
+//                             ),
+//                           ],
+//                         ),
+//                       ],
+//                     ),
+//             ),
+//           );
+//   }
+// }

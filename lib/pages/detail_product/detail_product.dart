@@ -260,7 +260,7 @@ class _DetailProductState extends State<DetailProduct> {
             itemBuilder: (context, index) {
               return Text(data[index]);
             },
-            separatorBuilder: (contex, index) => SizedBox(
+            separatorBuilder: (context, index) => SizedBox(
               width: 10,
             ),
           ),

@@ -1,10 +1,11 @@
+import 'dart:developer';
 import 'package:ecommerce_admin_tut/constant.dart';
 import 'package:ecommerce_admin_tut/models/order_model/revenue_statistic.dart';
 import 'package:ecommerce_admin_tut/services/orders.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 
-class StatictisProvider with ChangeNotifier{
+class StatictisProvider with ChangeNotifier {
   bool isLoading = true;
   List<Revenue> statistics = [];
   List<double> revenues = [];
@@ -14,41 +15,47 @@ class StatictisProvider with ChangeNotifier{
   List<FlSpot> data = [];
   OrderServices _orderServices = OrderServices();
 
+  double jump = 0;
+  int index = 0;
+
   getRevenue(int startTime, int endTime) async {
+    index = 0;
+    jump = 0;
     statistics.clear();
     revenues.clear();
     dataX.clear();
     isLoading = true;
-    statistics = await _orderServices.getRevenueStatistics(startTime, endTime) ?? [];
+    statistics =
+        await _orderServices.getRevenueStatistics(startTime, endTime) ?? [];
     revenueTableSource.addAll(_getRevenueDataTable());
     statistics.forEach((item) {
-      double revenue = item.amounts! - (item.taxs! + item.totalOriginals!) + 0.0;
+      double revenue =
+          item.amounts! - (item.taxs! + item.totalOriginals!) + 0.0;
       revenues.add(revenue);
-      if(maxTotal < revenue)
-        maxTotal = revenue as int;
+      if (maxTotal < revenue) maxTotal = revenue as int;
     });
     formatData();
+    // addData();
     isLoading = false;
     notifyListeners();
   }
 
-  formatData(){
+  formatData() {
     int number = chartData(maxTotal);
-    revenues.sort();
-    for(int i=0; i<revenues.length; i++){
+    for (int i = 0; i < revenues.length; i++) {
       double data = revenues[i] / number;
       revenues[i] = data;
     }
-    double x = (maxTotal/number).ceil() / 4;
+    double x = (maxTotal / number).ceil() / 4;
     int num = 0;
-    for(int i = 1; i<5; i++){
+    for (int i = 1; i < 5; i++) {
       num = (num + x).ceil();
       dataX.add(formatChartDataX(number, num));
     }
     notifyListeners();
   }
 
-  _getRevenueDataTable(){
+  _getRevenueDataTable() {
     List<Map<String, dynamic>> temps = [];
     var i = 1;
     for (Revenue revenue in statistics) {
@@ -68,22 +75,24 @@ class StatictisProvider with ChangeNotifier{
     return temps;
   }
 
-  List<FlSpot> addData(){
+  List<FlSpot> addData() {
+    data.clear();
     int length = revenues.length - 1;
-    double jump = 0;
+    int jump = 0;
     int index = 0;
-    for (double i = 1; i < 16; i = i + ((15 / length).floor() - 1)) {
+    for (int i = 1; i < 16; i++) {
+      log('$i');
       if (i == 1) {
-        data.add(FlSpot(i, revenues[index]));
+        data.add(FlSpot(i.toDouble(), revenues[index]));
         index++;
+        jump = jump + (15/length).floor();
       }
-      if (i != 0 && i == jump.floor()) {
-        data.add(FlSpot(i, revenues[index]));
+      if (i > 1 && i == jump) {
+        data.add(FlSpot(i.toDouble(), revenues[index]));
         index++;
+        jump = jump + (15/length).floor();
       }
-      jump = jump + (15 / length);
     }
     return data;
   }
-
 }
