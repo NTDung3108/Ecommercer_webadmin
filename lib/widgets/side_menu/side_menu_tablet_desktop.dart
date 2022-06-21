@@ -3,6 +3,7 @@ import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/pages/categories/categories_page.dart';
 import 'package:ecommerce_admin_tut/provider/app_provider.dart';
 import 'package:ecommerce_admin_tut/provider/home_provider.dart';
+import 'package:ecommerce_admin_tut/provider/product_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
@@ -15,7 +16,7 @@ class SideMenuTabletDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppProvider appProvider = Provider.of<AppProvider>(context);
-    final HomeProvider homeProvider = Provider.of<HomeProvider>(context);
+    final ProductProvider productProvider = Provider.of<ProductProvider>(context);
     return Container(
       decoration: BoxDecoration(
           color: Colors.indigo,
@@ -64,6 +65,7 @@ class SideMenuTabletDesktop extends StatelessWidget {
               text: 'Products',
               active: appProvider.currentPage == DisplayedPage.PRODUCTS,
               onTap: () {
+                productProvider.getProductFromServer();
                 appProvider.changeCurrentPage(DisplayedPage.PRODUCTS);
                 locator<NavigationService>().navigateTo(ProductsRoute);
               },

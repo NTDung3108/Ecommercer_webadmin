@@ -123,8 +123,12 @@ class _StatisticalState extends State<Statistical>
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              LineChartSample1(),
-              StatisticDetail(),
+              statictisProvider.statistics.isEmpty == true
+                  ? Container()
+                  : LineChartSample1(),
+              statictisProvider.statistics.isEmpty == true
+                  ? Container()
+                  : StatisticDetail(),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:ecommerce_admin_tut/locator.dart';
+import 'package:ecommerce_admin_tut/models/all_product.dart';
 import 'package:ecommerce_admin_tut/models/brand_response.dart';
 import 'package:ecommerce_admin_tut/models/detail_product.dart';
 import 'package:ecommerce_admin_tut/models/discount_responese.dart';
@@ -12,12 +13,34 @@ import 'package:ecommerce_admin_tut/services/products.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductProvider extends ChangeNotifier {
-  ProductsServices _productsServices = ProductsServices();
   DiscountService _discountService = DiscountService();
   BrandsServices _brandsServices = BrandsServices();
   CategoriesServices _categoriesServices = CategoriesServices();
 
   List<Map<String, dynamic>> productsTableSource = [];
+  List<Map<String, dynamic>> sourceFiltered = [];
+  List<Map<String, dynamic>> source = [];
+
+  ProductsServices _productsServices = ProductsServices();
+  List<Products> _products = <Products>[];
+
+  List<Products> get products => _products;
+
+  List<int> perPages = [];
+  int total = 100;
+  int currentPerPage = 5;
+  int currentPage = 1;
+  bool isSearch = false;
+  String? searchKey = "name";
+  List<bool>? expanded = [];
+
+  List<Map<String, dynamic>> selecteds = [];
+  String selectableKey = "id";
+
+  String? sortColumn;
+  bool sortAscending = true;
+  bool isLoading = true;
+  bool showSelect = true;
 
   Product product = Product();
   List<Discounr> discount = [];
@@ -35,6 +58,141 @@ class ProductProvider extends ChangeNotifier {
     getListBrand();
     getListDiscount();
     getListSubcategory();
+  }
+
+  getProductFromServer() async {
+    productsTableSource.clear();
+    _products.clear();
+    perPages.clear();
+    _products = await _productsServices.getAllProducts() ?? [];
+    productsTableSource.addAll(_getProductsData());
+    sourceFiltered = productsTableSource;
+    total = sourceFiltered.length;
+    if (_products.length < 5) {
+      currentPerPage = _products.length;
+      expanded = List.generate(currentPerPage, (index) => false);
+      source = sourceFiltered.getRange(0, currentPerPage).toList();
+    } else {
+      currentPerPage = 5;
+      perPages.addAll([5, 10, 15, 100]);
+      expanded = List.generate(currentPerPage, (index) => false);
+      source = sourceFiltered.getRange(0, currentPerPage).toList();
+    }
+    isLoading = false;
+    notifyListeners();
+  }
+
+  List<Map<String, dynamic>> _getProductsData() {
+    List<Map<String, dynamic>> temps = [];
+    for (Products product in _products) {
+      temps.add({
+        "id": product.idProduct,
+        "name": product.nameProduct,
+        "brand": product.brand,
+        "category": product.name,
+        "quantity": product.quantily,
+        "sold": product.sold,
+        "price": "${product.price} VND",
+        "importPrice": '${product.importPrice} VND',
+        "addDay": product.addDay,
+        "updateDay": product.updateDay,
+      });
+    }
+    return temps;
+  }
+
+  onSort(dynamic value) {
+    sortColumn = value;
+    sortAscending = !sortAscending;
+    if (sortAscending) {
+      productsTableSource
+          .sort((a, b) => b["$sortColumn"].compareTo(a["$sortColumn"]));
+    } else {
+      productsTableSource
+          .sort((a, b) => a["$sortColumn"].compareTo(b["$sortColumn"]));
+    }
+    notifyListeners();
+  }
+
+  onSelected(bool value, Map<String, dynamic> item) {
+    print("$value  $item ");
+    if (value) {
+      selecteds.add(item);
+    } else {
+      selecteds.removeAt(selecteds.indexOf(item));
+    }
+    notifyListeners();
+  }
+
+  onSelectAll(bool value) {
+    if (value) {
+      selecteds = productsTableSource.map((entry) => entry).toList().cast();
+    } else {
+      selecteds.clear();
+    }
+    notifyListeners();
+  }
+
+  onChanged(int value) {
+    currentPerPage = value;
+    notifyListeners();
+  }
+
+  previous() {
+    var _nextSet = currentPage - currentPerPage;
+    currentPage = _nextSet > 1 ? _nextSet : 1;
+    resetData(start: currentPage - 1);
+    notifyListeners();
+  }
+
+  resetData({start: 0}) async {
+    isLoading = true;
+    notifyListeners();
+    var _expandedLen =
+        total - start < currentPerPage? total - start : currentPerPage;
+    Future.delayed(Duration(seconds: 0)).then((value) {
+      expanded = List.generate(_expandedLen as int, (index) => false);
+      source.clear();
+      source = sourceFiltered.getRange(start, start + _expandedLen).toList();
+      isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  next() {
+    var _nextSet = currentPage + currentPerPage;
+    currentPage = _nextSet < total ? _nextSet : total - currentPerPage;
+    resetData(start: _nextSet - 1);
+    notifyListeners();
+  }
+
+  filterData(value) {
+    isLoading = true;
+    notifyListeners();
+    try {
+      if (value == "" || value == null) {
+        sourceFiltered = productsTableSource;
+      } else {
+        sourceFiltered = productsTableSource
+            .where((data) => data[searchKey!]
+                .toString()
+                .toLowerCase()
+                .contains(value.toString().toLowerCase()))
+            .toList();
+      }
+
+      total = sourceFiltered.length;
+      var _rangeTop = total < currentPerPage ? total : currentPerPage;
+      expanded = List.generate(_rangeTop, (index) => false);
+      source = sourceFiltered.getRange(0, _rangeTop).toList();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+    notifyListeners();
   }
 
   getDetailProduct(int id, BuildContext context) async {

@@ -16,7 +16,6 @@ class TablesProvider with ChangeNotifier {
   // ANCHOR table headers
   List<Map<String, dynamic>> usersTableSource = [];
   List<Map<String, dynamic>> ordersTableSource = <Map<String, dynamic>>[];
-  List<Map<String, dynamic>> productsTableSource = [];
   List<Map<String, dynamic>> categoriesTableSource = [];
   List<Map<String, dynamic>> subcategoryTableSource = [];
   List<Map<String, dynamic>> brandsTableSource = [];
@@ -34,10 +33,6 @@ class TablesProvider with ChangeNotifier {
 
   List<Users> get users => _users;
 
-  ProductsServices _productsServices = ProductsServices();
-  List<Products> _products = <Products>[];
-
-  List<Products> get products => _products;
 
   BrandsServices _brandsServices = BrandsServices();
   List<Brands> _brands = <Brands>[];
@@ -50,14 +45,6 @@ class TablesProvider with ChangeNotifier {
     _orders.clear();
     _orders = await _orderServices.getAllOrders() ?? [];
     ordersTableSource.addAll(_getOrdersData());
-    notifyListeners();
-  }
-
-  getProductFromServer() async {
-    productsTableSource.clear();
-    _products.clear();
-    _products = await _productsServices.getAllProducts() ?? [];
-    productsTableSource.addAll(_getProductsData());
     notifyListeners();
   }
 
@@ -117,18 +104,6 @@ class TablesProvider with ChangeNotifier {
     return temps;
   }
 
-  // List<Map<String, dynamic>> _getCategoriesData() {
-  //   List<Map<String, dynamic>> temps = [];
-  //
-  //   for (CategoriesModel category in _categories) {
-  //     temps.add({
-  //       "id": category.id,
-  //       "category": category.category,
-  //     });
-  //   }
-  //   return temps;
-  // }
-
   List<Map<String, dynamic>> _getOrdersData() {
     List<Map<String, dynamic>> temps = [];
     for (Orders order in _orders) {
@@ -145,24 +120,7 @@ class TablesProvider with ChangeNotifier {
     return temps;
   }
 
-  List<Map<String, dynamic>> _getProductsData() {
-    List<Map<String, dynamic>> temps = [];
-    for (Products product in _products) {
-      temps.add({
-        "id": product.idProduct,
-        "name": product.nameProduct,
-        "brand": product.brand,
-        "category": product.name,
-        "quantity": product.quantily,
-        "sold": product.sold,
-        "price": "${product.price} VND",
-        "importPrice": '${product.importPrice} VND',
-        "addDay": product.addDay,
-        "updateDay": product.updateDay,
-      });
-    }
-    return temps;
-  }
+
   List<Map<String, dynamic>> _getDiscountData() {
     isLoading = true;
     notifyListeners();
