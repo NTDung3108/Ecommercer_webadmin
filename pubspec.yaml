@@ -40,7 +40,7 @@ dependencies:
   http: ^0.13.4
   flutter_svg: ^0.22.0
   url_launcher: ^6.1.2
-
+  image_picker_for_web: ^2.1.8
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -67,8 +67,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - images/
-    - images/products.png
-
+    - images/add_image.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

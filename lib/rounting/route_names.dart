@@ -16,4 +16,5 @@ const String DiscountRoute = "/discount";
 const String PageControllerRoute = "/page";
 const String OrderDetailRoute = "/order_detail";
 const String ProductDetailRoute = "/product_detail";
+const String NewProductRoute = "/new_product";
 

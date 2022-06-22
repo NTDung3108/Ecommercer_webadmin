@@ -2,6 +2,7 @@ import 'package:ecommerce_admin_tut/extension/string_extensions.dart';
 import 'package:ecommerce_admin_tut/pages/brands/brands_page.dart';
 import 'package:ecommerce_admin_tut/pages/categories/categories_page.dart';
 import 'package:ecommerce_admin_tut/pages/detail_product/detail_product.dart';
+import 'package:ecommerce_admin_tut/pages/detail_product/new_product_page.dart';
 import 'package:ecommerce_admin_tut/pages/discount/discount_page.dart';
 import 'package:ecommerce_admin_tut/pages/login/login.dart';
 import 'package:ecommerce_admin_tut/pages/order_detail/order_detail_%20page.dart';
@@ -55,6 +56,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(OrderDetail(), settings);
     case ProductDetailRoute:
       return _getPageRoute(DetailProduct(), settings);
+    case NewProductRoute:
+      return _getPageRoute(NewProductPage(), settings);
     default:
       return _getPageRoute(LoginPage(), settings);
   }

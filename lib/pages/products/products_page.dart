@@ -1,16 +1,10 @@
-import 'dart:developer';
-
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/provider/product_provider.dart';
-import 'package:ecommerce_admin_tut/provider/tables.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_table/responsive_table.dart';
-
-import '../../widgets/page_header.dart';
-
 class ProductsPage extends StatefulWidget {
   @override
   _ProductsPageState createState() => _ProductsPageState();
@@ -52,7 +46,10 @@ class _ProductsPageState extends State<ProductsPage> {
                 clipBehavior: Clip.none,
                 child: ResponsiveDatatable(
                   title: TextButton.icon(
-                    onPressed: () => {},
+                    onPressed: (){
+                      locator<NavigationService>()
+                          .globalNavigateTo(NewProductRoute, context);
+                    },
                     icon: Icon(Icons.add),
                     label: Text("new item"),
                   ),

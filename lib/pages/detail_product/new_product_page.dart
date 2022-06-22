@@ -2,22 +2,27 @@ import 'package:ecommerce_admin_tut/models/brand_response.dart';
 import 'package:ecommerce_admin_tut/models/discount_responese.dart';
 import 'package:ecommerce_admin_tut/models/subcategory.dart';
 import 'package:ecommerce_admin_tut/provider/product_provider.dart';
+import 'package:ecommerce_admin_tut/widgets/base_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/base_appbar.dart';
-
-class DetailProduct extends StatefulWidget {
-  const DetailProduct({Key? key}) : super(key: key);
+class NewProductPage extends StatefulWidget {
+  const NewProductPage({Key? key}) : super(key: key);
 
   @override
-  State<DetailProduct> createState() => _DetailProductState();
+  _NewProductPageState createState() => _NewProductPageState();
 }
 
-class _DetailProductState extends State<DetailProduct> {
+class _NewProductPageState extends State<NewProductPage> {
   final _formKey = GlobalKey<FormState>();
-  String? phone;
-  List<String> data = ['One', 'Two', 'Three', 'Four'];
+  List<String> files = [];
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController importPriceController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
+  TextEditingController colorController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   String discountValue = '';
   String brandValue = '';
   String categoryValue = '';
@@ -28,7 +33,7 @@ class _DetailProductState extends State<DetailProduct> {
     return Scaffold(
       appBar: BaseAppbar(
         context: context,
-        title: 'Order Detail',
+        title: 'New Product',
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
@@ -38,69 +43,26 @@ class _DetailProductState extends State<DetailProduct> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                rowItem('Name', _productProvider.nameController),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                rowItem('Price', _productProvider.priceController),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                rowItem('Import Price', _productProvider.importPriceController),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                // rowDropdownDiscount('Discount', _productProvider.discount),
-                discountItem('Discount', _productProvider.discount,
-                    _productProvider.product.discount!),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                rowItem('Quantity', _productProvider.quantityController),
+                rowItem('Name', nameController),
+                rowItem('Price', priceController),
+                rowItem('Import Price', importPriceController),
+                discountItem('Discount', _productProvider.discount),
+                rowItem('Quantity', quantityController),
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Sold: ${_productProvider.product.sold} ",
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                rowItem('Color', _productProvider.colorController),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                brandsItem('Brands', _productProvider.brands,
-                    _productProvider.product.brandsId!),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                categoryItem('Category', _productProvider.subcategories,
-                    _productProvider.product.subcategoryId!),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Add Day: ${_productProvider.product.addDay}",
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  "Update Day: ${_productProvider.product.updateday}",
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
+                rowItem('Color', colorController),
+                brandsItem('Brands', _productProvider.brands),
+                categoryItem('Category', _productProvider.subcategories),
                 const SizedBox(
                   height: 20,
                 ),
                 descriptionItem(
-                    'Description', _productProvider.descriptionController),
+                    'Description', descriptionController),
                 const SizedBox(
                   height: 10,
                 ),
-                pictureRow('Picture', _productProvider.product.picture!),
+                pictureRow('Picture', files),
                 const SizedBox(
                   height: 50,
                 ),
@@ -120,7 +82,7 @@ class _DetailProductState extends State<DetailProduct> {
                         _productProvider.updateProduct(
                             discount, brand, subcategory, context);
                       },
-                      child: Text('Cập nhật'),
+                      child: Text('Thêm Sản Phẩm'),
                       style: ElevatedButton.styleFrom(primary: Colors.green),
                     ),
                   ],
@@ -191,10 +153,10 @@ class _DetailProductState extends State<DetailProduct> {
     );
   }
 
-  Widget discountItem(String title, List<Discounr> data, int discount) {
+  Widget discountItem(String title, List<Discounr> data) {
     List<String> list =
         data.map((e) => '${e.idDiscount}-${e.discount}%').toList();
-    String s = list.where((e) => e[0] == '$discount').toList()[0];
+    String s = list[0];
     return Row(
       children: [
         Text(
@@ -224,9 +186,9 @@ class _DetailProductState extends State<DetailProduct> {
     );
   }
 
-  Widget brandsItem(String title, List<Brands> data, int id) {
+  Widget brandsItem(String title, List<Brands> data) {
     List<String> list = data.map((e) => '${e.idBrands}-${e.brand}').toList();
-    String s = list.where((e) => e[0] == '$id').toList()[0];
+    String s = list[0];
     return Row(
       children: [
         Text(
@@ -256,9 +218,9 @@ class _DetailProductState extends State<DetailProduct> {
     );
   }
 
-  Widget categoryItem(String title, List<Subcategory> data, int id) {
+  Widget categoryItem(String title, List<Subcategory> data) {
     List<String> list = data.map((e) => '${e.id}-${e.name}').toList();
-    String s = list.where((e) => e[0] == '$id').toList()[0];
+    String s = list[0];
     return Row(
       children: [
         Text(
@@ -304,13 +266,19 @@ class _DetailProductState extends State<DetailProduct> {
           height: 100,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: data.length,
+            itemCount: data.isEmpty ? 1 : data.length + 1,
             itemBuilder: (context, index) {
-              return SizedBox(
+              if (data.isNotEmpty)
+                return SizedBox(
                   width: 100,
                   height: 100,
-                  child:
-                      Image.network('http://192.168.2.101:3000/${data[index]}'));
+                  child: Image.asset('images/add_image.png'),
+                );
+              return SizedBox(
+                width: 100,
+                height: 100,
+                child: Image.asset('images/add_image.png'),
+              );
             },
             separatorBuilder: (context, index) => SizedBox(
               width: 10,
