@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/provider/product_provider.dart';
 import 'package:ecommerce_admin_tut/provider/tables.dart';
@@ -15,77 +17,9 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  late List<DatatableHeader> _headers;
-
   @override
   void initState() {
     super.initState();
-
-    /// set headers
-    _headers = [
-      DatatableHeader(
-          text: "ID",
-          value: "id",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Name",
-          value: "name",
-          show: true,
-          flex: 3,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Brand",
-          value: "brand",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Category",
-          value: "category",
-          show: true,
-          flex: 2,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Quantity",
-          value: "quantity",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Sold",
-          value: "sold",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.center),
-      DatatableHeader(
-          text: "Price",
-          value: "price",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Import Price",
-          value: "importPrice",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Add Day",
-          value: "addDay",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-      DatatableHeader(
-          text: "Update Day",
-          value: "updateDay",
-          show: true,
-          sortable: true,
-          textAlign: TextAlign.left),
-    ];
   }
 
   @override
@@ -158,7 +92,7 @@ class _ProductsPageState extends State<ProductsPage> {
                             });
                           })
                   ],
-                  headers: _headers,
+                  headers: productProvider.headers,
                   source: productProvider.source,
                   expanded: productProvider.expanded,
                   selecteds: productProvider.selecteds,
@@ -172,8 +106,9 @@ class _ProductsPageState extends State<ProductsPage> {
                   sortAscending: productProvider.sortAscending,
                   sortColumn: productProvider.sortColumn,
                   isLoading: productProvider.isLoading,
-                  onSelect: (value, item) => productProvider.onSelected,
-                  onSelectAll: (value) => productProvider.onSelectAll,
+                  onSelect: (value, item) =>
+                      productProvider.onSelected(value!, item),
+                  onSelectAll: (value) => productProvider.onSelectAll(value!),
                   footers: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -216,7 +151,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     IconButton(
                       icon: Icon(Icons.arrow_forward_ios, size: 16),
                       onPressed: productProvider.currentPage +
-                                  productProvider.currentPerPage-
+                                  productProvider.currentPerPage -
                                   1 >=
                               productProvider.total
                           ? null

@@ -65,6 +65,7 @@ class SideMenuTabletDesktop extends StatelessWidget {
               text: 'Products',
               active: appProvider.currentPage == DisplayedPage.PRODUCTS,
               onTap: () {
+                productProvider.init();
                 productProvider.getProductFromServer();
                 appProvider.changeCurrentPage(DisplayedPage.PRODUCTS);
                 locator<NavigationService>().navigateTo(ProductsRoute);

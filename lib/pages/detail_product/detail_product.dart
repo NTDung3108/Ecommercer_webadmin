@@ -1,11 +1,8 @@
-import 'dart:html';
-
 import 'package:ecommerce_admin_tut/models/brand_response.dart';
 import 'package:ecommerce_admin_tut/models/discount_responese.dart';
 import 'package:ecommerce_admin_tut/models/subcategory.dart';
 import 'package:ecommerce_admin_tut/provider/product_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/base_appbar.dart';
@@ -21,6 +18,9 @@ class _DetailProductState extends State<DetailProduct> {
   final _formKey = GlobalKey<FormState>();
   String? phone;
   List<String> data = ['One', 'Two', 'Three', 'Four'];
+  String discountValue = '';
+  String brandValue = '';
+  String categoryValue = '';
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,19 @@ class _DetailProductState extends State<DetailProduct> {
                 Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        int discount = discountValue.isEmpty
+                            ? _productProvider.product.discount!
+                            : int.parse(discountValue[0]);
+                        int brand = brandValue.isEmpty
+                            ? _productProvider.product.brandsId!
+                            : int.parse(brandValue[0]);
+                        int subcategory = categoryValue.isEmpty
+                            ? _productProvider.product.subcategoryId!
+                            : int.parse(categoryValue[0]);
+                        _productProvider.updateProduct(
+                            discount, brand, subcategory, context);
+                      },
                       child: Text('Cập nhật'),
                       style: ElevatedButton.styleFrom(primary: Colors.green),
                     ),
@@ -136,7 +148,7 @@ class _DetailProductState extends State<DetailProduct> {
             controller: controller,
             onSaved: (newValue) => phone = newValue,
             decoration: InputDecoration(
-              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
               hintText: '$title',
             ),
           ),
@@ -184,7 +196,7 @@ class _DetailProductState extends State<DetailProduct> {
   Widget discountItem(String title, List<Discounr> data, int discount) {
     List<String> list =
         data.map((e) => '${e.idDiscount}-${e.discount}%').toList();
-    String dropdownValue = list.where((e) => e[0] == '$discount').toList()[0];
+    String s = list.where((e) => e[0] == '$discount').toList()[0];
     return Row(
       children: [
         Text(
@@ -195,7 +207,7 @@ class _DetailProductState extends State<DetailProduct> {
           width: 10,
         ),
         DropdownButton<String>(
-          value: dropdownValue,
+          value: discountValue.isEmpty ? s : discountValue,
           icon: const Icon(Icons.arrow_drop_down),
           style: const TextStyle(color: Colors.black),
           items: list.map<DropdownMenuItem<String>>((String value) {
@@ -205,7 +217,9 @@ class _DetailProductState extends State<DetailProduct> {
             );
           }).toList(),
           onChanged: (value) {
-            setState(() {});
+            setState(() {
+              discountValue = value!;
+            });
           },
         ),
       ],
@@ -214,7 +228,7 @@ class _DetailProductState extends State<DetailProduct> {
 
   Widget brandsItem(String title, List<Brands> data, int id) {
     List<String> list = data.map((e) => '${e.idBrands}-${e.brand}').toList();
-    String dropdownValue = list.where((e) => e[0] == '$id').toList()[0];
+    String s = list.where((e) => e[0] == '$id').toList()[0];
     return Row(
       children: [
         Text(
@@ -225,7 +239,7 @@ class _DetailProductState extends State<DetailProduct> {
           width: 10,
         ),
         DropdownButton<String>(
-          value: dropdownValue,
+          value: brandValue.isEmpty ? s : brandValue,
           icon: const Icon(Icons.arrow_drop_down),
           style: const TextStyle(color: Colors.black),
           items: list.map<DropdownMenuItem<String>>((String value) {
@@ -235,7 +249,9 @@ class _DetailProductState extends State<DetailProduct> {
             );
           }).toList(),
           onChanged: (value) {
-            setState(() {});
+            setState(() {
+              brandValue = value!;
+            });
           },
         ),
       ],
@@ -244,7 +260,7 @@ class _DetailProductState extends State<DetailProduct> {
 
   Widget categoryItem(String title, List<Subcategory> data, int id) {
     List<String> list = data.map((e) => '${e.id}-${e.name}').toList();
-    String dropdownValue = list.where((e) => e[0] == '$id').toList()[0];
+    String s = list.where((e) => e[0] == '$id').toList()[0];
     return Row(
       children: [
         Text(
@@ -255,7 +271,7 @@ class _DetailProductState extends State<DetailProduct> {
           width: 10,
         ),
         DropdownButton<String>(
-          value: dropdownValue,
+          value: categoryValue.isEmpty ? s : categoryValue,
           icon: const Icon(Icons.arrow_drop_down),
           style: const TextStyle(color: Colors.black),
           items: list.map<DropdownMenuItem<String>>((String value) {
@@ -265,7 +281,9 @@ class _DetailProductState extends State<DetailProduct> {
             );
           }).toList(),
           onChanged: (value) {
-            setState(() {});
+            setState(() {
+              categoryValue = value!;
+            });
           },
         ),
       ],
@@ -293,7 +311,8 @@ class _DetailProductState extends State<DetailProduct> {
               return SizedBox(
                   width: 100,
                   height: 100,
-                  child: Image.network('http://10.50.10.135:3000/${data[index]}'));
+                  child:
+                      Image.network('http://10.50.10.135:3000/${data[index]}'));
             },
             separatorBuilder: (context, index) => SizedBox(
               width: 10,

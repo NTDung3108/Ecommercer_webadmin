@@ -23,7 +23,7 @@ void main() async{
     ChangeNotifierProvider.value(value: StatictisProvider()),
     ChangeNotifierProvider.value(value: OrderDetailProvider()),
     ChangeNotifierProvider.value(value: HomeProvider()),
-    ChangeNotifierProvider.value(value: ProductProvider.init()),
+    ChangeNotifierProvider.value(value: ProductProvider()),
   ], child: MyApp()));
 }
 

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/models/all_product.dart';
 import 'package:ecommerce_admin_tut/models/brand_response.dart';
@@ -11,6 +14,8 @@ import 'package:ecommerce_admin_tut/services/discount_service.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:responsive_table/responsive_table.dart';
 
 class ProductProvider extends ChangeNotifier {
   DiscountService _discountService = DiscountService();
@@ -54,7 +59,107 @@ class ProductProvider extends ChangeNotifier {
   final TextEditingController colorController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  ProductProvider.init() {
+  String discountValue = '';
+
+  late List<DatatableHeader> headers = headers = [
+    DatatableHeader(
+        text: "ID",
+        value: "id",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "Name",
+        value: "name",
+        show: true,
+        flex: 3,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "Brand",
+        value: "brand",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "Category",
+        value: "category",
+        show: true,
+        flex: 2,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Quantity",
+        value: "quantity",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "Sold",
+        value: "sold",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.center),
+    DatatableHeader(
+        text: "Price",
+        value: "price",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Import Price",
+        value: "importPrice",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Add Day",
+        value: "addDay",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+        text: "Update Day",
+        value: "updateDay",
+        show: true,
+        sortable: true,
+        textAlign: TextAlign.left),
+    DatatableHeader(
+      text: "",
+      value: "delete",
+      show: true,
+      sortable: false,
+      sourceBuilder: (value, row) {
+        return InkWell(
+          onTap: () {
+            log('${row["id"]}');
+            deleteProduct(row["id"]);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.red, borderRadius: BorderRadius.circular(4)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.white),
+                ),
+                const SizedBox(
+                  width: 4,
+                ),
+                const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                )
+              ],
+            ),
+          ),
+        );
+      },)
+  ];
+
+  init() {
     getListBrand();
     getListDiscount();
     getListSubcategory();
@@ -149,7 +254,7 @@ class ProductProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     var _expandedLen =
-        total - start < currentPerPage? total - start : currentPerPage;
+        total - start < currentPerPage ? total - start : currentPerPage;
     Future.delayed(Duration(seconds: 0)).then((value) {
       expanded = List.generate(_expandedLen as int, (index) => false);
       source.clear();
@@ -203,10 +308,14 @@ class ProductProvider extends ChangeNotifier {
         product = resp.product!;
         nameController.text = product.nameProduct!;
         priceController.text = '${product.price ?? 0}';
-        importPriceController.text = '${product.price ?? 0}';
+        importPriceController.text = '${product.importPrice ?? 0}';
         quantityController.text = '${product.quantily ?? 0}';
         for (int i = 0; i < product.colors!.length; i++) {
-          color = color + product.colors![i];
+          if (i == product.colors!.length - 1) {
+            color = color + product.colors![i];
+          } else {
+            color = color + product.colors![i] + ', ';
+          }
         }
         colorController.text = color;
         descriptionController.text = product.description ?? '';
@@ -251,5 +360,38 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  updateProduct(
+      int discount, int brand, int subcategory, BuildContext context) async {
+    try {
+      var resp = await _productsServices.updateProduct(
+          product.idProduct!,
+          nameController.text,
+          descriptionController.text,
+          int.parse(priceController.text),
+          discount,
+          int.parse(quantityController.text),
+          jsonEncode(colorController.text.split(', ')),
+          brand,
+          subcategory,
+          int.parse(importPriceController.text));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(resp.msj ?? ''),
+      ));
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+  deleteProduct(int id) async {
+    try {
+      var resp = await _productsServices.deleteProduct(id);
+      if(resp.resp!){
+        getProductFromServer();
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+    notifyListeners();
   }
 }

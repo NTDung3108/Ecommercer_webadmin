@@ -24,10 +24,7 @@ class HttpClient {
   Future<http.Response> put(String address, String token, String body) async {
     Uri uri = Uri.parse(server + address);
     return await client.put(uri,
-        headers: {
-          'Accept': 'application/json',
-          'xx-token': '$token'
-        },
+        headers: {'Content-type': 'application/json', 'xx-token': '$token'},
         body: body);
   }
 }

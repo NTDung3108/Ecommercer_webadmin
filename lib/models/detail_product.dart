@@ -59,8 +59,8 @@ class Product {
   List<String>? colors;
   int? brandsId;
   int? subcategoryId;
-  int? addDay;
-  int? updateday;
+  String? addDay;
+  String? updateday;
   int? importPrice;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(

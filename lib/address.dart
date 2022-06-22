@@ -15,4 +15,7 @@ class Address{
   static String detailProduct = '/staff/get-product-by-id/';
   static String allSubcategory = '/staff/get-all-category';
   static String updateOrderStatus = '/update-order-status';
+  static String updateProduct = '/staff/update-product';
+  static String deleteProduct = '/staff/delete-product';
+
 }
