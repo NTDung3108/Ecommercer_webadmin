@@ -1,10 +1,14 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:ecommerce_admin_tut/models/brand_response.dart';
 import 'package:ecommerce_admin_tut/models/discount_responese.dart';
 import 'package:ecommerce_admin_tut/models/subcategory.dart';
 import 'package:ecommerce_admin_tut/provider/product_provider.dart';
 import 'package:ecommerce_admin_tut/widgets/base_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:provider/provider.dart';
 
 class NewProductPage extends StatefulWidget {
@@ -17,12 +21,15 @@ class NewProductPage extends StatefulWidget {
 class _NewProductPageState extends State<NewProductPage> {
   final _formKey = GlobalKey<FormState>();
   List<String> files = [];
+  List<Uint8List> images = [];
+
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController importPriceController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController colorController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
   String discountValue = '';
   String brandValue = '';
   String categoryValue = '';
@@ -57,8 +64,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                descriptionItem(
-                    'Description', descriptionController),
+                descriptionItem('Description', descriptionController),
                 const SizedBox(
                   height: 10,
                 ),
@@ -71,16 +77,26 @@ class _NewProductPageState extends State<NewProductPage> {
                     ElevatedButton(
                       onPressed: () {
                         int discount = discountValue.isEmpty
-                            ? _productProvider.product.discount!
+                            ? _productProvider.discount[0].idDiscount!
                             : int.parse(discountValue[0]);
                         int brand = brandValue.isEmpty
-                            ? _productProvider.product.brandsId!
+                            ? _productProvider.brands[0].idBrands!
                             : int.parse(brandValue[0]);
                         int subcategory = categoryValue.isEmpty
-                            ? _productProvider.product.subcategoryId!
+                            ? _productProvider.subcategories[0].id!
                             : int.parse(categoryValue[0]);
-                        _productProvider.updateProduct(
-                            discount, brand, subcategory, context);
+                        _productProvider.addNewProduct(
+                            images,
+                            nameController.text,
+                            descriptionController.text,
+                            int.parse(priceController.text),
+                            discount,
+                            int.parse(quantityController.text),
+                            jsonEncode(colorController.text.split(', ')),
+                            brand,
+                            subcategory,
+                            int.parse(importPriceController.text),
+                            context);
                       },
                       child: Text('Thêm Sản Phẩm'),
                       style: ElevatedButton.styleFrom(primary: Colors.green),
@@ -250,7 +266,7 @@ class _NewProductPageState extends State<NewProductPage> {
     );
   }
 
-  Widget pictureRow(String title, List<String> data) {
+  Widget pictureRow(String title, List<dynamic> data) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -269,15 +285,36 @@ class _NewProductPageState extends State<NewProductPage> {
             itemCount: data.isEmpty ? 1 : data.length + 1,
             itemBuilder: (context, index) {
               if (data.isNotEmpty)
-                return SizedBox(
+                return index == data.length
+                    ? SizedBox()
+                    : SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Image.memory(images[index]),
+                      );
+              return InkWell(
+                onTap: () async {
+                  var image =
+                      await ImagePickerPlugin().getMultiImage(imageQuality: 5);
+                  var i_1 = await image[0].readAsBytes();
+                  var i_2 = await image[1].readAsBytes();
+                  var i_3 = await image[2].readAsBytes();
+                  var i_4 = await image[3].readAsBytes();
+                  var i_5 = await image[4].readAsBytes();
+                  var img = [i_1, i_2, i_3, i_4, i_5];
+                  setState(() {
+                    images.addAll(img);
+                    for (int i = 0; i < image.length; i++) {
+                      files.add(image[index].path);
+                      log(files[index]);
+                    }
+                  });
+                },
+                child: SizedBox(
                   width: 100,
                   height: 100,
                   child: Image.asset('images/add_image.png'),
-                );
-              return SizedBox(
-                width: 100,
-                height: 100,
-                child: Image.asset('images/add_image.png'),
+                ),
               );
             },
             separatorBuilder: (context, index) => SizedBox(

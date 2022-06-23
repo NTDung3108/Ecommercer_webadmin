@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'dart:typed_data';
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/models/all_product.dart';
 import 'package:ecommerce_admin_tut/models/brand_response.dart';
@@ -13,9 +13,10 @@ import 'package:ecommerce_admin_tut/services/categories.dart';
 import 'package:ecommerce_admin_tut/services/discount_service.dart';
 import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class ProductProvider extends ChangeNotifier {
   DiscountService _discountService = DiscountService();
@@ -156,7 +157,8 @@ class ProductProvider extends ChangeNotifier {
             ),
           ),
         );
-      },)
+      },
+    )
   ];
 
   init() {
@@ -383,15 +385,62 @@ class ProductProvider extends ChangeNotifier {
       throw Exception(e);
     }
   }
+
   deleteProduct(int id) async {
     try {
       var resp = await _productsServices.deleteProduct(id);
-      if(resp.resp!){
+      if (resp.resp!) {
         getProductFromServer();
       }
     } catch (e) {
       throw Exception(e);
     }
     notifyListeners();
+  }
+
+  Future<bool> addNewProduct(
+      List<Uint8List> images,
+      String name,
+      String description,
+      int price,
+      int discount,
+      int quantity,
+      String colors,
+      int brand,
+      int subcategory,
+      int importPrice,
+      BuildContext context) async {
+    var file1 = http.MultipartFile.fromBytes('multi-files', images[0],
+        contentType: new MediaType('image', 'jpg'));
+    var file2 = http.MultipartFile.fromBytes('multi-files', images[1],
+        contentType: new MediaType('image', 'jpg'));
+    var file3 = http.MultipartFile.fromBytes('multi-files', images[2],
+        contentType: new MediaType('image', 'jpg'));
+    var file4 = http.MultipartFile.fromBytes('multi-files', images[3],
+        contentType: new MediaType('image', 'jpg'));
+    var file5 = http.MultipartFile.fromBytes('multi-files', images[4],
+        contentType: new MediaType('image', 'jpg'));
+    var multiFile = [file1, file2, file3, file4, file5];
+    try {
+      var resp = await _productsServices.addNewProduct(
+          multiFile,
+          name,
+          description,
+          price,
+          discount,
+          quantity,
+          colors,
+          brand,
+          subcategory,
+          importPrice);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(resp.msj ?? ''),
+        ),
+      );
+      return true;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

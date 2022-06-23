@@ -74,7 +74,7 @@ class OrderServices {
     // var token = await AuthServices().readToken();
     var response = await httpClient.get('${Address.downloadInvoice}$orderId');
     if(response.statusCode == 200){
-      String url = 'http://192.168.2.101:3000/HD$orderId.txt';
+      String url = 'http://10.50.10.135:3000/HD$orderId.txt';
       html.AnchorElement anchorElement =  new html.AnchorElement(href: url);
       anchorElement.download = url;
       anchorElement.click();

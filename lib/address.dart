@@ -17,5 +17,5 @@ class Address{
   static String updateOrderStatus = '/update-order-status';
   static String updateProduct = '/staff/update-product';
   static String deleteProduct = '/staff/delete-product';
-
+  static String addNewProduct = '/staff/add-new-product';
 }
