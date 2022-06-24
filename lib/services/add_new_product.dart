@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -18,7 +19,7 @@ class AddNewProduct{
         required int subcategory,
         required int importPrice}) async {
     final Dio _dio = Dio();
-    _dio.options.baseUrl = 'http://192.168.2.101:3000/api';
+    _dio.options.baseUrl = 'http://10.50.10.135:3000/api';
     var formData = FormData.fromMap({
       'in_nameProduct': name,
       'in_description': description,
@@ -29,16 +30,16 @@ class AddNewProduct{
       'in_brands_id': brand.toString(),
       'in_subcategory_id': subcategory.toString(),
       'in_importPrice': importPrice.toString(),
-      'many-files': [
-        MultipartFile.fromBytes(images[0],
+      'multi-files': [
+        MultipartFile.fromBytes(images[0].cast(),
             filename: fileName[0], contentType: MediaType("image", "jpg")),
-        MultipartFile.fromBytes(images[1],
+        MultipartFile.fromBytes(images[1].cast(),
             filename: fileName[1], contentType: MediaType("image", "jpg")),
-        MultipartFile.fromBytes(images[2],
+        MultipartFile.fromBytes(images[2].cast(),
             filename: fileName[2], contentType: MediaType("image", "jpg")),
-        MultipartFile.fromBytes(images[3],
+        MultipartFile.fromBytes(images[3].cast(),
             filename: fileName[3], contentType: MediaType("image", "jpg")),
-        MultipartFile.fromBytes(images[4],
+        MultipartFile.fromBytes(images[4].cast(),
             filename: fileName[4], contentType: MediaType("image", "jpg")),
       ]
     });

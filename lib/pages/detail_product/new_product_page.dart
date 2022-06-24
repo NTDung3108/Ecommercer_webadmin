@@ -20,9 +20,6 @@ class NewProductPage extends StatefulWidget {
 
 class _NewProductPageState extends State<NewProductPage> {
   final _formKey = GlobalKey<FormState>();
-  List<String> files = [];
-  List<Uint8List> images = [];
-
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController importPriceController = TextEditingController();
@@ -68,14 +65,14 @@ class _NewProductPageState extends State<NewProductPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                pictureRow('Picture', images),
+                pictureRow('Picture', _productProvider.images, _productProvider),
                 const SizedBox(
                   height: 50,
                 ),
                 Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         int discount = discountValue.isEmpty
                             ? _productProvider.discount[0].idDiscount!
                             : int.parse(discountValue[0]);
@@ -85,19 +82,32 @@ class _NewProductPageState extends State<NewProductPage> {
                         int subcategory = categoryValue.isEmpty
                             ? _productProvider.subcategories[0].id!
                             : int.parse(categoryValue[0]);
-                        _productProvider.addNewProduct(
-                            images,
-                            files,
+                       bool isAdd = await _productProvider.addNewProduct(
                             nameController.text,
                             descriptionController.text,
                             int.parse(priceController.text),
                             discount,
                             int.parse(quantityController.text),
-                            jsonEncode(colorController.text.split(', ')),
+                            colorController.text,
                             brand,
                             subcategory,
                             int.parse(importPriceController.text),
                             context);
+                       if(isAdd){
+                         setState(() {
+                           nameController.text = '';
+                           descriptionController.text = '';
+                           priceController.text = '';
+                           discountValue = '';
+                           brandValue = '';
+                           colorController.text = '';
+                           categoryValue = '';
+                           importPriceController.text = '';
+                           _productProvider.images.clear();
+                           _productProvider.fileName.clear();
+                           quantityController.text = '';
+                         });
+                       }
                       },
                       child: Text('Thêm Sản Phẩm'),
                       style: ElevatedButton.styleFrom(primary: Colors.green),
@@ -267,7 +277,7 @@ class _NewProductPageState extends State<NewProductPage> {
     );
   }
 
-  Widget pictureRow(String title, List<dynamic> data) {
+  Widget pictureRow(String title, List<dynamic> data, ProductProvider productProvider) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -291,7 +301,7 @@ class _NewProductPageState extends State<NewProductPage> {
                     : SizedBox(
                         width: 100,
                         height: 100,
-                        child: Image.memory(images[index]),
+                        child: Image.memory(productProvider.images[index]),
                       );
               return InkWell(
                 onTap: () async {
@@ -305,10 +315,10 @@ class _NewProductPageState extends State<NewProductPage> {
                   var img = [i_1, i_2, i_3, i_4, i_5];
 
                   setState(() {
-                    images.addAll(img);
+                    productProvider.images.addAll(img);
                     for (int i = 0; i < image.length; i++) {
-                      files.add(image[i].name);
-                      log(files[index]);
+                      productProvider.fileName.add(image[i].name);
+                      log(productProvider.fileName[index]);
                     }
                   });
                 },

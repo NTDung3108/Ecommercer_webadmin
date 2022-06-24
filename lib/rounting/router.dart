@@ -11,7 +11,6 @@ import 'package:ecommerce_admin_tut/pages/register_info/register_info_page.dart'
 import 'package:ecommerce_admin_tut/pages/registration/registration.dart';
 import 'package:ecommerce_admin_tut/pages/subcategory/subcategory_page.dart';
 import 'package:ecommerce_admin_tut/widgets/layout/layout.dart';
-
 import '../pages/home/home_page.dart';
 import '../pages/orders/orders_page.dart';
 import '../pages/otp_screen/otp_page.dart';

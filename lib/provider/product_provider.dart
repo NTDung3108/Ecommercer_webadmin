@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
+import 'package:ecommerce_admin_tut/address.dart';
 import 'package:ecommerce_admin_tut/locator.dart';
 import 'package:ecommerce_admin_tut/models/all_product.dart';
 import 'package:ecommerce_admin_tut/models/brand_response.dart';
 import 'package:ecommerce_admin_tut/models/detail_product.dart';
 import 'package:ecommerce_admin_tut/models/discount_responese.dart';
+import 'package:ecommerce_admin_tut/models/response.dart';
 import 'package:ecommerce_admin_tut/models/subcategory.dart';
 import 'package:ecommerce_admin_tut/rounting/route_names.dart';
+import 'package:ecommerce_admin_tut/services/add_new_product.dart';
 import 'package:ecommerce_admin_tut/services/brands.dart';
 import 'package:ecommerce_admin_tut/services/categories.dart';
 import 'package:ecommerce_admin_tut/services/discount_service.dart';
@@ -15,8 +18,6 @@ import 'package:ecommerce_admin_tut/services/navigation_service.dart';
 import 'package:ecommerce_admin_tut/services/products.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_table/responsive_table.dart';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 
 class ProductProvider extends ChangeNotifier {
   DiscountService _discountService = DiscountService();
@@ -59,6 +60,10 @@ class ProductProvider extends ChangeNotifier {
   final TextEditingController quantityController = TextEditingController();
   final TextEditingController colorController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
+  List<Uint8List> images = [];
+
+  List<String> fileName = [];
 
   String discountValue = '';
 
@@ -256,7 +261,7 @@ class ProductProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     var _expandedLen =
-        total - start < currentPerPage ? total - start : currentPerPage;
+    total - start < currentPerPage ? total - start : currentPerPage;
     Future.delayed(Duration(seconds: 0)).then((value) {
       expanded = List.generate(_expandedLen as int, (index) => false);
       source.clear();
@@ -281,7 +286,8 @@ class ProductProvider extends ChangeNotifier {
         sourceFiltered = productsTableSource;
       } else {
         sourceFiltered = productsTableSource
-            .where((data) => data[searchKey!]
+            .where((data) =>
+            data[searchKey!]
                 .toString()
                 .toLowerCase()
                 .contains(value.toString().toLowerCase()))
@@ -364,8 +370,8 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
-  updateProduct(
-      int discount, int brand, int subcategory, BuildContext context) async {
+  updateProduct(int discount, int brand, int subcategory,
+      BuildContext context) async {
     try {
       var resp = await _productsServices.updateProduct(
           product.idProduct!,
@@ -398,10 +404,7 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> addNewProduct(
-      List<Uint8List> image,
-      List<String> fileName,
-      String name,
+  Future<bool> addNewProduct(String name,
       String description,
       int price,
       int discount,
@@ -411,31 +414,27 @@ class ProductProvider extends ChangeNotifier {
       int subcategory,
       int importPrice,
       BuildContext context) async {
-
-    // var file1 = http.MultipartFile.fromBytes('many-files', image[0],
-    //           filename: fileName[0],
-    //           contentType: new MediaType("image", 'jpg'));
-    // var file2 = http.MultipartFile.fromBytes('many-files', image[1],
-    //     filename: fileName[1],
-    //     contentType: new MediaType("image", 'jpg'));
-    // var file3 = http.MultipartFile.fromBytes('many-files', image[2],
-    //     filename: fileName[2],
-    //     contentType: new MediaType("image", 'jpg'));
-    // var file4 = http.MultipartFile.fromBytes('many-files', image[3],
-    //     filename: fileName[3],
-    //     contentType: new MediaType("image", 'jpg'));
-    // var file5 = http.MultipartFile.fromBytes('many-files', image[4],
-    //     filename: fileName[4],
-    //     contentType: new MediaType("image", 'jpg'));
-    // var multiFile = [file1, file2, file3, file4, file5];
     try {
-
+      var resp = await AddNewProduct().newProduct(Address.addNewProduct,
+          images: images,
+          fileName: fileName,
+          name: name,
+          description: description,
+          price: price,
+          discount: discount,
+          quantity: quantity,
+          colors: jsonEncode(colors.split(', ')),
+          brand: brand,
+          subcategory: subcategory,
+          importPrice: importPrice);
+      final response = Response.fromJson(resp.data);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(resp.msj ?? ''),
+          content: Text(response.msj ?? ''),
         ),
       );
-      return true;
+      if (response.resp!) return true;
+      return false;
     } catch (e) {
       throw Exception(e);
     }
