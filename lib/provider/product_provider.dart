@@ -399,7 +399,8 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<bool> addNewProduct(
-      List<Uint8List> images,
+      List<Uint8List> image,
+      List<String> fileName,
       String name,
       String description,
       int price,
@@ -410,29 +411,25 @@ class ProductProvider extends ChangeNotifier {
       int subcategory,
       int importPrice,
       BuildContext context) async {
-    var file1 = http.MultipartFile.fromBytes('multi-files', images[0],
-        contentType: new MediaType('image', 'jpg'));
-    var file2 = http.MultipartFile.fromBytes('multi-files', images[1],
-        contentType: new MediaType('image', 'jpg'));
-    var file3 = http.MultipartFile.fromBytes('multi-files', images[2],
-        contentType: new MediaType('image', 'jpg'));
-    var file4 = http.MultipartFile.fromBytes('multi-files', images[3],
-        contentType: new MediaType('image', 'jpg'));
-    var file5 = http.MultipartFile.fromBytes('multi-files', images[4],
-        contentType: new MediaType('image', 'jpg'));
-    var multiFile = [file1, file2, file3, file4, file5];
+
+    // var file1 = http.MultipartFile.fromBytes('many-files', image[0],
+    //           filename: fileName[0],
+    //           contentType: new MediaType("image", 'jpg'));
+    // var file2 = http.MultipartFile.fromBytes('many-files', image[1],
+    //     filename: fileName[1],
+    //     contentType: new MediaType("image", 'jpg'));
+    // var file3 = http.MultipartFile.fromBytes('many-files', image[2],
+    //     filename: fileName[2],
+    //     contentType: new MediaType("image", 'jpg'));
+    // var file4 = http.MultipartFile.fromBytes('many-files', image[3],
+    //     filename: fileName[3],
+    //     contentType: new MediaType("image", 'jpg'));
+    // var file5 = http.MultipartFile.fromBytes('many-files', image[4],
+    //     filename: fileName[4],
+    //     contentType: new MediaType("image", 'jpg'));
+    // var multiFile = [file1, file2, file3, file4, file5];
     try {
-      var resp = await _productsServices.addNewProduct(
-          multiFile,
-          name,
-          description,
-          price,
-          discount,
-          quantity,
-          colors,
-          brand,
-          subcategory,
-          importPrice);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(resp.msj ?? ''),

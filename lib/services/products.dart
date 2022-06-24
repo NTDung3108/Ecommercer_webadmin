@@ -5,7 +5,6 @@ import 'package:ecommerce_admin_tut/models/all_product.dart';
 import 'package:ecommerce_admin_tut/models/detail_product.dart';
 import 'package:ecommerce_admin_tut/models/response.dart';
 import 'package:ecommerce_admin_tut/services/auth_services.dart';
-import 'package:http/http.dart' as http;
 
 class ProductsServices {
   HttpClient httpClient = HttpClient();
@@ -82,39 +81,42 @@ class ProductsServices {
     return Response(resp: false, msj: 'error');
   }
 
-  Future<Response> addNewProduct(
-      List<http.MultipartFile> image,
-      String name,
-      String description,
-      int price,
-      int discount,
-      int quantity,
-      String colors,
-      int brand,
-      int subcategory,
-      int importPrice) async {
-    final token = await AuthServices().readToken();
+  // Future<Response> addNewProduct(
+  //     List<http.MultipartFile> image,
+  //     String name,
+  //     String description,
+  //     int price,
+  //     int discount,
+  //     int quantity,
+  //     String colors,
+  //     int brand,
+  //     int subcategory,
+  //     int importPrice) async {
+  //   final token = await AuthServices().readToken();
+  //
+  //   Uri uri =
+  //       Uri.parse('http://192.168.2.101:3000/api${Address.addNewProduct}');
+  //
+  //   var request = http.MultipartRequest('POST', uri)
+  //     ..headers['Accept'] = 'application/json'
+  //     ..headers['xx-token'] = token!
+  //     ..fields['in_nameProduct'] = name
+  //     ..fields['in_description'] = description
+  //     ..fields['in_price'] = price.toString()
+  //     ..fields['in_discount'] = discount.toString()
+  //     ..fields['in_quantily'] = quantity.toString()
+  //     ..fields['in_colors'] = colors
+  //     ..fields['in_brands_id'] = brand.toString()
+  //     ..fields['in_subcategory_id'] = subcategory.toString()
+  //     ..fields['in_importPrice'] = importPrice.toString()
+  //     ..files.addAll(image);
+  //
+  //   final resp = await request.send();
+  //   var data = await http.Response.fromStream(resp);
+  //     if (resp.statusCode == 200)
+  //       return Response.fromJson(jsonDecode(data.body));
+  //     else
+  //       return Response(resp: false, msj: 'error');
+  // }
 
-    Uri uri = Uri.parse('http://10.50.10.135:3000/api${Address.addNewProduct}');
-
-    var request = http.MultipartRequest('POST', uri)
-      ..headers['Accept'] = 'application/json'
-      ..headers['xx-token'] = token!
-      ..fields['in_nameProduct'] = name
-      ..fields['in_description'] = description
-      ..fields['in_price'] = price.toString()
-      ..fields['in_discount'] = discount.toString()
-      ..fields['in_quantily'] = quantity.toString()
-      ..fields['in_colors'] = colors
-      ..fields['in_brands_id'] = brand.toString()
-      ..fields['in_subcategory_id'] = subcategory.toString()
-      ..fields['in_importPrice'] = importPrice.toString()
-      ..files.addAll(image);
-
-    final resp = await request.send();
-    var data = await http.Response.fromStream(resp);
-    if (resp.statusCode == 200)
-      return Response.fromJson(jsonDecode(data.body));
-    return Response(resp: false, msj: 'error');
-  }
 }

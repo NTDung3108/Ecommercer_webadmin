@@ -68,7 +68,7 @@ class _NewProductPageState extends State<NewProductPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                pictureRow('Picture', files),
+                pictureRow('Picture', images),
                 const SizedBox(
                   height: 50,
                 ),
@@ -87,6 +87,7 @@ class _NewProductPageState extends State<NewProductPage> {
                             : int.parse(categoryValue[0]);
                         _productProvider.addNewProduct(
                             images,
+                            files,
                             nameController.text,
                             descriptionController.text,
                             int.parse(priceController.text),
@@ -302,10 +303,11 @@ class _NewProductPageState extends State<NewProductPage> {
                   var i_4 = await image[3].readAsBytes();
                   var i_5 = await image[4].readAsBytes();
                   var img = [i_1, i_2, i_3, i_4, i_5];
+
                   setState(() {
                     images.addAll(img);
                     for (int i = 0; i < image.length; i++) {
-                      files.add(image[index].path);
+                      files.add(image[i].name);
                       log(files[index]);
                     }
                   });

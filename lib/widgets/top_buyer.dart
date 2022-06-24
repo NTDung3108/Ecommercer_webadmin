@@ -24,7 +24,7 @@ class TopBuyerWidget extends StatelessWidget {
         height: 40,
         width: 40,
         child: ClipOval(
-          child: Image.network('http://10.50.10.135:3000/${buyers.image}'),
+          child: Image.network('http://192.168.2.101:3000/${buyers.image}'),
         ),
       ),
       title: Text('${buyers.firstName} ${buyers.lastName}'),
