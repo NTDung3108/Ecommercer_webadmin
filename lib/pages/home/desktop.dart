@@ -27,7 +27,7 @@ class _HomePageDesktopState extends State<HomePageDesktop> with TickerProviderSt
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        PageHeader(text: "DASHBOARD",),
+        PageHeader(text: "Bảng Diều Khiển",),
         CardsList(),
         Padding(
           padding: const EdgeInsets.all(14),

@@ -38,7 +38,7 @@ class _StatisticalState extends State<Statistical>
         Row(
           children: [
             const Text(
-              'Type: ',
+              'Loại thống kê: ',
               style: TextStyle(fontSize: 16, height: 20 / 16),
             ),
             DropdownButton(
@@ -64,7 +64,7 @@ class _StatisticalState extends State<Statistical>
               width: 40,
             ),
             const Text(
-              'Time: ',
+              'Thời gian: ',
               style: TextStyle(fontSize: 16, height: 20 / 16),
             ),
             InkWell(
@@ -106,13 +106,13 @@ class _StatisticalState extends State<Statistical>
                 statictisProvider.getRevenue(ts1.seconds, ts2.seconds);
                 log('${statictisProvider.revenues}');
               },
-              child: Text('Statistic'),
+              child: Text('Thống Kê'),
             ),
           ],
         ),
         TabBarCustom(
           controller: _tabController,
-          tabs: ['Diagram', 'Detail Statistical'],
+          tabs: ['Biểu Đồ', 'Chi Tiết Thống Kê'],
           isScrollable: false,
         ),
         SizedBox(

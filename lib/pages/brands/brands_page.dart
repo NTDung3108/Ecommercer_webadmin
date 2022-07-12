@@ -105,14 +105,14 @@ class _BrandsPageState extends State<BrandsPage> {
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Brand",
+          text: "Hãng",
           value: "brand",
           show: true,
           flex: 2,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Status",
+          text: "Trạng thái",
           value: "status",
           show: true,
           sortable: true,
@@ -134,7 +134,7 @@ class _BrandsPageState extends State<BrandsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ORDERS"),
+        title: Text("Nhà sản xuất"),
         leading: Container(),
       ),
       body: SingleChildScrollView(
@@ -156,7 +156,7 @@ class _BrandsPageState extends State<BrandsPage> {
                       title: TextButton.icon(
                         onPressed: () => {},
                         icon: Icon(Icons.add),
-                        label: Text("new item"),
+                        label: Text("Thêm mới"),
                       ),
                       reponseScreenSizes: [ScreenSize.xs],
                       actions: [
@@ -164,7 +164,7 @@ class _BrandsPageState extends State<BrandsPage> {
                           Expanded(
                               child: TextField(
                                 decoration: InputDecoration(
-                                    hintText: 'Enter search term based on ' +
+                                    hintText: 'Nhập từ khóa cần tìm kiếm' +
                                         _searchKey!
                                             .replaceAll(new RegExp('[\\W_]+'), ' ')
                                             .toUpperCase(),
@@ -259,7 +259,7 @@ class _BrandsPageState extends State<BrandsPage> {
                       footers: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Text("Rows per page:"),
+                          child: Text("Số hàng:"),
                         ),
                         if (_perPages.isNotEmpty)
                           Container(

@@ -188,7 +188,7 @@ class LineChartSample1 extends StatelessWidget {
                   height: 37,
                 ),
                 const Text(
-                  'Unfold Shop 2018',
+                  '',
                   style: TextStyle(
                     color: Color(0xff827daa),
                     fontSize: 16,
@@ -199,7 +199,7 @@ class LineChartSample1 extends StatelessWidget {
                   height: 4,
                 ),
                 const Text(
-                  'Monthly Sales',
+                  '',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,

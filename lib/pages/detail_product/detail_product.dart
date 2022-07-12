@@ -17,7 +17,6 @@ class DetailProduct extends StatefulWidget {
 class _DetailProductState extends State<DetailProduct> {
   final _formKey = GlobalKey<FormState>();
   String? phone;
-  List<String> data = ['One', 'Two', 'Three', 'Four'];
   String discountValue = '';
   String brandValue = '';
   String categoryValue = '';

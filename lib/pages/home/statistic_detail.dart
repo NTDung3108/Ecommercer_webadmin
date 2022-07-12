@@ -74,31 +74,31 @@ class _StatisticDetailState extends State<StatisticDetail> {
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Date",
+          text: "Ngày",
           value: "date",
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Amounts",
+          text: "Tổng giá",
           value: "amounts",
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Tax",
+          text: "Tổng thuế",
           value: "tax",
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Total Originals",
+          text: "Tổng giá theo giá nhập",
           value: "total_originals",
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Revenue",
+          text: "Doanh thu",
           value: "revenue",
           show: true,
           sortable: true,
@@ -135,7 +135,7 @@ class _StatisticDetailState extends State<StatisticDetail> {
                 clipBehavior: Clip.none,
                 child: ResponsiveDatatable(
                   title: Text(
-                    'Revenue Statistic',
+                    'Thống kê doanh thu',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   reponseScreenSizes: [ScreenSize.xs],

@@ -47,25 +47,25 @@ class _NewProductPageState extends State<NewProductPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                rowItem('Name', nameController),
-                rowItem('Price', priceController),
-                rowItem('Import Price', importPriceController),
-                discountItem('Discount', _productProvider.discount),
-                rowItem('Quantity', quantityController),
+                rowItem('Tên sản phẩm', nameController),
+                rowItem('Giá bán', priceController),
+                rowItem('Giá nhập', importPriceController),
+                discountItem('Khuyến mãi', _productProvider.discount),
+                rowItem('Số lượng còn lại', quantityController),
                 const SizedBox(
                   height: 10,
                 ),
-                rowItem('Color', colorController),
-                brandsItem('Brands', _productProvider.brands),
-                categoryItem('Category', _productProvider.subcategories),
+                rowItem('Màu sắc', colorController),
+                brandsItem('Nhà sản xuất', _productProvider.brands),
+                categoryItem('Danh mục', _productProvider.subcategories),
                 const SizedBox(
                   height: 20,
                 ),
-                descriptionItem('Description', descriptionController),
+                descriptionItem('Mô tả', descriptionController),
                 const SizedBox(
                   height: 10,
                 ),
-                pictureRow('Picture', _productProvider.images, _productProvider),
+                pictureRow('Ảnh của sản phẩm', _productProvider.images, _productProvider),
                 const SizedBox(
                   height: 50,
                 ),

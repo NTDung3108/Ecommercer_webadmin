@@ -11,14 +11,14 @@ class HomePageTablet extends StatelessWidget {
     return ListView(
       children: [
         PageHeader(
-          text: 'DASHBOARD',
+          text: 'Bảng Điều Khiển',
         ),
         Padding(
           padding: const EdgeInsets.all(14),
           child: CardItem(
             icon: Icons.monetization_on_outlined,
-            title: "Revenue",
-            subtitle: "Revenue this month",
+            title: "Doanh thu",
+            subtitle: "Doanh thu trong tháng",
             value: "\$ 4,323",
             color1: Colors.green.shade700,
             color2: Colors.green,
@@ -28,8 +28,8 @@ class HomePageTablet extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: CardItem(
             icon: Icons.shopping_basket_outlined,
-            title: "Products",
-            subtitle: "Total products on store",
+            title: "Sản phẩm",
+            subtitle: "Số lượng sản phẩm trong kho",
             value: "231",
             color1: Colors.lightBlueAccent,
             color2: Colors.blue,
@@ -39,8 +39,8 @@ class HomePageTablet extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           child: CardItem(
             icon: Icons.delivery_dining,
-            title: "Orders",
-            subtitle: "Total orders for this month",
+            title: "Đơn hàng",
+            subtitle: "Số lượn đơn hàng trong tháng",
             value: "33",
             color1: Colors.redAccent,
             color2: Colors.red,
@@ -78,7 +78,7 @@ class HomePageTablet extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomText(
-                      text: 'Top Buyers',
+                      text: 'bảng xếp hạng',
                       size: 30,
                     ),
                   ],

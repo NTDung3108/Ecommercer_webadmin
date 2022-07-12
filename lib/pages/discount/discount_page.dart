@@ -101,27 +101,27 @@ class _DiscountPageState extends State<DiscountPage> {
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Title",
+          text: "Tiêu Đề",
           value: "title",
           show: true,
           flex: 2,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Content",
+          text: "Nội Dung",
           value: "content",
           flex: 3,
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Start Day",
+          text: "Ngày Bắt Đầu",
           value: "startday",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "End Day",
+          text: "Ngày kết thúc",
           value: "endday",
           show: true,
           sortable: true,
@@ -143,7 +143,7 @@ class _DiscountPageState extends State<DiscountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ORDERS"),
+        title: Text("Khuyến mãi"),
         leading: Container(),
       ),
       body: SingleChildScrollView(
@@ -165,7 +165,7 @@ class _DiscountPageState extends State<DiscountPage> {
                       title: TextButton.icon(
                         onPressed: () => {},
                         icon: Icon(Icons.add),
-                        label: Text("new item"),
+                        label: Text("Thêm mới"),
                       ),
                       reponseScreenSizes: [ScreenSize.xs],
                       actions: [
@@ -173,7 +173,7 @@ class _DiscountPageState extends State<DiscountPage> {
                           Expanded(
                               child: TextField(
                                 decoration: InputDecoration(
-                                    hintText: 'Enter search term based on ' +
+                                    hintText: 'Nhập từ khóa cần tìm kiếm ' +
                                         _searchKey!
                                             .replaceAll(new RegExp('[\\W_]+'), ' ')
                                             .toUpperCase(),
@@ -268,7 +268,7 @@ class _DiscountPageState extends State<DiscountPage> {
                       footers: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Text("Rows per page:"),
+                          child: Text("Số hàng:"),
                         ),
                         if (_perPages.isNotEmpty)
                           Container(
