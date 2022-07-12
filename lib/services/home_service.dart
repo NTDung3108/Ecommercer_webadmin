@@ -15,7 +15,7 @@ class HomeService {
 
   Future<RevenueMonth?> getRevenueMonth(String date) async {
     var token = await AuthServices().readToken();
-    var response = await _httpClient.get('${Address.revenue}?$date', token: token!);
+    var response = await _httpClient.get('${Address.revenue}?time=$date', token: token!);
     if (response.statusCode == 200) {
       return RevenueMonth.fromJson(jsonDecode(response.body));
     }

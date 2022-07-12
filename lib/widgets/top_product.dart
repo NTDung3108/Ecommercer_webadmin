@@ -25,7 +25,7 @@ class TopProductWidget extends StatelessWidget {
         height: 40,
         width: 40,
         child: ClipOval(
-          child: Image.network('http://10.50.10.135:3000/${topProduct.picture![0]}'),
+          child: Image.network('http://192.168.78.19:3000/${topProduct.picture![0]}'),
         ),
       ),
       title: Text('${topProduct.nameProduct}'),

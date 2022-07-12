@@ -25,7 +25,7 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
       children: [
         TabBarCustom(
           controller: _tabController,
-          tabs: ["Top Buyers", "Top Products"],
+          tabs: ["Nhười dùng", "Sản phẩm"],
           // isScrollable: false,
         ),
         SizedBox(
@@ -39,7 +39,7 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
               Column(
                 children: [
                   CustomText(
-                    text: 'Top Buyers',
+                    text: 'Bảng xếp hạng người mua hàng',
                     size: 30,
                   ),
                   Expanded(
@@ -55,7 +55,7 @@ class _TopRankState extends State<TopRank> with TickerProviderStateMixin {
               Column(
                 children: [
                   CustomText(
-                    text: 'Top Buyers',
+                    text: 'Bảng xếp hạng sản phẩm bán chạy',
                     size: 30,
                   ),
                   Expanded(

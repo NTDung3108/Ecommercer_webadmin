@@ -19,7 +19,7 @@ class AddNewProduct{
         required int subcategory,
         required int importPrice}) async {
     final Dio _dio = Dio();
-    _dio.options.baseUrl = 'http://10.50.10.135:3000/api';
+    _dio.options.baseUrl = 'http://192.168.78.19:3000/api';
     var formData = FormData.fromMap({
       'in_nameProduct': name,
       'in_description': description,

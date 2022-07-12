@@ -310,7 +310,7 @@ class _DetailProductState extends State<DetailProduct> {
                   width: 100,
                   height: 100,
                   child:
-                      Image.network('http://10.50.10.135:3000/${data[index]}'));
+                      Image.network('http://192.168.78.19:3000/${data[index]}'));
             },
             separatorBuilder: (context, index) => SizedBox(
               width: 10,

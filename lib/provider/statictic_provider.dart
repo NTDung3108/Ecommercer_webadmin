@@ -11,12 +11,14 @@ class StatictisProvider with ChangeNotifier {
   List<double> revenues = [];
   List<String> dataX = [];
   int maxTotal = 0;
-  List<Map<String, dynamic>> revenueTableSource = <Map<String, dynamic>>[];
   List<FlSpot> data = [];
   OrderServices _orderServices = OrderServices();
 
   double jump = 0;
   int index = 0;
+
+  List<Map<String, dynamic>> revenueTableSource = <Map<String, dynamic>>[];
+  int currentPerPage = 0;
 
   getRevenue(int startTime, int endTime) async {
     index = 0;
@@ -28,6 +30,7 @@ class StatictisProvider with ChangeNotifier {
     statistics =
         await _orderServices.getRevenueStatistics(startTime, endTime) ?? [];
     revenueTableSource.addAll(_getRevenueDataTable());
+    currentPerPage = statistics.length;
     statistics.forEach((item) {
       double revenue =
           item.amounts! - (item.taxs! + item.totalOriginals!) + 0.0;

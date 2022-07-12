@@ -15,7 +15,6 @@ class _StatisticDetailState extends State<StatisticDetail> {
 
   late List<DatatableHeader> _headers;
 
-  int? _currentPerPage = 2;
   List<bool>? _expanded;
   String? _searchKey = "id";
 
@@ -45,7 +44,7 @@ class _StatisticDetailState extends State<StatisticDetail> {
       _sourceOriginal.clear();
       _sourceOriginal.addAll(_statictisProvider!.revenueTableSource);
       _sourceFiltered = _sourceOriginal;
-      _source = _sourceFiltered.getRange(0, _currentPerPage!).toList();
+      _source = _sourceFiltered.getRange(0, _statictisProvider!.currentPerPage).toList();
       setState(() => _isLoading = false);
     });
   }
@@ -169,8 +168,8 @@ class _StatisticDetailState extends State<StatisticDetail> {
                         _sourceFiltered.sort((a, b) =>
                             a["$_sortColumn"].compareTo(b["$_sortColumn"]));
                       }
-                      var _rangeTop = _currentPerPage! < _sourceFiltered.length
-                          ? _currentPerPage!
+                      var _rangeTop = _statictisProvider!.currentPerPage < _sourceFiltered.length
+                          ? _statictisProvider!.currentPerPage
                           : _sourceFiltered.length;
                       _source = _sourceFiltered.getRange(0, _rangeTop).toList();
                       _searchKey = value;

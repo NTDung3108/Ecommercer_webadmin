@@ -95,7 +95,7 @@ class ProductsServices {
   //   final token = await AuthServices().readToken();
   //
   //   Uri uri =
-  //       Uri.parse('http://10.50.10.135:3000/api${Address.addNewProduct}');
+  //       Uri.parse('http://192.168.78.19:3000/api${Address.addNewProduct}');
   //
   //   var request = http.MultipartRequest('POST', uri)
   //     ..headers['Accept'] = 'application/json'
