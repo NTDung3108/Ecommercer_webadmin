@@ -50,20 +50,20 @@ class _OrderDetailState extends State<OrderDetail> {
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Name Product",
+          text: "Tên sản phẩm",
           value: "nameProduct",
           flex: 2,
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Quantity",
+          text: "Số lượng",
           value: "quantity",
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Price",
+          text: "Đơn giá",
           value: "price",
           show: true,
           sortable: true,
@@ -94,7 +94,7 @@ class _OrderDetailState extends State<OrderDetail> {
     return Scaffold(
       appBar: BaseAppbar(
         context: context,
-        title: 'Order Detail',
+        title: 'Chi tiết đơn hàng',
       ),
       body: _orderDetailProvider.orderDetail == null
           ? const Center(
@@ -107,21 +107,21 @@ class _OrderDetailState extends State<OrderDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Name: ${_orderDetailProvider.orderDetail.userName ?? ''}',
+                      'Tên: ${_orderDetailProvider.orderDetail.userName ?? ''}',
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'Address: ${_orderDetailProvider.orderDetail.address ?? ''}',
+                      'Địa chỉ: ${_orderDetailProvider.orderDetail.address ?? ''}',
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      'Phone: ${_orderDetailProvider.orderDetail.phone ?? ''}',
+                      'Số điện thoại: ${_orderDetailProvider.orderDetail.phone ?? ''}',
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                     const SizedBox(
@@ -129,11 +129,11 @@ class _OrderDetailState extends State<OrderDetail> {
                     ),
                     _orderDetailProvider.orderDetail.status != -1
                         ? Text(
-                            'Note: ${_orderDetailProvider.orderDetail.note}',
+                            'Ghi chú: ${_orderDetailProvider.orderDetail.note}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           )
                         : Text(
-                            'Reason: ${_orderDetailProvider.orderDetail.reason}',
+                            'Lí do: ${_orderDetailProvider.orderDetail.reason}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                     const SizedBox(
@@ -159,7 +159,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       height: 20,
                     ),
                     Text(
-                        "Amount: ${_orderDetailProvider.orderDetail.amount} VND",
+                        "Tổng giá: ${_orderDetailProvider.orderDetail.amount} VND",
                         style: TextStyle(fontSize: 16, color: Colors.black)),
                     SizedBox(
                       height: 20,

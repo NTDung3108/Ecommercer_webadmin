@@ -110,40 +110,40 @@ class _OrdersPageState extends State<OrdersPage> {
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "User Id",
+          text: "Mã người dùng",
           value: "userId",
           flex: 2,
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Total",
+          text: "Tổng",
           value: "total",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Created At",
+          text: "Ngày tạo",
           value: "createdAt",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Note",
+          text: "Ghi chú",
           value: "note",
           flex: 2,
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Reason",
+          text: "Lý do",
           value: "reason",
           flex: 2,
           show: true,
           sortable: true,
           textAlign: TextAlign.center),
       DatatableHeader(
-          text: "Status",
+          text: "Trạng thái",
           value: "status",
           show: true,
           sortable: true,
@@ -167,7 +167,7 @@ class _OrdersPageState extends State<OrdersPage> {
         Provider.of<OrderDetailProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("ORDERS"),
+        title: Text("ĐƠN HÀNG"),
         leading: Container(),
       ),
       body: SingleChildScrollView(
@@ -189,7 +189,7 @@ class _OrdersPageState extends State<OrdersPage> {
                   title: TextButton.icon(
                     onPressed: () => {},
                     icon: Icon(Icons.add),
-                    label: Text("new item"),
+                    label: Text("Thêm mới"),
                   ),
                   reponseScreenSizes: [ScreenSize.xs],
                   actions: [
@@ -197,7 +197,7 @@ class _OrdersPageState extends State<OrdersPage> {
                       Expanded(
                           child: TextField(
                         decoration: InputDecoration(
-                            hintText: 'Enter search term based on ' +
+                            hintText: 'Nhập từ khóa cần tìm kiếm vào đây' +
                                 _searchKey!
                                     .replaceAll(new RegExp('[\\W_]+'), ' ')
                                     .toUpperCase(),
@@ -294,7 +294,7 @@ class _OrdersPageState extends State<OrdersPage> {
                   footers: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text("Rows per page:"),
+                      child: Text("Số hàng:"),
                     ),
                     if (_perPages.isNotEmpty)
                       Container(

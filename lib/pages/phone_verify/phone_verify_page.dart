@@ -71,7 +71,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: "Verify Phone Number",
+                      text: "Xác Thực Số Điện thoại",
                       size: 22,
                       weight: FontWeight.bold,
                     ),
@@ -109,7 +109,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                             },
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'phone number',
+                                hintText: 'Số Điện Thoại',
                                 icon: Icon(Icons.phone_outlined)),
                           ),
                         ),
@@ -151,7 +151,7 @@ class _PhoneVerifyPageState extends State<PhoneVerifyPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
-                                  text: "Verify",
+                                  text: "Xác thực",
                                   size: 22,
                                   color: Colors.white,
                                   weight: FontWeight.bold,

@@ -71,7 +71,7 @@ class _OTPPageState extends State<OTPPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: "Verify Phone Number",
+                      text: "Xác Thực Số Điện Thoại",
                       size: 22,
                       weight: FontWeight.bold,
                     ),
@@ -93,27 +93,27 @@ class _OTPPageState extends State<OTPPage> {
                             onSaved: (newValue) => otpValue = newValue,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
-                                removeError(error: "OTP is not empty");
+                                removeError(error: "Mã OTP không được để trống");
                               }
                               if(value.length == 6){
-                                removeError(error: "OTP invalid");
+                                removeError(error: "Mã OTP không hợp lệ");
                               }
                               return;
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                addError(error: "OTP is not empty");
+                                addError(error: "mã OTP không được để trống");
                                 return "";
                               }
                               if(value.length < 6){
-                                addError(error: "OTP invalid");
+                                addError(error: "Mã OTP không hợp lệ");
                                 return "";
                               }
                               null;
                             },
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'OTP',
+                                hintText: 'Nhập mã OTP',
                             ),
                           ),
                         ),
@@ -144,7 +144,7 @@ class _OTPPageState extends State<OTPPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
-                                  text: "Verify",
+                                  text: "Xác thưc",
                                   size: 22,
                                   color: Colors.white,
                                   weight: FontWeight.bold,

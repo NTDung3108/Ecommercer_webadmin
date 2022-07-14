@@ -53,7 +53,7 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
   }
 
   Gender? _gender = Gender.male;
-  String sGender = 'male';
+  String sGender = 'Nam';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: "REGISTRATION INFORMATION",
+                      text: "Đăng ký thông tin",
                       size: 22,
                       weight: FontWeight.bold,
                     ),
@@ -103,21 +103,21 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                             onSaved: (newValue) => firstName = newValue,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
-                                removeError(error: "First name is not empty");
+                                removeError(error: "Họ không được để trống");
                               }
                               firstName = value;
                               return;
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                addError(error: "First name is not empty");
+                                addError(error: "Họ không được để trống");
                                 return "";
                               }
                               return null;
                             },
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'First name',
+                                hintText: 'Họ',
                                 icon: Icon(Icons.person_outline_outlined)),
                           ),
                         ),
@@ -137,20 +137,20 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                             onSaved: (newValue) => lastName = newValue,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
-                                removeError(error: "Last name is not empty");
+                                removeError(error: "Tên không được để trống");
                               }
                               return;
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                addError(error: "Last name is not empty");
+                                addError(error: "Tên không được để trống");
                                 return "";
                               }
                               return null;
                             },
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Last name',
+                                hintText: 'Tên không được để trống',
                                 icon: Icon(Icons.person_outline_outlined)),
                           ),
                         ),
@@ -169,33 +169,33 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                             onChanged: (Gender? value) {
                               setState(() {
                                 _gender = value;
-                                sGender = 'male';
+                                sGender = 'Nam';
                               });
                             },
                           ),
-                          Text('male'),
+                          Text('Nam'),
                           Radio<Gender>(
                             value: Gender.female,
                             groupValue: _gender,
                             onChanged: (Gender? value) {
                               setState(() {
                                 _gender = value;
-                                sGender = 'female';
+                                sGender = 'Nữ';
                               });
                             },
                           ),
-                          Text('female'),
+                          Text('Nữ'),
                           Radio<Gender>(
                             value: Gender.other,
                             groupValue: _gender,
                             onChanged: (Gender? value) {
                               setState(() {
                                 _gender = value;
-                                sGender = 'ohter';
+                                sGender = 'Khác';
                               });
                             },
                           ),
-                          Text('other'),
+                          Text('Khác'),
                         ],
                       ),
                     ),
@@ -247,20 +247,20 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                             onSaved: (newValue) => address = newValue,
                             onChanged: (value) {
                               if (value.isNotEmpty) {
-                                removeError(error: "Address is not empty");
+                                removeError(error: "Địa chỉ không được để trống");
                               }
                               return;
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                addError(error: "Address is not empty");
+                                addError(error: "Địa chỉ không được để trống");
                                 return "";
                               }
                               return null;
                             },
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Address',
+                                hintText: 'Địa chỉ',
                                 icon: Icon(Icons.location_on_outlined)),
                           ),
                         ),
@@ -308,7 +308,7 @@ class _RegisterInfoPageState extends State<RegisterInfoPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
-                                  text: "REGISTER",
+                                  text: "Đăng ký",
                                   size: 22,
                                   color: Colors.white,
                                   weight: FontWeight.bold,

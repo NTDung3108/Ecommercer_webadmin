@@ -26,7 +26,7 @@ class _ProductsPageState extends State<ProductsPage> {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("PRODUCT"),
+        title: Text("SẢN PHẨM"),
         leading: Container(),
       ),
       body: SingleChildScrollView(
@@ -51,14 +51,14 @@ class _ProductsPageState extends State<ProductsPage> {
                           .globalNavigateTo(NewProductRoute, context);
                     },
                     icon: Icon(Icons.add),
-                    label: Text("new item"),
+                    label: Text("Thêm mới"),
                   ),
                   actions: [
                     if (productProvider.isSearch)
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText: 'Enter search term based on ' +
+                            hintText: 'Nhập từ khóa cần tìm kiếm' +
                                 productProvider.searchKey!
                                     .replaceAll(new RegExp('[\\W_]+'), ' ')
                                     .toUpperCase(),
@@ -109,7 +109,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   footers: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text("Rows per page:"),
+                      child: Text("Số hàng:"),
                     ),
                     if (productProvider.perPages.isNotEmpty)
                       Container(

@@ -102,38 +102,38 @@ class _UsersPageState extends State<UsersPage> {
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Name",
+          text: "Họ Tên",
           value: "name",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Phone",
+          text: "Số điện thoại",
           value: "phone",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Address",
+          text: "Địa chỉ",
           value: "address",
           show: true,
           flex: 2,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Gender",
+          text: "Giới tính",
           value: "gender",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Status",
+          text: "Trạng thái",
           value: "status",
           show: true,
           sortable: true,
           textAlign: TextAlign.left),
       DatatableHeader(
-          text: "Created",
+          text: "Ngày đăng kí",
           value: "created",
           show: true,
           sortable: true,
@@ -154,7 +154,7 @@ class _UsersPageState extends State<UsersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ORDERS"),
+        title: Text("NGƯỜI DÙNG"),
         leading: Container(),
       ),
       body: SingleChildScrollView(
@@ -176,7 +176,7 @@ class _UsersPageState extends State<UsersPage> {
                       title: TextButton.icon(
                         onPressed: () => {},
                         icon: Icon(Icons.add),
-                        label: Text("new item"),
+                        label: Text("Thêm mới"),
                       ),
                       reponseScreenSizes: [ScreenSize.xs],
                       actions: [
@@ -184,7 +184,7 @@ class _UsersPageState extends State<UsersPage> {
                           Expanded(
                               child: TextField(
                                 decoration: InputDecoration(
-                                    hintText: 'Enter search term based on ' +
+                                    hintText: 'Nhậm từ kháo cần tìm kiếm' +
                                         _searchKey!
                                             .replaceAll(new RegExp('[\\W_]+'), ' ')
                                             .toUpperCase(),
@@ -279,7 +279,7 @@ class _UsersPageState extends State<UsersPage> {
                       footers: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Text("Rows per page:"),
+                          child: Text("Số hàng:"),
                         ),
                         if (_perPages.isNotEmpty)
                           Container(

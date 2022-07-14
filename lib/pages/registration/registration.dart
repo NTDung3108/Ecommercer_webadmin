@@ -82,8 +82,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         children: [
                           CustomText(
                             text: _authProvider.isForgot
-                                ? 'CHANGE PASSWORD'
-                                : "REGISTRATION",
+                                ? 'Đổi Mật Khẩu'
+                                : "Đăng Kí",
                             size: 22,
                             weight: FontWeight.bold,
                           ),
@@ -104,26 +104,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   onChanged: (value) {
                                     if (value.isNotEmpty) {
                                       removeError(
-                                          error: "Password is not empty");
+                                          error: "Mật khẩu không được để trống");
                                       removeError(
-                                          error: "Password does not match");
+                                          error: "Mật khẩu quá ngắn");
                                     }
                                     password = value;
                                     return;
                                   },
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      addError(error: "Password is not empty");
+                                      addError(error: "Mật khẩu không được để trống");
                                       return "";
                                     } else if (value.length < 6) {
-                                      addError(error: "Password too short");
+                                      addError(error: "Mật khẩu quá ngắn");
                                       return "";
                                     }
                                     return null;
                                   },
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: 'Password',
+                                      hintText: 'Mật khẩu',
                                       icon: Icon(Icons.lock_outline)),
                                 ),
                               ),
@@ -146,26 +146,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   onChanged: (value) {
                                     if (value.isNotEmpty) {
                                       removeError(
-                                          error: "Reenter is not empty");
+                                          error: "Mật khẩu không được để trống");
                                       removeError(
-                                          error: "Password does not match");
+                                          error: "Mật khẩu không hợp lệ");
                                     }
                                     return;
                                   },
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      addError(error: "Reenter is not empty");
+                                      addError(error: "Mật khẩu không được để trống");
                                       return "";
                                     } else if (password != value) {
                                       addError(
-                                          error: 'Password does not match');
+                                          error: 'Mật khẩu không hợp lệ');
                                       return "";
                                     }
                                     return null;
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: 'Reenter Password',
+                                    hintText: 'Nhập lại mật khẩu',
                                     icon: Icon(Icons.lock_outline),
                                   ),
                                 ),
@@ -193,7 +193,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Text('Show password')
+                                Text('Hiện mật khẩu')
                               ],
                             ),
                           ),
@@ -249,8 +249,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     children: [
                                       CustomText(
                                         text: _authProvider.isForgot
-                                            ? 'CHANGE PASSWORD'
-                                            : "REGISTER",
+                                            ? 'Đổi mật khẩu'
+                                            : "Đăng kí",
                                         size: 22,
                                         color: Colors.white,
                                         weight: FontWeight.bold,
@@ -270,7 +270,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
-                                  text: "Already have an account? ",
+                                  text: "Bạn đẫ có tài khoản?",
                                   size: 16,
                                   color: Colors.grey,
                                 ),
@@ -281,7 +281,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               LoginRoute, context);
                                     },
                                     child: CustomText(
-                                      text: "Sign in here.. ",
+                                      text: "Đăng nhập ở đây.. ",
                                       size: 16,
                                       color: Colors.indigo,
                                     )),

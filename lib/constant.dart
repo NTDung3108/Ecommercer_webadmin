@@ -20,13 +20,13 @@ checkEmail(String? value) {
 
 String convertStatus(int i){
   if(i == -1){
-    return 'Cancle';
+    return 'Hủy';
   }else if(i == 0){
-    return 'New Order';
+    return 'Đơn mói';
   }else if(i == 1){
-    return 'Transport';
+    return 'Đang vận truyển';
   }else{
-    return 'Complete';
+    return 'Hoàn Thành';
   }
 }
 
@@ -62,6 +62,6 @@ String formatChartDataX(int i, int data){
   }
 }
 
-const String phoneNumberNullError = "Please Enter your phone number";
-const String phoneError = "Invalid phone number";
-const String emailError = "Invalid email";
+const String phoneNumberNullError = "Hãy nhập số điện thoại";
+const String phoneError = "Số điện thọi không hợp lệ";
+const String emailError = "Email không hợp lệ";

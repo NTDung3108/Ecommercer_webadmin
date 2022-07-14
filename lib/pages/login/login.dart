@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomText(
-                            text: "SIGN IN",
+                            text: "ĐĂNG NHẬP",
                             size: 22,
                             weight: FontWeight.bold,
                           ),
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: 'Phone number',
+                                      hintText: 'Số điện thoại',
                                       icon: Icon(Icons.phone)),
                                 ),
                               ),
@@ -146,20 +146,20 @@ class _LoginPageState extends State<LoginPage> {
                                   onChanged: (value) {
                                     if (value.isNotEmpty) {
                                       removeError(
-                                          error: "password is not empty");
+                                          error: "Mật khẩu không được để trống");
                                     }
                                     return;
                                   },
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      addError(error: "Reenter is not empty");
+                                      addError(error: "Mật khẩu không được để trống");
                                       return "";
                                     }
                                     return null;
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: 'Password',
+                                    hintText: 'Mật Khẩu',
                                     icon: Icon(Icons.lock_outline),
                                   ),
                                 ),
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                                             PhoneVerifyRoute, context);
                                   },
                                   child: CustomText(
-                                    text: "Forgot password?",
+                                    text: "Quên mật khẩu?",
                                     size: 16,
                                     color: Colors.grey,
                                   ),
@@ -204,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Text('Show password')
+                                Text('Hiển thị mật khẩu')
                               ],
                             ),
                           ),
@@ -242,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       CustomText(
-                                        text: "SIGNIN",
+                                        text: "Đăng Nhập",
                                         size: 22,
                                         color: Colors.white,
                                         weight: FontWeight.bold,
@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomText(
-                                  text: "Already have an account? ",
+                                  text: "Bạn muốn tạo Tài khoản",
                                   size: 16,
                                   color: Colors.grey,
                                 ),
@@ -274,10 +274,11 @@ class _LoginPageState extends State<LoginPage> {
                                               PhoneVerifyRoute, context);
                                     },
                                     child: CustomText(
-                                      text: "Sign in here.. ",
+                                      text: "Đăng kí ở đây",
                                       size: 16,
                                       color: Colors.indigo,
-                                    )),
+                                    ),
+                                ),
                               ],
                             ),
                           ),
